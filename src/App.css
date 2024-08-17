@@ -1,38 +1,57 @@
+/* App.css */
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #00C98C;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 100vh; /* vh 단위를 사용하여 화면 전체 높이 설정 */
+}
+
+.container {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.highlight {
+  text-decoration: underline;
+}
+
+.logo {
+  margin: 20px 0;
+
+}
+
+.logo img {
+  width: 150px; /* 원하는 크기로 조정 */
+  width: 200px; /* 로고의 너비를 200px로 설정 */
+  height: 200px; /* 로고의 높이를 200px로 설정 */
+}
+
+.kakao-button {
+  background-color: #FEE500;
+  color: #3C1E1E;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kakao-button:hover {
+  background-color: #e0c200;
 }
