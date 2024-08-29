@@ -1,0 +1,51 @@
+/* Home 컴포넌트의 스타일 */
+.Home {
+    padding: 20px;
+    min-height: 90vh; /* 화면 전체 높이를 100vh로 채우고, 네비게이션 바를 위해 10vh를 남김 */
+    position: relative; /* 자식 요소의 절대 위치를 조정하기 위해 relative 사용 */
+  }
+  
+  /* 오른쪽 상단의 MyProfile 이미지 버튼 스타일 */
+  .profile-button {
+    position: absolute; /* 상위 요소를 기준으로 절대 위치 설정 */
+    top: 10px; /* 상단 여백 */
+    right: 10px; /* 오른쪽 여백 */
+    width: 40px; /* 이미지의 너비 */
+    height: 40px; /* 이미지의 높이 */
+    cursor: pointer; /* 마우스 커서 변경 */
+    border-radius: 50%; /* 원형 이미지로 만들기 위해 추가 */
+  }
+  
+  .profile-button:hover {
+    opacity: 0.8; /* 마우스를 올렸을 때 약간의 투명도 효과 */
+  }
+  
+  /* 하단 네비게이션 바 스타일 */
+  .bottom-navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    background-color: #66d9b8;
+    padding: 10px 0;
+  }
+  
+  .nav-button {
+    background-color: #66d9b8;
+    border: none;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+  }
+  
+  .nav-button:hover {
+    background-color: #56c3a2;
+  }
+  
