@@ -1,11 +1,10 @@
 import React from 'react';
 // import { REST_API_KEY, REDIRECT_URI } from '../../../config/kakaoConfig';
 
-const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
-const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
+const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
 
-
-console.log(REDIRECT_URI,REST_API_KEY)
+console.log(REDIRECT_URI, REST_API_KEY);
 
 const KakaoLoginButton = () => {
     const handleLogin = () => {
@@ -14,6 +13,5 @@ const KakaoLoginButton = () => {
 
     return <button onClick={handleLogin}>카카오로 로그인</button>;
 };
-
 
 export default KakaoLoginButton;

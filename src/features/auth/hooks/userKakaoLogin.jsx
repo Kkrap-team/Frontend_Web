@@ -2,12 +2,10 @@ import { useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../../../contexts/AuthContext';
-// import { REDIRECT_URI, REST_API_KEY, CLIENT_SECRET } from '../../../config/kakaoConfig';
 
 const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
 const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
 const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET;
-
 
 const useKakaoLogin = () => {
     const location = useLocation();
