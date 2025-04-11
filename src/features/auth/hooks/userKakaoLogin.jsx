@@ -47,7 +47,6 @@ const useKakaoLogin = () => {
                     console.error('카카오 로그인 실패:', err);
                 }
             };
-
             fetchToken();
         }
     }, [location, setUser, navigate]);
