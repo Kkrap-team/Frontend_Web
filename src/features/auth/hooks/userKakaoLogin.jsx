@@ -40,8 +40,8 @@ const useKakaoLogin = () => {
                     const user = await axios.post('http://43.203.234.0:8080/api/auth/kakao-login', {
                         accesstoken: accessToken,
                     });
-                    console.log('유저', user);
-
+                    setUser(user.data);
+                    console.log('setUser에 저장된 유저 데이터', user.data);
                     navigate('/');
                 } catch (err) {
                     console.error('카카오 로그인 실패:', err);
