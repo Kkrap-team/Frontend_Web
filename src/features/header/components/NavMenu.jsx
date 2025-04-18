@@ -17,8 +17,8 @@ export default function NavMenu({ toggleSearch, showSearchInput }) {
             </button>
 
             <button
-                className={`nav-item ${location.pathname.startsWith('/storage') ? 'active' : ''}`}
-                onClick={() => navigate('/storage')}
+                className={`nav-item ${location.pathname.startsWith('/Library') ? 'active' : ''}`}
+                onClick={() => navigate('/Library')}
             >
                 <img src="/storage_box.png" alt="보관함" className="nav-icon" />
                 <span>보관함</span>

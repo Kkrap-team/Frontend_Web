@@ -1,0 +1,20 @@
+.library-container {
+    padding: 30px;
+  }
+  
+  .library-title {
+    color: #2699fb;
+    font-size: 22px;
+    margin-right: 10px;
+  }
+  
+  .folder-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .folder-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+  }
