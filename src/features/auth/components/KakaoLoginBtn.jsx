@@ -3,7 +3,6 @@ import React from 'react';
 const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
 const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
 
-console.log(REDIRECT_URI, REST_API_KEY);
 
 const KakaoLoginButton = ({ className }) => {
     const handleLogin = () => {
