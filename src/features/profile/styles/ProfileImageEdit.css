@@ -1,0 +1,24 @@
+.profile-image-edit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
+    
+}
+
+.profile-preview {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #f2f2f2;
+}
+
+.change-image-text {
+    font-size: 16px;
+    color: #555;
+    margin-top: 10px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-align: center;
+}

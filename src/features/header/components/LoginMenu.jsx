@@ -3,21 +3,25 @@ import { useNavigate } from 'react-router-dom';
 import KakaoLoginBtn from '../../auth/components/KakaoLoginBtn';
 import useLogout from '../../auth/hooks/useLogout';
 import { AuthContext } from '@/contexts/AuthContext';
+
+const URL = import.meta.env.VITE_URL;
+
+console.log('URL', URL);
 export default function LoginMenu() {
-    const { user, setUser } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const navigate = useNavigate();
 
-   const logout = useLogout();
+    const logout = useLogout();
 
     return (
         <div className="right-menu">
             {user ? (
                 <>
                     <img
-                        src={user.profile}
+                        src={`${URL}${user.profile}`}
                         alt="프로필"
                         className="profile-image"
-                        onClick={() => navigate('/profile')}
+                        onClick={() => navigate('/EditProfile')}
                     />
                     <span className="nickname">{user.nickname}님, 환영합니다.</span>
                     <button onClick={logout} className="logout-button">

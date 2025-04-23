@@ -1,0 +1,91 @@
+.profile-form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding-top: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 6px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+textarea {
+    resize: none;
+    height: 100px;
+}
+
+.nickname-row {
+    display: flex;
+    gap: 10px;
+}
+
+.nickname-input.success {
+    border-color: green;
+}
+
+.nickname-input.error {
+    border-color: red;
+}
+
+.check-btn {
+    padding: 0 14px;
+    background-color: #4baef3;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.error-text {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.success-text {
+    color: green;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.cancel-btn {
+    padding: 10px 20px;
+    background-color: #ccc;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.save-btn {
+    padding: 10px 20px;
+    background-color: #4baef3;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}

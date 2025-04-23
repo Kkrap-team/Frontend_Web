@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../../../contexts/AuthContext';
@@ -11,11 +11,15 @@ const useKakaoLogin = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { setUser } = useContext(AuthContext);
+    const login = useRef(new Set());
 
     useEffect(() => {
         const code = new URLSearchParams(location.search).get('code');
 
-        if (code) {
+        // ✅ code가 있고, 중복 실행이 아니면 실행
+        if (code && !login.current.has(code)) {
+            login.current.add(code); // ✅ 중복 방지용
+
             const fetchToken = async () => {
                 try {
                     const tokenRes = await axios.post(
@@ -47,6 +51,7 @@ const useKakaoLogin = () => {
                     console.error('카카오 로그인 실패:', err);
                 }
             };
+
             fetchToken();
         }
     }, [location, setUser, navigate]);

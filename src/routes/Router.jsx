@@ -4,7 +4,7 @@ import Layout from '../components/layout/layout';
 import MainPage from '../pages/MainPage/MainPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import Header from '../features/header/components/Header';
-// import ProfilePage from ''
+import EditProfilePage from '@/pages/UserPage/EditProfilePage';
 
 function AppRouter() {
     return (
@@ -15,7 +15,7 @@ function AppRouter() {
                     <Route path="/" element={<MainPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="*" element={<div>페이지를 찾을 수 없습니다.</div>} />
-                    {/* <Route path="/profile" element= {<ProfilePage/> }/> */}
+                    <Route path="/EditProfile" element={<EditProfilePage />} />
                 </Routes>
             </Layout>
         </Router>
