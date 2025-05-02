@@ -1,4 +1,4 @@
-.profile-image-edit {
+.ProfileImageArea {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,7 +6,7 @@
     
 }
 
-.profile-preview {
+.ProfileImage {
     width: 200px;
     height: 200px;
     border-radius: 50%;
@@ -14,7 +14,7 @@
     background-color: #f2f2f2;
 }
 
-.change-image-text {
+.ChangeImageText {
     font-size: 16px;
     color: #555;
     margin-top: 10px;

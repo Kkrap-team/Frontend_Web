@@ -1,10 +1,10 @@
-.profile-form-container {
+.ProfileFormContainer {
     max-width: 400px;
     margin: 0 auto;
     padding-top: 10px;
 }
 
-.form-group {
+.FormGroup {
     margin-bottom: 20px;
 }
 
@@ -29,20 +29,20 @@ textarea {
     height: 100px;
 }
 
-.nickname-row {
+.NicknameRow {
     display: flex;
     gap: 10px;
 }
 
-.nickname-input.success {
+.NicknameInput.Success {
     border-color: green;
 }
 
-.nickname-input.error {
+.NicknameInput.Error {
     border-color: red;
 }
 
-.check-btn {
+.CheckBtn {
     padding: 0 14px;
     background-color: #4baef3;
     color: #fff;
@@ -53,26 +53,26 @@ textarea {
     white-space: nowrap;
 }
 
-.error-text {
+.ErrorText {
     color: red;
     font-size: 12px;
     margin-top: 4px;
 }
 
-.success-text {
+.SuccessText {
     color: green;
     font-size: 12px;
     margin-top: 4px;
 }
 
-.button-row {
+.ButtonRow {
     display: flex;
     justify-content: center;
     gap: 12px;
     margin-top: 20px;
 }
 
-.cancel-btn {
+.CancelBtn {
     padding: 10px 20px;
     background-color: #ccc;
     color: white;
@@ -81,7 +81,7 @@ textarea {
     cursor: pointer;
 }
 
-.save-btn {
+.SaveBtn {
     padding: 10px 20px;
     background-color: #4baef3;
     color: white;

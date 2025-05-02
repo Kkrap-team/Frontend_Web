@@ -1,7 +1,7 @@
 import api from '@/components/axios/axios';
 
 // 닉네임 중복 확인
-export async function checkNickname(userId, nickname) {
+export async function nicknameCheckApi(userId, nickname) {
     console.log('닉넴확인', userId, nickname);
     const res = await api.get('/users/check-nickname', {
         params: { nickname },
@@ -10,7 +10,7 @@ export async function checkNickname(userId, nickname) {
 }
 
 // 닉네임, 소개 변경
-export async function updateNickname(userId, nickname, bio) {
+export async function profileFormUpdateApi(userId, nickname, bio) {
     console.log('닉변', userId, nickname, bio);
     const res = await api.patch(
         `/users/${userId}/profile`,
@@ -23,7 +23,7 @@ export async function updateNickname(userId, nickname, bio) {
 }
 
 // 프로필 이미지 업로드
-export async function uploadProfileImageAPI(userId, formData) {
+export async function profileImageUpdateApi(userId, formData) {
     console.log('프로필이미지', userId, formData);
     const res = await api.post(`/users/${userId}/profile-image`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },

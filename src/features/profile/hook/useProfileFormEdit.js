@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
-import { checkNickname, updateNickname } from '../api/profileApi';
+import { nicknameCheckApi, profileFormUpdateApi } from '../api/profileApi';
 import { AuthContext } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ export default function useProfileFormEdit(initialUser) {
         setMessage('');
     }, [nickname]);
 
-    const onCheckDuplicate = async () => {
+    const checkDuplicateHandler = async () => {
         if (nickname === initialUser.nickname) {
             setIsAvailable(true);
             setMessage('현재 사용 중인 닉네임입니다.');
@@ -24,7 +24,7 @@ export default function useProfileFormEdit(initialUser) {
         }
     
         try {
-            await checkNickname(initialUser.userId, nickname);
+            await nicknameCheckApi(initialUser.userId, nickname);
             setIsAvailable(true);
             setMessage('사용 가능한 닉네임입니다.');
         } catch (error) {
@@ -62,7 +62,7 @@ export default function useProfileFormEdit(initialUser) {
             return;
         }
         try {
-            const res = await updateNickname(initialUser.userId, nickname, bio);
+            const res = await profileFormUpdateApi(initialUser.userId, nickname, bio);
             alert('프로필이 저장되었습니다!');
             setUser((prev) => ({
                 ...prev,
@@ -83,7 +83,7 @@ export default function useProfileFormEdit(initialUser) {
         setBio,
         isAvailable,
         message,
-        onCheckDuplicate,
+        checkDuplicateHandler,
         onSubmit,
     };
 }

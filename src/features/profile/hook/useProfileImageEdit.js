@@ -1,16 +1,16 @@
 import { useContext } from 'react';
-import { uploadProfileImageAPI } from '../api/profileApi';
+import { profileImageUpdateApi } from '../api/profileApi';
 import { AuthContext } from '@/contexts/AuthContext';
 
 export default function useProfileImageEdit() {
     const { user, setUser } = useContext(AuthContext);
 
-    const onImageChange = async (file) => {
+    const changeImageHandler = async (file) => {
         const formData = new FormData();
         formData.append('file', file);
 
         try {
-            const res = await uploadProfileImageAPI(user.userId, formData);
+            const res = await profileImageUpdateApi(user.userId, formData);
 
             // 받아온 응답 전체를 상태로 업데이트
             setUser((prev) => ({
@@ -28,5 +28,5 @@ export default function useProfileImageEdit() {
         }
     };
 
-    return { onImageChange };
+    return { changeImageHandler };
 }

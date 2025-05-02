@@ -21,7 +21,7 @@ export default function LoginMenu() {
                         src={`${URL}${user.profile}`}
                         alt="프로필"
                         className="profile-image"
-                        onClick={() => navigate('/EditProfile')}
+                        onClick={() => navigate('/editProfile')}
                     />
                     <span className="nickname">{user.nickname}님, 환영합니다.</span>
                     <button onClick={logout} className="logout-button">

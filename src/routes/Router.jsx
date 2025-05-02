@@ -15,7 +15,7 @@ function AppRouter() {
                     <Route path="/" element={<MainPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="*" element={<div>페이지를 찾을 수 없습니다.</div>} />
-                    <Route path="/EditProfile" element={<EditProfilePage />} />
+                    <Route path="/editProfile" element={<EditProfilePage />} />
                 </Routes>
             </Layout>
         </Router>

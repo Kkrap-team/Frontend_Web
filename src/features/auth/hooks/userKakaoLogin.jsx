@@ -1,5 +1,5 @@
 import { useEffect, useContext, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../../../contexts/AuthContext';
 
@@ -8,17 +8,17 @@ const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
 const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET;
 
 const useKakaoLogin = () => {
-    const location = useLocation();
+    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const { setUser } = useContext(AuthContext);
     const login = useRef(new Set());
 
     useEffect(() => {
-        const code = new URLSearchParams(location.search).get('code');
+        const code = searchParams.get('code');
 
-        // ✅ code가 있고, 중복 실행이 아니면 실행
+        // code가 있고, 중복 실행이 아니면 실행
         if (code && !login.current.has(code)) {
-            login.current.add(code); // ✅ 중복 방지용
+            login.current.add(code); // 중복 방지용
 
             const fetchToken = async () => {
                 try {
