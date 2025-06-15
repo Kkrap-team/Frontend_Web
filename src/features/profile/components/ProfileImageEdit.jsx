@@ -16,7 +16,13 @@ export default function ProfileImageEdit({ changeImageHandler }) {
     return (
         <div className="ProfileImageArea">
             <label htmlFor="ProfileImageInput">
-                <img src={`${url}${user.profile}?t=${Date.now()}`} alt="프로필" className="ProfileImage" />
+                {/* 카카오 기본 이미지로 올때는 http가 붙어와서 http가 있으면 url을 안붙힘 */}
+                <img
+                src={`${user.profile.startsWith('http') ? user.profile : `${url}${user.profile}`}?t=${Date.now()}`}
+                alt="프로필"
+                className="ProfileImage"
+                />
+
                 <p className="ChangeImageText">프로필 사진 변경</p>
                 {console.log('최종 이미지 경로:', `${url}${user.profile}?t=${Date.now()}`)}
             </label>

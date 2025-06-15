@@ -1,9 +1,9 @@
 import { useState, useContext, useEffect } from 'react';
-import { nicknameCheckApi, profileFormUpdateApi } from '../api/profileApi';
+import { nicknameCheckApi, profileFormUpdateApi, profileImageUpdateApi } from '@/features/profile/api/profileApi';
 import { AuthContext } from '@/contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 
-export default function useProfileFormEdit(initialUser) {
+export default function useProfileEdit(initialUser) {
     const [nickname, setNickname] = useState(initialUser.nickname || '');
     const [bio, setBio] = useState(initialUser.bio || '');
     const [isAvailable, setIsAvailable] = useState(null);
@@ -22,7 +22,7 @@ export default function useProfileFormEdit(initialUser) {
             setMessage('현재 사용 중인 닉네임입니다.');
             return;
         }
-    
+
         try {
             await nicknameCheckApi(initialUser.userId, nickname);
             setIsAvailable(true);
@@ -37,9 +37,8 @@ export default function useProfileFormEdit(initialUser) {
             }
         }
     };
-    
 
-    // 저장 요청
+    // 닉네임, 소개 변경 저장
     const onSubmit = async () => {
         const isNicknameChanged = nickname !== initialUser.nickname;
         const isBioChanged = bio !== initialUser.bio;
@@ -61,6 +60,7 @@ export default function useProfileFormEdit(initialUser) {
             alert('변경된 내용이 없습니다.');
             return;
         }
+
         try {
             const res = await profileFormUpdateApi(initialUser.userId, nickname, bio);
             alert('프로필이 저장되었습니다!');
@@ -69,10 +69,32 @@ export default function useProfileFormEdit(initialUser) {
                 nickname: res.nickname,
                 bio: res.bio,
             }));
-            navigate("/")
+            navigate({ to: '/' });
         } catch (error) {
             alert('프로필 저장 중 오류가 발생했습니다.');
             console.error('저장 실패:', error);
+        }
+    };
+
+    const changeImageHandler = async (file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const res = await profileImageUpdateApi(initialUser.userId, formData);
+
+            setUser((prev) => ({
+                ...prev,
+                profile: res.profile,
+                nickname: res.nickname,
+                bio: res.bio,
+                email: res.email,
+                userId: res.userId,
+                kakaoId: res.kakaoId,
+            }));
+        } catch (error) {
+            console.error('이미지 변경 실패:', error);
+            alert('이미지 업로드에 실패했습니다.');
         }
     };
 
@@ -85,5 +107,6 @@ export default function useProfileFormEdit(initialUser) {
         message,
         checkDuplicateHandler,
         onSubmit,
+        changeImageHandler,
     };
 }
