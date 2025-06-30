@@ -1,10 +1,14 @@
 // src/features/header/components/NavMenu.jsx
 import React from 'react';
 import { useNavigate, useRouterState } from '@tanstack/react-router';
+import { useModal } from '@/contexts/ModalContext';
 
 export default function NavMenu({ toggleSearch, showSearchInput }) {
     const navigate = useNavigate();
     const pathname = useRouterState({ select: (state) => state.location.pathname });
+    
+    const {showModal, modalName} = useModal();
+    const isFollowerOpen = modalName === 'follower';
 
     return (
         <nav className="nav">
@@ -22,8 +26,9 @@ export default function NavMenu({ toggleSearch, showSearchInput }) {
             </button>
 
             <button
-                className={`nav-item ${pathname.startsWith('/follower') ? 'active' : ''}`}
-                onClick={() => navigate({ to: '/follower' })}
+                className={`nav-item${modalName === 'follower' ? 'active':''}`}
+                onClick={()=>showModal('follower', {userId: 5})}
+                disabled= {isFollowerOpen}
             >
                 <img src="/follower.png" alt="팔로워" className="nav-icon" />
                 <span>팔로워</span>

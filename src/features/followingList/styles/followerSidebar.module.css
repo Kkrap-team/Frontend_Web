@@ -1,0 +1,43 @@
+.sidebar {
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarHeader {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.followerList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.followerItem {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+.followerItem:hover {
+  background-color: #f2f2f2;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
