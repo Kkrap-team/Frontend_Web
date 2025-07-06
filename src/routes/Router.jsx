@@ -2,9 +2,10 @@ import { createRootRoute, createRoute, createRouter, RouterProvider } from '@tan
 import { Outlet } from '@tanstack/react-router';
 import Header from '@/features/header/components/Header';
 import Layout from '@/components/layout/layout';
-import MainPage from '@/pages/MainPage/MainPage';
-import LoginPage from '@/pages/LoginPage/LoginPage';
-import EditProfilePage from '@/pages/UserPage/EditProfilePage';
+import MainPage from '@/pages/mainPage/MainPage';
+import LoginPage from '@/pages/loginPage/LoginPage';
+import EditProfilePage from '@/pages/userPage/EditProfilePage';
+import StoragePage from '@/pages/storagePage/StoragePage';
 
 const rootRoute = createRootRoute({
     component: () => (
@@ -23,11 +24,11 @@ const mainRoute = createRoute({
     component: MainPage,
 });
 
-// const loginRoute = createRoute({
-//     getParentRoute: () => rootRoute,
-//     path: '/login',
-//     component: LoginPage,
-// });
+const storageRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/storage',
+    component: StoragePage,
+});
 
 export const loginRoute = createRoute({
     getParentRoute: () => rootRoute,
@@ -48,7 +49,7 @@ const notFoundRoute = createRoute({
 });
 
 export const router = createRouter({
-    routeTree: rootRoute.addChildren([mainRoute, loginRoute, editProfileRoute, notFoundRoute]),
+    routeTree: rootRoute.addChildren([mainRoute, storageRoute, loginRoute, editProfileRoute, notFoundRoute]),
 });
 
 function AppRouter() {
