@@ -4,15 +4,15 @@ import styles from '../styles/followerSidebar.module.css';
 const FollowerSidebar = ({ followers }) => {
   return (
     <div className={styles.sidebar}>
-      <div className={styles.sidebarHeader}>팔로워</div>
-      <div className={styles.followerList}>
+      <div className={styles.title}>팔로워 목록</div>
+      <ul className={styles.list}>
         {followers.map((f) => (
-          <div key={f.followsId} className={styles.followerItem}>
-            <img src={f.profile} alt={f.nickname} className={styles.avatar} />
-            <span>{f.nickname}</span>
-          </div>
+          <li key={f.followsId} className={styles.item}>
+            <img src={f.profile} alt="프로필" className={styles.avatar} />
+            <span className={styles.nickname}>{f.nickname}</span>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

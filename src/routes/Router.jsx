@@ -4,6 +4,7 @@ import Header from '@/features/header/components/Header';
 import Layout from '@/components/layout/layout';
 import MainPage from '@/pages/MainPage/MainPage';
 import LoginPage from '@/pages/LoginPage/LoginPage';
+import FollowerPage from '@/pages/FollowerPage/FollowerPage';
 import EditProfilePage from '@/pages/UserPage/EditProfilePage';
 import { ModalProvider } from '@/contexts/ModalContext';
 import ModalRenderer from '@/components/common/ModalRenderer';
@@ -40,6 +41,12 @@ export const loginRoute = createRoute({
     component: LoginPage,
 });
 
+const followerRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/follower',
+    component: FollowerPage,
+});
+
 const editProfileRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: '/editProfile',
@@ -53,7 +60,7 @@ const notFoundRoute = createRoute({
 });
 
 export const router = createRouter({
-    routeTree: rootRoute.addChildren([mainRoute, loginRoute, editProfileRoute, notFoundRoute]),
+    routeTree: rootRoute.addChildren([mainRoute, loginRoute, editProfileRoute, notFoundRoute, followerRoute]),
 });
 
 function AppRouter() {

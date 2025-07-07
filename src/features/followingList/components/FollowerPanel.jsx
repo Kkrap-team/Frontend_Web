@@ -1,4 +1,5 @@
 // src/features/followingList/components/FollowerPanel.jsx
+//TODO : 삭제 예정 파일입니다.
 import React, { useEffect, useRef } from 'react';
 import { useFetchFollowingList } from '../hooks/useFetchFollowingList';
 import FollowerSidebar from './FollowerSidebar';

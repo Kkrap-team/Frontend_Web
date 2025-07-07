@@ -1,24 +1,27 @@
-import {useState, useCallback} from 'react';
+import { useEffect, useState } from 'react';
 import { fetchFollowingList } from '../api/fetchFollowingList';
 
-export const useFetchFollowingList = () => {
-    const [followers, setFollowers] = useState([]);
-    const [loading, setLoading] = useState(false);
+export const useFetchFollowingList = ({ userId } = {}) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    const loadFollowers = useCallback(async (userId) => {
-        setLoading(true);
-        try {
-            const data = await fetchFollowingList(userId);
-            setFollowers(data);
-        }catch (err){
-            console.error('팔로우 리스트 가져오는 부분 오류 : useFetchFollowingList.js 확인 바람.',err);
-        }finally{
-            setLoading(false);
-        }
-    }, []);
+  useEffect(() => {
+    if (!userId) return;
 
-    return{
-        followers, loading, loadFollowers,
+    const fetchData = async () => {
+      try {
+        const response = await fetchFollowingList(userId);
+        setData(response);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
     };
 
+    fetchData();
+  }, [userId]);
+
+  return { data, loading, error };
 };
