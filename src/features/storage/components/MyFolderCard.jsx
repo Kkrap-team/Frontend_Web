@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '@/features/storage/styles/MyFolderCard.css';
 
-const MyFolderCard = ({ folder, onDelete }) => {
+const MyFolderCard = ({ folder, onDelete, onEdit }) => {
     const { folderName, folderDescription, links, defaultFolder, scrapCount, viewCount, visible } = folder;
     const [showMenu, setShowMenu] = useState(false);
     // 대표 썸네일: links 배열의 첫 번째 썸네일(없으면 기본 이미지)
@@ -34,8 +34,30 @@ const MyFolderCard = ({ folder, onDelete }) => {
                             ⋮
                         </button>
                         {showMenu && (
-                            <div className="DropdownMenu">
-                                <button onClick={() => onDelete(folder)}>폴더 삭제</button>
+                            <div
+                                className="FolderMenuOverlay"
+                                onClick={() => setShowMenu(false)} //메뉴 바깥(오버레이) 클릭 -> 메뉴 닫힘
+                            >
+                                <div
+                                    className="FolderMenu"
+                                    onClick={(e) => e.stopPropagation()} // 메뉴 안쪽 클릭 -> 메뉴는 안 닫힘 (버튼 동작만 실행)
+                                >
+                                    <button className="FolderMenuItem" onClick={() => onEdit(folder)}>
+                                        <img className="FolderMenuIcon" src="/edit_folder.png" alt="수정" />
+                                        폴더 수정하기
+                                    </button>
+                                    <button className="FolderMenuItem">
+                                        <img className="FolderMenuIcon" src="/folder_permission.png" alt="권한" />
+                                        폴더 권한 제어
+                                    </button>
+                                    <button
+                                        className="FolderMenuItem FolderMenuDelete"
+                                        onClick={() => onDelete(folder)}
+                                    >
+                                        <img className="FolderMenuIcon" src="/delete.png" alt="삭제" />
+                                        삭제하기
+                                    </button>
+                                </div>
                             </div>
                         )}
                     </div>

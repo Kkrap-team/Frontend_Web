@@ -1,9 +1,21 @@
 import { useEffect, useState, useCallback } from 'react';
-import { getMyFolders, deleteMyFolder } from '../api/myFolderApi';
+import { getMyFolders, deleteMyFolder, getMyFolderProfile, editMyFolder } from '../api/myFolderApi';
 
 export default function useMyFolders(userId) {
     const [ownFolders, setOwnFolders] = useState([]);
     const [sharedFolders, setSharedFolders] = useState([]);
+    const [myFolderProfile, setMyFolderProfile] = useState([]);
+
+    //폴더 헤더 조회
+    const fetchMyFolderProfile = useCallback(async () => {
+        if (!userId) return;
+        try {
+            const data = await getMyFolderProfile(userId);
+            setMyFolderProfile(data);
+        } catch (err) {
+            console.error('폴더 헤더 get 안됨 :', err);
+        }
+    }, [userId]);
 
     //폴더 조회(내 폴더, 공유 폴더)
     const fetchFolders = useCallback(async () => {
@@ -16,6 +28,19 @@ export default function useMyFolders(userId) {
             console.error('폴더 get 안됨 :', err);
         }
     }, [userId]);
+
+    //폴더 수정
+    const editFolder = useCallback(
+        async (data) => {
+            try {
+                await editMyFolder(data);
+                fetchFolders();
+            } catch (err) {
+                console.error('폴더 update 안됨 :', err);
+            }
+        },
+        [fetchFolders]
+    );
 
     // 폴더 삭제
     const removeFolder = async (folder) => {
@@ -33,7 +58,8 @@ export default function useMyFolders(userId) {
 
     useEffect(() => {
         fetchFolders();
-    }, [fetchFolders]);
+        fetchMyFolderProfile();
+    }, [fetchFolders, fetchMyFolderProfile]);
 
-    return { ownFolders, sharedFolders, removeFolder };
+    return { ownFolders, sharedFolders, removeFolder, fetchFolders, fetchMyFolderProfile, myFolderProfile, editFolder };
 }

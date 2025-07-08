@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import '@/features/create/styles/FolderCreateModal.css';
 
-export default function FolderCreateModal({ onClose, onSubmit }) {
-    const [folderName, setFolderName] = useState('');
-    const [folderDescription, setFolderDescription] = useState('');
-    const [visible, setVisible] = useState(true);
+export default function FolderCreateModal({ mode, initialData, onClose, onSubmit }) {
+    const [folderName, setFolderName] = useState(initialData?.folderName || '');
+    const [folderDescription, setFolderDescription] = useState(initialData?.folderDescription || '');
+    const [visible, setVisible] = useState(initialData?.visible ?? true);
 
     const handleSubmit = () => {
         onSubmit({ folderName, folderDescription, visible });
@@ -14,7 +14,7 @@ export default function FolderCreateModal({ onClose, onSubmit }) {
     return (
         <div className="PopupBackdrop">
             <div className="Popup">
-                <h3>폴더 생성</h3>
+                <h3>{mode === 'edit' ? '폴더 수정' : '폴더 생성'}</h3>
                 <input
                     type="text"
                     placeholder="폴더 이름"
@@ -32,7 +32,7 @@ export default function FolderCreateModal({ onClose, onSubmit }) {
                 </label>
                 <div className="PopupButtons">
                     <button onClick={onClose}>취소</button>
-                    <button onClick={handleSubmit}>확인</button>
+                    <button onClick={handleSubmit}>{mode === 'edit' ? '수정하기' : '생성하기'}</button>
                 </div>
             </div>
         </div>
