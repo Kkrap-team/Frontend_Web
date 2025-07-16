@@ -1,18 +1,21 @@
 import React from "react";
 import styles from '../styles/followerSidebar.module.css';
+import FollowerProfileBox from "./FollowerProfileBox";
 
 const FollowerSidebar = ({ followers }) => {
   return (
-    <div className={styles.sidebar}>
-      <div className={styles.title}>팔로워 목록</div>
-      <ul className={styles.list}>
-        {followers.map((f) => (
-          <li key={f.followsId} className={styles.item}>
-            <img src={f.profile} alt="프로필" className={styles.avatar} />
-            <span className={styles.nickname}>{f.nickname}</span>
-          </li>
+    <div className={styles.sidebarContainer}>
+      <div className={styles.headerArea}>
+        <div className={styles.searchBar}>
+          <span className={styles.searchText}>팔로워 검색</span>
+        </div>
+      </div>
+
+      <div className={styles.profileList}>
+        {followers.map((follower) => (
+          <FollowerProfileBox key={follower.followesId} follower={follower} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
