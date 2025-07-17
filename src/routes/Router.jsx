@@ -29,11 +29,11 @@ const mainRoute = createRoute({
     component: MainPage,
 });
 
-// const loginRoute = createRoute({
-//     getParentRoute: () => rootRoute,
-//     path: '/login',
-//     component: LoginPage,
-// });
+const storageRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/storage',
+    component: StoragePage,
+});
 
 export const loginRoute = createRoute({
     getParentRoute: () => rootRoute,
@@ -60,7 +60,8 @@ const notFoundRoute = createRoute({
 });
 
 export const router = createRouter({
-    routeTree: rootRoute.addChildren([mainRoute, loginRoute, editProfileRoute, notFoundRoute, followerRoute]),
+    routeTree: rootRoute.addChildren([mainRoute, loginRoute, storageRoute, editProfileRoute, notFoundRoute, followerRoute]),
+
 });
 
 function AppRouter() {

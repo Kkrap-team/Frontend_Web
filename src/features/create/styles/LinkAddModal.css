@@ -1,0 +1,108 @@
+.LinkAddModalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.LinkAddModal {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+    padding: 28px 24px 24px 24px;
+    min-width: 320px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.LinkAddModalClose {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #888;
+    cursor: pointer;
+}
+
+.LinkAddModalTitle {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.LinkAddModalInput {
+    width: 100%;
+    padding: 12px;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    margin-bottom: 8px;
+}
+
+.LinkAddModalSelectWrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.LinkAddModalSelect {
+    flex: 1;
+    padding: 10px;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    background: #fafafa;
+}
+
+.LinkAddModalButtons {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.LinkAddModalPaste {
+    flex: 1;
+    padding: 12px 0;
+    border: 1.5px solid #222;
+    border-radius: 24px;
+    background: #fff;
+    color: #222;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.LinkAddModalPaste:hover {
+    background: #f5f5f5;
+}
+
+.LinkAddModalSubmit {
+    flex: 1;
+    padding: 12px 0;
+    border: none;
+    border-radius: 24px;
+    background: #3da5f5;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.LinkAddModalSubmit:hover {
+    background: #1d8ee6;
+}
