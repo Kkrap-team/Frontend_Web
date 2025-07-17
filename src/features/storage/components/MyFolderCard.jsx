@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '@/features/storage/styles/MyFolderCard.css';
 
-const MyFolderCard = ({ folder, onDelete, onEdit }) => {
+const MyFolderCard = ({ folder, onDelete, onEdit, onPermission }) => {
     const { folderName, folderDescription, links, defaultFolder, scrapCount, viewCount, visible } = folder;
     const [showMenu, setShowMenu] = useState(false);
     // 대표 썸네일: links 배열의 첫 번째 썸네일(없으면 기본 이미지)
@@ -46,7 +46,7 @@ const MyFolderCard = ({ folder, onDelete, onEdit }) => {
                                         <img className="FolderMenuIcon" src="/edit_folder.png" alt="수정" />
                                         폴더 수정하기
                                     </button>
-                                    <button className="FolderMenuItem">
+                                    <button className="FolderMenuItem" onClick={() => onPermission(folder)}>
                                         <img className="FolderMenuIcon" src="/folder_permission.png" alt="권한" />
                                         폴더 권한 제어
                                     </button>
