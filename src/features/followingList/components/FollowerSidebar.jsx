@@ -1,19 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from '../styles/followerSidebar.module.css';
 import FollowerProfileBox from "./FollowerProfileBox";
+import FollowerSearchBar from "./FollowerSearchBar";
 
 const FollowerSidebar = ({ followers }) => {
+  const [searchText, setSearchText] = useState("");
+
+  // 실시간 필터링
+  const filteredFollowers = followers.filter((f) =>
+    f.nickname.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
     <div className={styles.sidebarContainer}>
+      {/* 검색바 영역 */}
       <div className={styles.headerArea}>
-        <div className={styles.searchBar}>
-          <span className={styles.searchText}>팔로워 검색</span>
-        </div>
+        <FollowerSearchBar
+          searchText={searchText}
+          onChange={setSearchText}
+        />
       </div>
 
+      {/* 프로필 리스트 영역 */}
       <div className={styles.profileList}>
-        {followers.map((follower) => (
-          <FollowerProfileBox key={follower.followesId} follower={follower} />
+        {filteredFollowers.map((f) => (
+          <FollowerProfileBox key={f.followsId} follower={f} />
         ))}
       </div>
     </div>
