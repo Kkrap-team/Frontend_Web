@@ -27,9 +27,3 @@ export const editMyFolder = async (data) => {
     const res = await axios.patch(`${url}/folders/${data.folderId}`, data);
     return res.data;
 };
-
-// export const getFolderHeader = async (userId) => {
-//     const res = await axios.get(`${url}/folders/users/${userId}/folders/header`);
-//     console.log('폴더 헤더 데이터', res.data);
-//     return res.data;
-// };

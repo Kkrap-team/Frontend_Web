@@ -8,6 +8,7 @@ import FollowerPage from '@/pages/FollowerPage/FollowerPage';
 import EditProfilePage from '@/pages/UserPage/EditProfilePage';
 import { ModalProvider } from '@/contexts/ModalContext';
 import ModalRenderer from '@/components/common/ModalRenderer';
+import StoragePage from '@/pages/StoragePage/StoragePage';
 
 const rootRoute = createRootRoute({
     component: () => (
@@ -60,8 +61,14 @@ const notFoundRoute = createRoute({
 });
 
 export const router = createRouter({
-    routeTree: rootRoute.addChildren([mainRoute, loginRoute, storageRoute, editProfileRoute, notFoundRoute, followerRoute]),
-
+    routeTree: rootRoute.addChildren([
+        mainRoute,
+        loginRoute,
+        storageRoute,
+        editProfileRoute,
+        notFoundRoute,
+        followerRoute,
+    ]),
 });
 
 function AppRouter() {
