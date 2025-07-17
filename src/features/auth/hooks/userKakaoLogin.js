@@ -18,7 +18,6 @@ const useKakaoLogin = () => {
 
     useEffect(() => {
         const code = search.code;
-
         // code가 있고, 중복 실행이 아니면 실행
         if (code && !login.current.has(code)) {
             login.current.add(code); // 중복 방지용

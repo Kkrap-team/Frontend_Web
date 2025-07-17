@@ -1,0 +1,25 @@
+.sidebarContainer {
+  width: 341px;
+  height: 100%;
+  background: #fff;
+  border-right: 1px solid #757575;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin-left: -120px;  /*TODO : 레이아웃 수정하면서 수정 예정입니다.*/
+}
+
+.headerArea {
+  padding: 16px;
+  /* 검색창 아래에 약간의 여백 */
+}
+
+.profileList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 16px 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* 아이템간 간격 */
+}

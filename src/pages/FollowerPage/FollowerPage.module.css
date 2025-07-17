@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  height: calc(100vh - 81px); /* 헤더 제외 */
+}
+
+.contentArea {
+  flex: 1;
+  padding: 2rem;
+  background-color: #fff;
+}
