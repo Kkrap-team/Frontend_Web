@@ -1,4 +1,4 @@
-.header {
+.Header {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
@@ -7,42 +7,42 @@
     height: 60px;
 }
 
-.logo {
+.Logo {
     margin-left: 120px;
     display: flex;
     align-items: center;
     justify-self: start;
 }
 
-.logo-image {
+.LogoImage {
     height: 28px;
     margin-right: 8px;
 }
 
-.logo-text1 {
+.LogoText1 {
     font-weight: bold;
     font-size: 16px;
 }
 
-.logo-text2 {
+.LogoText2 {
     font-weight: bold;
     font-size: 16px;
     color: #5ab7fc;
 }
 
-.nav {
+.NavMenu {
     display: flex;
     align-items: center;
     gap: 20px;
     justify-self: center;
 }
 
-.nav-icon {
+.NavIcon {
     width: 24px;
     height: 24px;
 }
 
-.nav-item {
+.NavItem {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -54,16 +54,16 @@
     padding: 8px;
 }
 
-.nav-item:hover {
+.NavItem:hover {
     color: #000;
 }
 
-.nav-item.active {
+.NavItem.Active {
     background-color: #f2f2f2;
     border-radius: 4px;
 }
 
-.right-menu {
+.RightMenu {
     display: flex;
     margin-right: 120px;
     align-items: center;
@@ -71,14 +71,14 @@
     justify-self: end;
 }
 
-.more-button {
+.MoreButton {
     background: none;
     border: none;
     cursor: pointer;
     font-size: 14px;
 }
 
-.profile-image {
+.HeaderProfileImage {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -86,19 +86,13 @@
     border: 1px solid #ccc;
 }
 
-/* .login-button {
-    all: unset;
+.Nickname {
     font-size: 14px;
-    color: #757575;
-    cursor: pointer;
+    color: #333;
 }
 
-.login-button:hover {
-    color: #000;
-} */
-
-.logout-button,
-.login-button {
+.LogoutButton,
+.LoginButton {
     border: 1px solid #ccc;
     background-color: #fff;
     color: #333;
@@ -108,7 +102,7 @@
     cursor: pointer;
 }
 
-.logout-button:hover,
-.login-button:hover {
+.LogoutButton:hover,
+.LoginButton:hover {
     background-color: #f5f5f5;
 }

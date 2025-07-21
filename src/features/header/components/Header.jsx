@@ -11,8 +11,8 @@ export default function Header() {
 
     return (
         <>
-            <header className="header">
-                <Logo/>
+            <header className="Header">
+                <Logo />
                 <NavMenu toggleSearch={toggleSearch} showSearchInput={showSearchInput} />
                 <LoginMenu />
             </header>

@@ -33,6 +33,13 @@ export default function StoragePage() {
         setShowCreateModal(true);
     };
 
+    // 폴더 생성/수정 모달 닫기
+    const handleCloseModal = () => {
+        setShowCreateModal(false);
+        setEditTargetFolder(null);
+        setModalMode(null);
+    };
+
     // 폴더 수정 버튼 클릭 (MyFolderCard에서 호출)
     const handleEditClick = (folder) => {
         setModalMode('edit');
@@ -106,11 +113,7 @@ export default function StoragePage() {
                 <FolderCreateModal
                     mode={modalMode}
                     initialData={editTargetFolder}
-                    onClose={() => {
-                        setShowCreateModal(false);
-                        setEditTargetFolder(null);
-                        setModalMode(null);
-                    }}
+                    onClose={handleCloseModal}
                     onSubmit={handleSubmit}
                 />
             )}

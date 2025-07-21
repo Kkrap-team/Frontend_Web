@@ -18,6 +18,7 @@ export const deleteMyFolder = async (userId, folderId) => {
 //폴더 헤더 조회
 export const getMyFolderProfile = async (userId) => {
     const res = await axios.get(`${url}/users/folders/${userId}`);
+    console.log('폴더 헤더 조회 데이터', res.data);
     return res.data;
 };
 

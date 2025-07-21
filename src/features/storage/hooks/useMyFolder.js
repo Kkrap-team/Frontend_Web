@@ -7,14 +7,17 @@ export default function useMyFolders(userId) {
     const [myFolderProfile, setMyFolderProfile] = useState([]);
 
     //폴더 헤더 조회
-    const fetchMyFolderProfile = useCallback(async () => {
+    useEffect(() => {
         if (!userId) return;
-        try {
-            const data = await getMyFolderProfile(userId);
-            setMyFolderProfile(data);
-        } catch (err) {
-            console.error('폴더 헤더 get 안됨 :', err);
-        }
+        const fetchProfile = async () => {
+            try {
+                const data = await getMyFolderProfile(userId);
+                setMyFolderProfile(data);
+            } catch (err) {
+                console.error('폴더 헤더 get 안됨 :', err);
+            }
+        };
+        fetchProfile();
     }, [userId]);
 
     //폴더 조회(내 폴더, 공유 폴더)
@@ -36,7 +39,7 @@ export default function useMyFolders(userId) {
                 await editMyFolder(data);
                 fetchFolders();
             } catch (err) {
-                console.error('폴더 update 안됨 :', err);
+                console.error('폴더 edit 안됨 :', err);
             }
         },
         [fetchFolders]
@@ -58,8 +61,7 @@ export default function useMyFolders(userId) {
 
     useEffect(() => {
         fetchFolders();
-        fetchMyFolderProfile();
-    }, [fetchFolders, fetchMyFolderProfile]);
+    }, [fetchFolders]);
 
-    return { ownFolders, sharedFolders, removeFolder, fetchFolders, fetchMyFolderProfile, myFolderProfile, editFolder };
+    return { ownFolders, sharedFolders, removeFolder, fetchFolders, myFolderProfile, editFolder };
 }

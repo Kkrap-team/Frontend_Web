@@ -1,4 +1,3 @@
-// import api from '@/components/axios/axios';
 import axios from 'axios';
 
 const url = import.meta.env.VITE_URL;
