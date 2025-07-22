@@ -8,6 +8,8 @@ import FolderList from '@/features/storage/components/MyFolderList';
 import CreateDropdown from '@/features/create/components/CreateDropdown';
 import FolderCreateModal from '@/features/create/components/FolderCreateModal';
 import LinkAddModal from '@/features/create/components/LinkAddModal';
+import PermissionModal from '@/features/storage/components/PermissionModal';
+import usePermissionUsers from '@/features/storage/hooks/usePermissionUsers';
 
 export default function StoragePage() {
     const { user } = useAuth();
@@ -21,6 +23,18 @@ export default function StoragePage() {
         editFolder,
     } = useMyFolder(userId) || {};
     const { addFolder, addLink } = useCreate();
+    const {
+        users: followingUsers,
+        loading: usersLoading,
+        error: usersError,
+        showPermissionModal,
+        selectedUsers,
+        openPermissionModal,
+        closePermissionModal,
+        handleUserSelect,
+        handlePermissionConfirm,
+    } = usePermissionUsers(userId);
+
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showLinkModal, setShowLinkModal] = useState(false);
     const [modalMode, setModalMode] = useState(null);
@@ -103,7 +117,12 @@ export default function StoragePage() {
                 <h2 className="StorageTitle">{user.nickname}님의 폴더</h2>
                 <CreateDropdown onCreateFolder={handleCreateClick} onAddLink={() => setShowLinkModal(true)} />
             </div>
-            <FolderList folders={ownFolders} onDelete={handleDelete} onEdit={handleEditClick} />
+            <FolderList
+                folders={ownFolders}
+                onDelete={handleDelete}
+                onEdit={handleEditClick}
+                onPermission={openPermissionModal}
+            />
             <div className="StorageHeader">
                 <br />
                 <h2 className="StorageTitle">{user.nickname}님과 공유된 폴더</h2>
@@ -119,6 +138,18 @@ export default function StoragePage() {
             )}
             {showLinkModal && (
                 <LinkAddModal onClose={() => setShowLinkModal(false)} onSubmit={handleAddLink} folders={ownFolders} />
+            )}
+            {showPermissionModal && (
+                <PermissionModal
+                    isOpen={showPermissionModal}
+                    users={followingUsers}
+                    selectedUsers={selectedUsers}
+                    onUserSelect={handleUserSelect}
+                    onClose={closePermissionModal}
+                    onConfirm={handlePermissionConfirm}
+                    loading={usersLoading}
+                    error={usersError}
+                />
             )}
         </div>
     );

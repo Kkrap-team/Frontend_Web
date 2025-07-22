@@ -5,6 +5,7 @@ const url = import.meta.env.VITE_URL;
 //폴더 조회(내 폴더, 공유 폴더)
 export const getMyFolders = async (userId) => {
     const res = await axios.get(`${url}/folders/users/${userId}/folders/thumbnails/me`);
+    console.log('폴더 조회 데이터', res.data);
     return res.data;
 };
 

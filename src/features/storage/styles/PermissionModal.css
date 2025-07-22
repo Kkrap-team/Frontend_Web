@@ -1,0 +1,196 @@
+/* 모달 오버레이 */
+.ModalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* 모달 컨텐츠 */
+.ModalContent {
+    background: white;
+    border-radius: 16px;
+    width: 400px;
+    max-width: 90vw;
+    max-height: 80vh;
+    padding: 24px;
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 모달 타이틀 */
+.ModalTitle {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+/* 검색창 */
+.SearchWrapper {
+    position: relative;
+}
+
+.SearchInput {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.SearchInput:focus {
+    border-color: #007aff;
+}
+
+.SearchInput::placeholder {
+    color: #999;
+}
+
+/* 유저 리스트 */
+.UserList {
+    max-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 유저 아이템 */
+.UserItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.UserItem:hover {
+    background-color: #f8f9fa;
+}
+
+/* 유저 아바타 */
+.UserAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #f0f0f0;
+    border: 1px solid #e0e0e0;
+}
+
+/* 유저 정보 */
+.UserInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.UserName {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+.UserEmail {
+    font-size: 14px;
+    color: #666;
+}
+
+/* 체크박스 */
+.UserCheckbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #007aff;
+}
+
+/* 모달 액션 버튼 */
+.ModalActions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.CancelBtn,
+.ConfirmBtn {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.CancelBtn {
+    background: #f8f9fa;
+    color: #666;
+    border: 1px solid #e0e0e0;
+}
+
+.CancelBtn:hover {
+    background: #e9ecef;
+}
+
+.ConfirmBtn {
+    background: #007aff;
+    color: white;
+}
+
+.ConfirmBtn:hover {
+    background: #0056d3;
+}
+
+.ConfirmBtn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* 메시지들 */
+.LoadingMessage,
+.ErrorMessage,
+.EmptyMessage {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+.ErrorMessage {
+    color: #ff4444;
+}
+
+/* 스크롤바 스타일링 */
+.UserList::-webkit-scrollbar {
+    width: 6px;
+}
+
+.UserList::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.UserList::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.UserList::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
