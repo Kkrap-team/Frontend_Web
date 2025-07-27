@@ -1,5 +1,5 @@
 import { useModal } from '@/contexts/ModalContext';
-import UserSearchModal from '@/features/userSearch/componenets/UserSearchModal';
+import UserSearchModal from '@/features/userSearch/components/UserSearchModal';
 
 const ModalRenderer = () => {
   const { modalName, modalProps, hideModal } = useModal();
