@@ -9,6 +9,7 @@ import EditProfilePage from '@/pages/UserPage/EditProfilePage';
 import { ModalProvider } from '@/contexts/ModalContext';
 import ModalRenderer from '@/components/common/ModalRenderer';
 import StoragePage from '@/pages/StoragePage/StoragePage';
+import StorageFolderDetail from '@/pages/storageFolderDetail/StorageFolderDetail';
 
 const rootRoute = createRootRoute({
     component: () => (
@@ -54,6 +55,12 @@ const editProfileRoute = createRoute({
     component: EditProfilePage,
 });
 
+const folderDetailRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/storage/$folderId',
+    component: StorageFolderDetail,
+});
+
 const notFoundRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: '*',
@@ -66,6 +73,7 @@ export const router = createRouter({
         loginRoute,
         storageRoute,
         editProfileRoute,
+        folderDetailRoute,
         notFoundRoute,
         followerRoute,
     ]),

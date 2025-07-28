@@ -16,6 +16,6 @@ export const grantFolderPermission = async (userId, folderId, invitedUserIds) =>
         folderId: folderId,
         invitedUserIds: invitedUserIds,
     });
-    console.log('폴더 권한 부여 성공:', res.data);
+    console.log('!!!!!!!!!!!!!!!!!!!!', res.data);
     return res.data;
 };
