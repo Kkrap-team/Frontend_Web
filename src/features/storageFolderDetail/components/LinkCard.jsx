@@ -19,6 +19,7 @@ const LinkCard = ({ link, onKebabClick }) => {
                     src={displayImage}
                     alt={linkName || 'LinkThumbnail'}
                     onError={(e) => {
+                        e.target.onError = null;
                         e.target.src = '/Kkrap_logo.png';
                     }}
                 />

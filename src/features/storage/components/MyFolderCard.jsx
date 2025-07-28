@@ -26,11 +26,23 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission }) => {
                             className="MultiThumbnail"
                             src={link.thumbnailUrl || link.faviconUrl || '/Kkrap_logo.png'}
                             alt={folderName}
+                            onError={(e) => {
+                                e.target.onError = null;
+                                e.target.src = '/Kkrap_logo.png';
+                            }}
                         />
                     ))}
                 </div>
             ) : (
-                <img className="MyFolderImage" src={thumbnail} alt={folderName} />
+                <img
+                    className="MyFolderImage"
+                    src={thumbnail}
+                    alt={folderName}
+                    onError={(e) => {
+                        e.target.onError = null;
+                        e.target.src = '/Kkrap_logo.png';
+                    }}
+                />
             )}
             <div className="MyFolderInfo">
                 <div className="MyFolderHeader">
