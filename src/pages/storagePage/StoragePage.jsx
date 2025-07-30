@@ -33,7 +33,8 @@ export default function StoragePage() {
         closePermissionModal,
         handleUserSelect,
         handlePermissionConfirm,
-    } = usePermissionUsers(userId);
+        handlePermissionRevoke,
+    } = usePermissionUsers(userId, fetchFolders);
 
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showLinkModal, setShowLinkModal] = useState(false);
@@ -126,7 +127,12 @@ export default function StoragePage() {
             <div className="StorageHeader">
                 <br />
                 <h2 className="StorageTitle">{user.nickname}님과 공유된 폴더</h2>
-                <FolderList folders={sharedFolders} />
+                <FolderList
+                    folders={sharedFolders}
+                    onDelete={handleDelete}
+                    onEdit={handleEditClick}
+                    onPermission={openPermissionModal}
+                />
             </div>
             {showCreateModal && (
                 <FolderCreateModal
@@ -147,6 +153,7 @@ export default function StoragePage() {
                     onUserSelect={handleUserSelect}
                     onClose={closePermissionModal}
                     onConfirm={handlePermissionConfirm}
+                    onRevoke={handlePermissionRevoke}
                     loading={usersLoading}
                     error={usersError}
                 />

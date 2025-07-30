@@ -2,9 +2,9 @@ import React from 'react';
 import { getRouteApi } from '@tanstack/react-router';
 import { useContext } from 'react';
 import { AuthContext } from '@/contexts/AuthContext';
-import useFolderDetail from '@/features/storageFolderDetail/hooks/useFolderDetail';
-import FolderHeader from '@/features/storageFolderDetail/components/FolderHeader';
-import LinkList from '@/features/storageFolderDetail/components/LinkList';
+import useFolderDetail from '@/features/folderDetail/hooks/useFolderDetail';
+import FolderHeader from '@/features/folderDetail/components/FolderHeader';
+import LinkList from '@/features/folderDetail/components/LinkList';
 
 const routeApi = getRouteApi('/storage/$folderId');
 

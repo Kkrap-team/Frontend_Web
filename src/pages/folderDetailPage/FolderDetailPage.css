@@ -1,0 +1,22 @@
+.FolderDetailContainer {
+    width: 100%;
+    min-height: 100vh;
+    background: #f8f9fa;
+}
+
+.FolderDetailContent {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.FolderDetailTitle {
+    margin-bottom: 30px;
+}
+
+.FolderDetailTitle h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #212120;
+    margin: 0;
+}

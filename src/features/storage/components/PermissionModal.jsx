@@ -8,6 +8,7 @@ const PermissionModal = ({
     onUserSelect,
     onClose,
     onConfirm,
+    onRevoke,
     loading = false,
     error = null,
 }) => {
@@ -80,15 +81,24 @@ const PermissionModal = ({
                                     }}
                                 />
                                 <div className="UserInfo">
-                                    <div className="UserName">{user.nickname}</div>
+                                    <div className="UserName">
+                                        {user.nickname}
+                                        {user.invited && <span className="InvitedBadge">초대완료</span>}
+                                    </div>
                                     <div className="UserEmail">{user.email}</div>
                                 </div>
-                                <input
-                                    type="checkbox"
-                                    className="UserCheckbox"
-                                    checked={isUserSelected(user)}
-                                    onChange={() => handleUserToggle(user)}
-                                />
+                                {user.invited ? (
+                                    <button className="RevokeButton" onClick={() => onRevoke(user.followingId)}>
+                                        권한 삭제
+                                    </button>
+                                ) : (
+                                    <input
+                                        type="checkbox"
+                                        className="UserCheckbox"
+                                        checked={isUserSelected(user)}
+                                        onChange={() => handleUserToggle(user)}
+                                    />
+                                )}
                             </div>
                         ))}
                 </div>

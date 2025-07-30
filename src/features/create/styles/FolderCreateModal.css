@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 3;
+    z-index: 4;
 }
 
 .Popup {
@@ -25,4 +25,14 @@
     display: flex;
     justify-content: flex-end;
     gap: 8px;
+}
+
+.Popup h3 {
+    text-align: center;
+}
+
+.Popup input {
+    border-radius: 4px;
+    width: 100%;
+    font-size: 14px;
 }
