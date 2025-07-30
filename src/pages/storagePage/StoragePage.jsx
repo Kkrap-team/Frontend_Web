@@ -25,6 +25,9 @@ export default function StoragePage() {
     const { addFolder, addLink } = useCreate();
     const {
         users: followingUsers,
+        invitedUsers,
+        notInvitedUsers,
+        owner,
         loading: usersLoading,
         error: usersError,
         showPermissionModal,
@@ -149,6 +152,9 @@ export default function StoragePage() {
                 <PermissionModal
                     isOpen={showPermissionModal}
                     users={followingUsers}
+                    invitedUsers={invitedUsers}
+                    notInvitedUsers={notInvitedUsers}
+                    owner={owner}
                     selectedUsers={selectedUsers}
                     onUserSelect={handleUserSelect}
                     onClose={closePermissionModal}

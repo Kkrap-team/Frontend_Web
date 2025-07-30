@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/LinkSettingsModal.css';
 
-const LinkSettingsModal = ({ isOpen, link, onClose, onSave, onDelete }) => {
-    const [linkName, setLinkName] = useState(link?.linkName || '');
-    const [confirmType, setConfirmType] = useState(null); // 'save' 또는 'delete'
-    console.log('링크설정모달 링크', link);
+const LinkSettingsModal = ({ isOpen, link, onClose, onSave, onDelete, onCopyLink }) => {
+    const [linkName, setLinkName] = useState('');
+
+    // link가 변경될 때마다 linkName 초기화
+    useEffect(() => {
+        if (link) {
+            setLinkName(link.linkName || '');
+        }
+    }, [link]);
 
     if (!isOpen || !link) return null;
 
@@ -14,36 +19,19 @@ const LinkSettingsModal = ({ isOpen, link, onClose, onSave, onDelete }) => {
 
         if (hasChanged) {
             // 변경사항이 있으면 수정 확인 모달 표시
-            setConfirmType('save');
+            onSave(link, linkName); // Hook에서 확인 모달 표시 후 처리
         } else {
+            // 변경사항이 없으면 바로 닫기
             onClose();
         }
     };
 
     const handleCopyLink = () => {
-        navigator.clipboard.writeText(link.linkUrl);
-        alert('링크가 복사되었습니다.');
+        onCopyLink(link); // Hook의 함수 호출
     };
 
     const handleDelete = () => {
-        setConfirmType('delete');
-    };
-
-    // 확인 처리 (수정 또는 삭제)
-    const handleConfirm = () => {
-        if (confirmType === 'save') {
-            onSave({ ...link, linkName });
-            onClose();
-        } else if (confirmType === 'delete') {
-            onDelete(link);
-            // onClose()는 handleDelete 함수 내부에서 처리됨
-        }
-        setConfirmType(null);
-    };
-
-    // 취소 처리
-    const handleCancel = () => {
-        setConfirmType(null);
+        onDelete(link);
     };
 
     const clearInput = () => {
@@ -100,37 +88,6 @@ const LinkSettingsModal = ({ isOpen, link, onClose, onSave, onDelete }) => {
                     </div>
                 </div>
             </div>
-
-            {/* 확인 모달 (수정/삭제 공통) */}
-            {confirmType && (
-                <div className="LinkSettingsModalOverlay" onClick={handleCancel}>
-                    <div className="ConfirmModal" onClick={(e) => e.stopPropagation()}>
-                        <div className="ConfirmModalHeader">
-                            <h3>{confirmType === 'save' ? '확인' : '삭제 확인'}</h3>
-                        </div>
-                        <div className="ConfirmModalContent">
-                            {confirmType === 'save' ? (
-                                <p>링크 이름을 수정하시겠습니까?</p>
-                            ) : (
-                                <>
-                                    <p>이 링크를 삭제하시겠습니까?</p>
-                                </>
-                            )}
-                        </div>
-                        <div className="ConfirmModalFooter">
-                            <button className="LinkSettingsBtn CancelBtn" onClick={handleCancel}>
-                                취소
-                            </button>
-                            <button
-                                className={`LinkSettingsBtn ${confirmType === 'delete' ? 'DeleteBtn' : 'ConfirmBtn'}`}
-                                onClick={handleConfirm}
-                            >
-                                {confirmType === 'save' ? '확인' : '삭제'}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
         </>
     );
 };

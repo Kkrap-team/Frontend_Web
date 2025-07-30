@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const url = import.meta.env.VITE_URL;
 
-// 폴더 상세 정보 및 링크 목록 조회 (하나의 API로 모든 정보 가져옴)
+// 폴더 상세 정보 및 전체 링크 목록 조회
 export const getFolderDetail = async (folderId) => {
     const res = await axios.get(`${url}/folders/me/folders/${folderId}/links`);
     console.log('폴더 상세 정보 및 링크 목록:', res.data);

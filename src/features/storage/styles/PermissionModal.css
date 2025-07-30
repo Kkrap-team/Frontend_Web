@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 10;
 }
 
 /* 모달 컨텐츠 */
@@ -18,7 +18,7 @@
     border-radius: 16px;
     width: 400px;
     max-width: 90vw;
-    max-height: 80vh;
+    max-height: 100vh;
     padding: 24px;
     box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -29,10 +29,57 @@
 /* 모달 타이틀 */
 .ModalTitle {
     font-size: 20px;
-    font-weight: 600;
+    font-weight: bold;
     text-align: center;
     color: #333;
+}
+
+/* 오너 정보 */
+.OwnerInfo {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid #e9ecef;
+}
+
+.OwnerLabel {
+    font-size: 16px;
+    font-weight: bold;
+    color: #757575;
     margin-bottom: 8px;
+    text-align: center;
+}
+
+.OwnerItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.OwnerAvatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: contain;
+    background: #ffffff;
+}
+
+.OwnerDetails {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.OwnerName {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.OwnerEmail {
+    font-size: 14px;
+    color: #666;
 }
 
 /* 검색창 */
@@ -57,6 +104,41 @@
 
 .SearchInput::placeholder {
     color: #999;
+}
+
+/* 탭 네비게이션 */
+.TabNavigation {
+    display: flex;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 4px;
+    gap: 4px;
+}
+
+.TabButton {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+    color: #666;
+}
+
+.TabButton:hover {
+    background: #e9ecef;
+}
+
+.TabButton.active {
+    background: #5ab7fc;
+    color: white;
+}
+
+.TabButton.active:hover {
+    background: #0056d3;
 }
 
 /* 유저 리스트 */
@@ -116,7 +198,27 @@
     width: 20px;
     height: 20px;
     cursor: pointer;
-    accent-color: #007aff;
+    appearance: none;
+    -webkit-appearance: none;
+
+    border-radius: 4px;
+    background: white;
+    position: relative;
+}
+
+.UserCheckbox:checked {
+    background: #5ab7fc;
+}
+
+.UserCheckbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -44%);
+    color: white;
+    font-size: 26px;
+    font-weight: bold;
 }
 
 .UserCheckbox:disabled {
@@ -149,7 +251,7 @@
 }
 
 .RevokeButton:hover {
-    background: #ff3838;
+    background: red;
 }
 
 /* 모달 액션 버튼 */
@@ -182,8 +284,7 @@
 }
 
 .ConfirmBtn {
-    background: #007aff;
-    color: white;
+    color: #5ab7fc;
 }
 
 .ConfirmBtn:hover {

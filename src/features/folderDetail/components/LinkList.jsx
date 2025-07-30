@@ -5,11 +5,8 @@ import useLinkSettings from '../hooks/useLinkSettings';
 import '../styles/LinkList.css';
 
 const LinkList = ({ links, folderInfo, userId, refetch }) => {
-    const { showModal, selectedLink, openModal, closeModal, handleSave, handleDelete } = useLinkSettings(
-        userId,
-        folderInfo,
-        refetch
-    );
+    const { showModal, selectedLink, openModal, closeModal, handleSave, handleDelete, handleCopyLink } =
+        useLinkSettings(userId, refetch);
     return (
         <div className="LinkListContainer">
             <div className="LinkListHeader">
@@ -41,6 +38,7 @@ const LinkList = ({ links, folderInfo, userId, refetch }) => {
                 onClose={closeModal}
                 onSave={handleSave}
                 onDelete={handleDelete}
+                onCopyLink={handleCopyLink}
             />
         </div>
     );
