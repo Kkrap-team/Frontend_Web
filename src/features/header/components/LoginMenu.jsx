@@ -6,7 +6,6 @@ import { AuthContext } from '@/contexts/AuthContext';
 
 const url = import.meta.env.VITE_URL;
 
-console.log('URL', url);
 export default function LoginMenu() {
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -14,24 +13,24 @@ export default function LoginMenu() {
     const logout = useLogout();
 
     return (
-        <div className="right-menu">
+        <div className="RightMenu">
             {user ? (
                 <>
                     <img
                         src={`${user.profile.startsWith('http') ? user.profile : `${url}${user.profile}`}?t=${Date.now()}`}
                         alt="프로필"
-                        className="profile-image"
+                        className="HeaderProfileImage"
                         onClick={() => navigate({ to: '/editProfile' })}
                     />
-                    <span className="nickname">{user.nickname}님, 환영합니다.</span>
-                    <button onClick={logout} className="logout-button">
+                    <span className="Nickname">{user.nickname}님, 환영합니다.</span>
+                    <button onClick={logout} className="LogoutButton">
                         로그아웃
                     </button>
                 </>
             ) : (
-                <KakaoLoginBtn className="login-button" />
+                <KakaoLoginBtn className="LoginButton" />
             )}
-            <button className="more-button">⋮</button>
+            <button className="MoreButton">⋮</button>
         </div>
     );
 }

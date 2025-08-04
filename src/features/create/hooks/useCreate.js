@@ -13,7 +13,6 @@ export default function useCreateFolder() {
 
     const addLink = async (data, userId, onSuccess) => {
         try {
-            console.log('링크 추가 훅에서 실행', data, userId, onSuccess);
             await createLink(data, userId);
             if (onSuccess) onSuccess(); // 생성 성공 시 콜백 실행
         } catch (err) {

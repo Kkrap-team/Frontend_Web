@@ -3,7 +3,7 @@ import '@/features/create/styles/LinkAddModal.css';
 
 export default function LinkAddModal({ onClose, onSubmit, folders = [] }) {
     const [link, setLink] = useState('');
-    const [selectedFolder, setSelectedFolder] = useState(folders[0]?.id || '');
+    const [selectedFolder, setSelectedFolder] = useState(folders[0].folderId || '');
 
     const handlePaste = async () => {
         try {
@@ -14,16 +14,19 @@ export default function LinkAddModal({ onClose, onSubmit, folders = [] }) {
         }
     };
 
-    const handleSubmit = () => {
+    const handleLinkSubmit = () => {
         if (!link) return alert('링크 주소를 입력해주세요.');
         onSubmit({ link, folderId: selectedFolder });
+    };
+
+    const handleLinkCancel = () => {
         onClose();
     };
 
     return (
         <div className="LinkAddModalBackdrop">
             <div className="LinkAddModal">
-                <button className="LinkAddModalClose" onClick={onClose}>
+                <button className="LinkAddModalClose" onClick={handleLinkCancel}>
                     &times;
                 </button>
                 <h3 className="LinkAddModalTitle">업로드</h3>
@@ -53,7 +56,7 @@ export default function LinkAddModal({ onClose, onSubmit, folders = [] }) {
                     <button className="LinkAddModalPaste" onClick={handlePaste}>
                         붙여넣기
                     </button>
-                    <button className="LinkAddModalSubmit" onClick={handleSubmit}>
+                    <button className="LinkAddModalSubmit" onClick={handleLinkSubmit}>
                         추가하기
                     </button>
                 </div>

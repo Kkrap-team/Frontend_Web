@@ -8,6 +8,8 @@ import FolderList from '@/features/storage/components/MyFolderList';
 import CreateDropdown from '@/features/create/components/CreateDropdown';
 import FolderCreateModal from '@/features/create/components/FolderCreateModal';
 import LinkAddModal from '@/features/create/components/LinkAddModal';
+import PermissionModal from '@/features/storage/components/PermissionModal';
+import usePermissionUsers from '@/features/storage/hooks/usePermissionUsers';
 
 export default function StoragePage() {
     const { user } = useAuth();
@@ -21,6 +23,22 @@ export default function StoragePage() {
         editFolder,
     } = useMyFolder(userId) || {};
     const { addFolder, addLink } = useCreate();
+    const {
+        users: followingUsers,
+        invitedUsers,
+        notInvitedUsers,
+        owner,
+        loading: usersLoading,
+        error: usersError,
+        showPermissionModal,
+        selectedUsers,
+        openPermissionModal,
+        closePermissionModal,
+        handleUserSelect,
+        handlePermissionConfirm,
+        handlePermissionRevoke,
+    } = usePermissionUsers(userId, fetchFolders);
+
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showLinkModal, setShowLinkModal] = useState(false);
     const [modalMode, setModalMode] = useState(null);
@@ -31,6 +49,13 @@ export default function StoragePage() {
         setModalMode('create');
         setEditTargetFolder(null);
         setShowCreateModal(true);
+    };
+
+    // 폴더 생성/수정 모달 닫기
+    const handleCloseModal = () => {
+        setShowCreateModal(false);
+        setEditTargetFolder(null);
+        setModalMode(null);
     };
 
     // 폴더 수정 버튼 클릭 (MyFolderCard에서 호출)
@@ -96,26 +121,48 @@ export default function StoragePage() {
                 <h2 className="StorageTitle">{user.nickname}님의 폴더</h2>
                 <CreateDropdown onCreateFolder={handleCreateClick} onAddLink={() => setShowLinkModal(true)} />
             </div>
-            <FolderList folders={ownFolders} onDelete={handleDelete} onEdit={handleEditClick} />
+            <FolderList
+                folders={ownFolders}
+                onDelete={handleDelete}
+                onEdit={handleEditClick}
+                onPermission={openPermissionModal}
+            />
             <div className="StorageHeader">
                 <br />
                 <h2 className="StorageTitle">{user.nickname}님과 공유된 폴더</h2>
-                <FolderList folders={sharedFolders} />
+                <FolderList
+                    folders={sharedFolders}
+                    onDelete={handleDelete}
+                    onEdit={handleEditClick}
+                    onPermission={openPermissionModal}
+                />
             </div>
             {showCreateModal && (
                 <FolderCreateModal
                     mode={modalMode}
                     initialData={editTargetFolder}
-                    onClose={() => {
-                        setShowCreateModal(false);
-                        setEditTargetFolder(null);
-                        setModalMode(null);
-                    }}
+                    onClose={handleCloseModal}
                     onSubmit={handleSubmit}
                 />
             )}
             {showLinkModal && (
                 <LinkAddModal onClose={() => setShowLinkModal(false)} onSubmit={handleAddLink} folders={ownFolders} />
+            )}
+            {showPermissionModal && (
+                <PermissionModal
+                    isOpen={showPermissionModal}
+                    users={followingUsers}
+                    invitedUsers={invitedUsers}
+                    notInvitedUsers={notInvitedUsers}
+                    owner={owner}
+                    selectedUsers={selectedUsers}
+                    onUserSelect={handleUserSelect}
+                    onClose={closePermissionModal}
+                    onConfirm={handlePermissionConfirm}
+                    onRevoke={handlePermissionRevoke}
+                    loading={usersLoading}
+                    error={usersError}
+                />
             )}
         </div>
     );

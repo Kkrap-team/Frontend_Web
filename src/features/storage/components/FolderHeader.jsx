@@ -18,11 +18,11 @@ export default function FolderHeader({ data }) {
                         <span className="FolderStatLabel">Views</span>
                     </div>
                     <div className="FolderStatItem">
-                        <span className="FolderStatNum">{(10000000 / 1000000).toFixed(0)}M</span>
+                        <span className="FolderStatNum">{data.totalScrapCount}+</span>
                         <span className="FolderStatLabel">Scrap</span>
                     </div>
                     <div className="FolderStatItem">
-                        <span className="FolderStatNum">{data.followingCount}</span>
+                        <span className="FolderStatNum">{data.followingCount}+</span>
                         <span className="FolderStatLabel">follower</span>
                     </div>
                 </div>

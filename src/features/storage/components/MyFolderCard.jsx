@@ -1,17 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from '@tanstack/react-router';
 import '@/features/storage/styles/MyFolderCard.css';
 
 const MyFolderCard = ({ folder, onDelete, onEdit, onPermission }) => {
-    const { folderName, folderDescription, links, defaultFolder, scrapCount, viewCount, visible } = folder;
+    const { folderId, folderName, folderDescription, links, defaultFolder, scrapCount, viewCount, visible } = folder;
     const [showMenu, setShowMenu] = useState(false);
+    const navigate = useNavigate();
+    const cardRef = useRef(null);
     // 대표 썸네일: links 배열의 첫 번째 썸네일(없으면 기본 이미지)
     const thumbnail =
         links && links.length > 0
             ? links[0].thumbnailUrl || links[0].faviconUrl || '/Kkrap_logo.png'
             : '/Kkrap_logo.png';
 
+    // 외부 클릭 감지해서 메뉴 닫기
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (cardRef.current && !cardRef.current.contains(event.target)) {
+                setShowMenu(false);
+            }
+        };
+
+        if (showMenu) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [showMenu]);
+
+    const handleFolderClick = () => {
+        // 메뉴가 열려있으면 메뉴만 닫고 페이지 이동하지 않음
+        if (showMenu) {
+            setShowMenu(false);
+            return;
+        }
+        navigate({ to: `/storage/${folderId}` });
+    };
+
     return (
-        <div className="MyFolderCard">
+        <div className="MyFolderCard" ref={cardRef} onClick={handleFolderClick}>
             {defaultFolder ? (
                 <div className="MultiThumbnailGrid">
                     {(links || []).map((link, idx) => (
@@ -20,17 +49,35 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission }) => {
                             className="MultiThumbnail"
                             src={link.thumbnailUrl || link.faviconUrl || '/Kkrap_logo.png'}
                             alt={folderName}
+                            onError={(e) => {
+                                e.target.onError = null;
+                                e.target.src = '/Kkrap_logo.png';
+                            }}
                         />
                     ))}
                 </div>
             ) : (
-                <img className="MyFolderImage" src={thumbnail} alt={folderName} />
+                <img
+                    className="MyFolderImage"
+                    src={thumbnail}
+                    alt={folderName}
+                    onError={(e) => {
+                        e.target.onError = null;
+                        e.target.src = '/Kkrap_logo.png';
+                    }}
+                />
             )}
             <div className="MyFolderInfo">
                 <div className="MyFolderHeader">
                     <div className="MyFolderTitle">{folderName}</div>
                     <div className="MoreWrapper">
-                        <button className="MoreBtn" onClick={() => setShowMenu((prev) => !prev)}>
+                        <button
+                            className="MoreBtn"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setShowMenu((prev) => !prev);
+                            }}
+                        >
                             ⋮
                         </button>
                         {showMenu && (

@@ -6,8 +6,11 @@ export default function FolderCreateModal({ mode, initialData, onClose, onSubmit
     const [folderDescription, setFolderDescription] = useState(initialData?.folderDescription || '');
     const [visible, setVisible] = useState(initialData?.visible ?? true);
 
-    const handleSubmit = () => {
+    const handleFolderSubmit = () => {
         onSubmit({ folderName, folderDescription, visible });
+    };
+
+    const handleFolderCancel = () => {
         onClose();
     };
 
@@ -31,8 +34,8 @@ export default function FolderCreateModal({ mode, initialData, onClose, onSubmit
                     공개/비공개
                 </label>
                 <div className="PopupButtons">
-                    <button onClick={onClose}>취소</button>
-                    <button onClick={handleSubmit}>{mode === 'edit' ? '수정하기' : '생성하기'}</button>
+                    <button onClick={handleFolderCancel}>취소</button>
+                    <button onClick={handleFolderSubmit}>{mode === 'edit' ? '수정하기' : '생성하기'}</button>
                 </div>
             </div>
         </div>
