@@ -14,6 +14,8 @@ export const useModal = () => {
 
 export const ModalProvider = ({ children }) => {
     const [confirmModal, setConfirmModal] = useState(null);
+    const [modalName, setModalName] = useState(null);
+    const [modalProps, setModalProps] = useState({});
 
     const showConfirm = (config) => {
         setConfirmModal(config);
@@ -23,8 +25,27 @@ export const ModalProvider = ({ children }) => {
         setConfirmModal(null);
     };
 
+    const showModal = (name, props = {}) => {
+        setModalName(name);
+        setModalProps(props);
+    };
+
+    const hideModal = () => {
+        setModalName(null);
+        setModalProps({});
+    };
+
     return (
-        <ModalContext.Provider value={{ showConfirm, hideConfirm }}>
+        <ModalContext.Provider
+            value={{
+                showConfirm,
+                hideConfirm,
+                showModal,
+                hideModal,
+                modalName,
+                modalProps,
+            }}
+        >
             {children}
             {confirmModal && (
                 <ConfirmModal
