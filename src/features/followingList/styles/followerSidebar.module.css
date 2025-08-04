@@ -1,12 +1,11 @@
 .sidebarContainer {
-  width: 341px;
+  width: 280px;
   height: 100%;
   background: #fff;
-  border-right: 1px solid #757575;
+  border-right: 1px solid #e0e0e0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  margin-left: -120px;  /*TODO : 레이아웃 수정하면서 수정 예정입니다.*/
 }
 
 .headerArea {

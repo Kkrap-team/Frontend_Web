@@ -1,11 +1,11 @@
 import { useModal } from '@/contexts/ModalContext';
-import FollowerPanel from '@/features/followingList/components/FollowerPanel';
+import UserSearchModal from '@/features/userSearch/componenets/UserSearchModal';
 
 const ModalRenderer = () => {
   const { modalName, modalProps, hideModal } = useModal();
 
-  if (modalName === 'follower') {
-    return <FollowerPanel {...modalProps} onClose={hideModal} />;
+  if (modalName === 'userSearch') {
+    return <UserSearchModal {...modalProps} onClose={hideModal} />;
   }
 
   return null;

@@ -24,7 +24,7 @@ const FollowerSidebar = ({ followers }) => {
       {/* 프로필 리스트 영역 */}
       <div className={styles.profileList}>
         {filteredFollowers.map((f) => (
-          <FollowerProfileBox key={f.followsId} follower={f} />
+          <FollowerProfileBox key={f.followingId} follower={f} />
         ))}
       </div>
     </div>
