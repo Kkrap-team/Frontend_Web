@@ -3,9 +3,10 @@ import '../styles/Header.css';
 
 import NavMenu from '../components/NavMenu';
 import LoginMenu from '../components/LoginMenu';
-import SearchInput from '../../search/components/SearchInput';
+import SearchOverlay from '../../search/components/SearchOverlay';
 import useSearchToggle from '../hooks/useSearchToggle';
 import Logo from '@/features/header/components/logo';
+
 export default function Header() {
     const { showSearchInput, toggleSearch } = useSearchToggle();
 
@@ -16,7 +17,7 @@ export default function Header() {
                 <NavMenu toggleSearch={toggleSearch} showSearchInput={showSearchInput} />
                 <LoginMenu />
             </header>
-            {showSearchInput && <SearchInput />}
+            <SearchOverlay isVisible={showSearchInput} onClose={toggleSearch} />
         </>
     );
 }

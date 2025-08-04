@@ -5,6 +5,11 @@
     border-bottom: 1px solid #ddd;
     background-color: #fff;
     height: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* 검색 컴포넌트보다 높은 z-index */
 }
 
 .Logo {
@@ -105,4 +110,10 @@
 .LogoutButton:hover,
 .LoginButton:hover {
     background-color: #f5f5f5;
+}
+
+/* 검색 섹션 */
+.search-section {
+    position: relative;
+    background-color: #fff;
 }
