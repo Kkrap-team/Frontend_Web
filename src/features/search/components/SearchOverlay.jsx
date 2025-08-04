@@ -1,18 +1,29 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useSearchSuggestions } from '../hooks/useSearchSuggestions';
+import { getRankings } from '../api/searchApi';
+import SearchHeader from './SearchHeader';
+import SearchResultSection from './SearchResultSection';
+import SortedResultsSection from './SortedResultsSection';
 import './SearchOverlay.css';
 
 const SearchOverlay = ({ isVisible, onClose }) => {
     const [query, setQuery] = useState('');
     const [isSearching, setIsSearching] = useState(false);
+    const [rankings, setRankings] = useState(null);
+    const [rankingsLoading, setRankingsLoading] = useState(false);
+    const [recentSearches, setRecentSearches] = useState([
+        '부산여행',
+        '부산 가볼만한 맛집',
+        '제주도 가고싶다.'
+    ]);
+    
     const navigate = useNavigate();
-    const inputRef = useRef(null);
     const { suggestions, loading, error, fetchSuggestions } = useSearchSuggestions();
 
     useEffect(() => {
-        if (isVisible && inputRef.current) {
-            inputRef.current.focus();
+        if (isVisible) {
+            fetchRankings();
         }
     }, [isVisible]);
 
@@ -34,14 +45,25 @@ const SearchOverlay = ({ isVisible, onClose }) => {
         };
     }, [isVisible]);
 
+    const fetchRankings = async () => {
+        try {
+            setRankingsLoading(true);
+            const data = await getRankings();
+            setRankings(data);
+        } catch (error) {
+            console.error('랭킹 데이터 가져오기 오류:', error);
+        } finally {
+            setRankingsLoading(false);
+        }
+    };
+
     const handleClose = () => {
         setQuery('');
         setIsSearching(false);
         onClose();
     };
 
-    const handleInputChange = (e) => {
-        const value = e.target.value;
+    const handleQueryChange = (value) => {
         setQuery(value);
         
         if (value.trim()) {
@@ -54,141 +76,66 @@ const SearchOverlay = ({ isVisible, onClose }) => {
 
     const handleSearch = (searchTerm = query) => {
         if (searchTerm.trim()) {
+            // 최근 검색어에 추가
+            if (!recentSearches.includes(searchTerm)) {
+                setRecentSearches(prev => [searchTerm, ...prev.slice(0, 2)]);
+            }
             // navigate({ to: '/search', search: { term: searchTerm.trim() } });
             handleClose();
         }
     };
 
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            // handleSearch();
-        }
+    const handleSearchClick = (searchTerm) => {
+        setQuery(searchTerm);
+        handleSearch(searchTerm);
     };
 
-    const handleSuggestionClick = (suggestion) => {
-        // handleSearch(suggestion.folderName);
+    const handleRemoveSearch = (searchToRemove) => {
+        setRecentSearches(prev => prev.filter(item => item !== searchToRemove));
+    };
+
+    const handlePreviewItemClick = (item) => {
+        // 폴더 상세 페이지로 이동
+        console.log('폴더 클릭:', item);
     };
 
     return (
         <div className={`search-overlay ${isVisible ? 'visible' : ''}`}>
-            <div className="search-overlay-backdrop" onClick={handleClose} />
             <div className="search-overlay-content">
-                <div className="search-header">
-                    <div className="search-input-container">
-                        <img src="/search.png" alt="검색" className="search-icon" />
-                        <input
-                            ref={inputRef}
-                            type="text"
-                            className="search-input"
-                            placeholder="검색어를 입력하세요"
-                            value={query}
-                            onChange={handleInputChange}
-                            onKeyPress={handleKeyPress}
-                            aria-label="검색어 입력"
+                <SearchHeader 
+                    query={query}
+                    onQueryChange={handleQueryChange}
+                    onClose={handleClose}
+                    onSearch={handleSearch}
+                />
+
+                {!isSearching && (
+                    <>
+                        <SearchResultSection 
+                            recentSearches={recentSearches}
+                            searchResults={[]}
+                            searchLoading={false}
+                            onSearchClick={handleSearchClick}
+                            onRemoveSearch={handleRemoveSearch}
+                            onPreviewItemClick={handlePreviewItemClick}
                         />
-                    </div>
-                    <button 
-                        className="close-button" 
-                        onClick={handleClose}
-                        aria-label="검색 닫기"
-                    >
-                        ×
-                    </button>
-                </div>
+                        <SortedResultsSection 
+                            rankings={rankings}
+                            loading={rankingsLoading}
+                        />
+                    </>
+                )}
 
-                <div className="search-content">
-                    {!isSearching && (
-                        <div className="recent-searches">
-                            <h3 className="section-title">최근 검색</h3>
-                            <div className="search-history">
-                                <div className="search-item" onClick={() => {/* handleSearch('대전여행') */}}>
-                                    <span className="clock-icon">🕐</span>
-                                    <span className="search-term">대전여행</span>
-                                    <button className="remove-btn" aria-label="검색 기록 삭제">×</button>
-                                </div>
-                                <div className="search-item" onClick={() => {/* handleSearch('서울맛집') */}}>
-                                    <span className="clock-icon">🕐</span>
-                                    <span className="search-term">서울맛집</span>
-                                    <button className="remove-btn" aria-label="검색 기록 삭제">×</button>
-                                </div>
-                                <div className="search-item" onClick={() => {/* handleSearch('부산여행') */}}>
-                                    <span className="clock-icon">🕐</span>
-                                    <span className="search-term">부산여행</span>
-                                    <button className="remove-btn" aria-label="검색 기록 삭제">×</button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {isSearching && (
-                        <div className="search-results">
-                            <h3 className="section-title">
-                                {loading ? '검색 중...' : `검색 결과 (${suggestions.length})`}
-                            </h3>
-                            
-                            {loading && (
-                                <div className="loading-suggestions">
-                                    {[...Array(3)].map((_, index) => (
-                                        <div key={index} className="suggestion-skeleton">
-                                            <div className="skeleton-avatar"></div>
-                                            <div className="skeleton-content">
-                                                <div className="skeleton-title"></div>
-                                                <div className="skeleton-description"></div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-
-                            {!loading && suggestions.length > 0 && (
-                                <div className="suggestions-list">
-                                    {suggestions.map((suggestion) => (
-                                        <div 
-                                            key={suggestion.folderId} 
-                                            className="suggestion-item"
-                                            onClick={() => handleSuggestionClick(suggestion)}
-                                            tabIndex={0}
-                                            onKeyPress={(e) => {
-                                                if (e.key === 'Enter') {
-                                                    handleSuggestionClick(suggestion);
-                                                }
-                                            }}
-                                            role="button"
-                                            aria-label={`${suggestion.folderName} 선택`}
-                                        >
-                                            <div className="suggestion-avatar">
-                                                <img 
-                                                    src={suggestion.profileImage || '/public/account_circle.png'} 
-                                                    alt={suggestion.nickname}
-                                                    onError={(e) => {
-                                                        e.target.src = '/public/account_circle.png';
-                                                    }}
-                                                />
-                                            </div>
-                                            <div className="suggestion-content">
-                                                <div className="suggestion-title">{suggestion.folderName}</div>
-                                                <div className="suggestion-description">{suggestion.folderDescription}</div>
-                                                <div className="suggestion-meta">
-                                                    <span className="suggestion-author">{suggestion.nickname}</span>
-                                                    <span className="suggestion-stats">
-                                                        조회 {suggestion.viewCount} • 스크랩 {suggestion.scrapCount}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-
-                            {!loading && suggestions.length === 0 && query.trim() && (
-                                <div className="no-results">
-                                    <p>"{query}"에 대한 검색 결과가 없습니다.</p>
-                                    <p>다른 검색어를 시도해보세요.</p>
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </div>
+                {isSearching && (
+                    <SearchResultSection 
+                        recentSearches={recentSearches}
+                        searchResults={suggestions}
+                        searchLoading={loading}
+                        onSearchClick={handleSearchClick}
+                        onRemoveSearch={handleRemoveSearch}
+                        onPreviewItemClick={handlePreviewItemClick}
+                    />
+                )}
             </div>
         </div>
     );

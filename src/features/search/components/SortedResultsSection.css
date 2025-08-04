@@ -1,0 +1,158 @@
+.sorted-results-section {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 24px;
+    background: white;
+    min-height: 300px;
+    flex-shrink: 0;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+}
+
+.sorted-section {
+    flex: 1;
+}
+
+.sorted-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 20px;
+}
+
+.sorted-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.sorted-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background: #f8f9fa;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin: 0;
+}
+
+.sorted-item:hover {
+    background: #e9ecef;
+}
+
+.sorted-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.sorted-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sorted-item-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.sorted-item-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+.sorted-item-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 0 12px 0;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.sorted-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.8rem;
+    color: #888;
+    flex-wrap: wrap;
+}
+
+.sorted-item-author {
+    color: #667eea;
+    font-weight: 500;
+}
+
+.sorted-item-stats {
+    font-weight: 500;
+}
+
+.sorted-item-date {
+    color: #999;
+}
+
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    color: #666;
+    animation: fadeIn 0.5s ease;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+}
+
+.loading-state p {
+    margin: 0;
+    font-size: 1rem;
+    color: #888;
+}
+
+.no-sorted-results {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+.no-sorted-results p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+} 
