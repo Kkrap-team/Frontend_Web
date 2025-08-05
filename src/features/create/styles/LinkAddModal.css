@@ -2,9 +2,9 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.3);
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,15 +12,15 @@
 }
 
 .LinkAddModal {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
-    padding: 28px 24px 24px 24px;
-    min-width: 320px;
-    position: relative;
+    background: white;
+    padding: 24px;
+    border-radius: 8px;
+    width: 320px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
 .LinkAddModalClose {
@@ -32,77 +32,103 @@
     font-size: 28px;
     color: #888;
     cursor: pointer;
+    z-index: 1;
 }
 
 .LinkAddModalTitle {
     text-align: center;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
-    margin-bottom: 8px;
+    color: #000;
+    margin: 8px 0 8px 0;
 }
 
-.LinkAddModalInput {
-    width: 100%;
-    padding: 12px;
-    border: 1.5px solid #ccc;
-    border-radius: 8px;
+.LinkAddModalLabel {
     font-size: 16px;
-    outline: none;
-    margin-bottom: 8px;
+    font-weight: 500;
+    color: #000;
+    margin-top: 12px;
 }
 
-.LinkAddModalSelectWrapper {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
+.LinkAddModalInput,
 .LinkAddModalSelect {
-    flex: 1;
-    padding: 10px;
-    border: 1.5px solid #ccc;
-    border-radius: 8px;
-    font-size: 15px;
-    background: #fafafa;
+    width: 100%;
+    padding: 8px 0;
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+    background: transparent;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.LinkAddModalInput:focus,
+.LinkAddModalSelect:focus {
+    border-bottom-color: #5a9cf8;
+}
+
+.LinkAddModalInput::placeholder {
+    color: #757575;
+}
+
+.LinkAddModalDropdown {
+    position: relative;
+}
+
+.LinkAddModalSelect optgroup {
+    font-weight: bold;
+    color: #666;
+    background-color: #f8f9fa;
+}
+
+.LinkAddModalSelect option {
+    font-weight: normal;
+    color: #333;
+    background-color: white;
+    padding: 4px 8px;
 }
 
 .LinkAddModalButtons {
     display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    margin-top: 10px;
+    gap: 8px;
+    margin-top: 8px;
 }
 
 .LinkAddModalPaste {
     flex: 1;
-    padding: 12px 0;
-    border: 1.5px solid #222;
-    border-radius: 24px;
-    background: #fff;
-    color: #222;
-    font-size: 16px;
-    font-weight: 500;
+    padding: 10px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
     cursor: pointer;
-    transition: background 0.2s;
+    background: white;
+    color: #000;
+    transition: background-color 0.2s;
 }
 
 .LinkAddModalPaste:hover {
-    background: #f5f5f5;
+    background: #f8f9fa;
 }
 
 .LinkAddModalSubmit {
     flex: 1;
-    padding: 12px 0;
+    padding: 10px 16px;
     border: none;
-    border-radius: 24px;
-    background: #3da5f5;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 500;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
     cursor: pointer;
-    transition: background 0.2s;
+    background: #5a9cf8;
+    color: white;
+    transition: background-color 0.2s;
 }
 
 .LinkAddModalSubmit:hover {
-    background: #1d8ee6;
+    background: #4a8ce8;
+}
+
+.LinkAddModalSubmit:disabled {
+    background: #ccc;
+    cursor: not-allowed;
 }

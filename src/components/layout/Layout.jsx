@@ -25,6 +25,9 @@ export default function Layout({ children }) {
             style={{
                 margin: isFollowerPage ? '60px 0 0 0' : '60px 120px 0 120px',
                 height: isFollowerPage ? 'calc(100vh - 110px)' : 'calc(100vh - 60px)',
+                opacity: isSearchOpen ? 0 : 1,
+                transition: isSearchOpen ? 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
+                pointerEvents: isSearchOpen ? 'none' : 'auto',
             }}
         >
             {children}

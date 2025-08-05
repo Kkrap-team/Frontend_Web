@@ -7,6 +7,10 @@ export default function FolderCreateModal({ mode, initialData, onClose, onSubmit
     const [visible, setVisible] = useState(initialData?.visible ?? true);
 
     const handleFolderSubmit = () => {
+        if (!folderName.trim()) {
+            alert('폴더 제목을 입력해주세요.');
+            return;
+        }
         onSubmit({ folderName, folderDescription, visible });
     };
 
@@ -15,27 +19,55 @@ export default function FolderCreateModal({ mode, initialData, onClose, onSubmit
     };
 
     return (
-        <div className="PopupBackdrop">
-            <div className="Popup">
-                <h3>{mode === 'edit' ? '폴더 수정' : '폴더 생성'}</h3>
-                <input
-                    type="text"
-                    placeholder="폴더 이름"
-                    value={folderName}
-                    onChange={(e) => setFolderName(e.target.value)}
-                />
-                <textarea
-                    placeholder="폴더 설명"
-                    value={folderDescription}
-                    onChange={(e) => setFolderDescription(e.target.value)}
-                />
-                <label>
-                    <input type="checkbox" checked={visible} onChange={() => setVisible(!visible)} />
-                    공개/비공개
-                </label>
-                <div className="PopupButtons">
-                    <button onClick={handleFolderCancel}>취소</button>
-                    <button onClick={handleFolderSubmit}>{mode === 'edit' ? '수정하기' : '생성하기'}</button>
+        <div className="FolderCreateModalBackdrop" onClick={handleFolderCancel}>
+            <div className="FolderCreateModal" onClick={(e) => e.stopPropagation()}>
+                <h3 className="FolderCreateModalTitle">{mode === 'edit' ? '폴더 수정' : '폴더 생성'}</h3>
+
+                <div className="FolderCreateModalField">
+                    <label className="FolderCreateModalLabel">
+                        폴더 제목 <span className="required">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        className="FolderCreateModalInput"
+                        placeholder="폴더 제목을 입력하세요"
+                        value={folderName}
+                        onChange={(e) => setFolderName(e.target.value)}
+                    />
+                </div>
+
+                <div className="FolderCreateModalField">
+                    <label className="FolderCreateModalLabel">폴더 설명</label>
+                    <input
+                        type="text"
+                        className="FolderCreateModalInput"
+                        placeholder="폴더 설명을 입력하세요"
+                        value={folderDescription}
+                        onChange={(e) => setFolderDescription(e.target.value)}
+                    />
+                </div>
+
+                <div className="FolderCreateModalField">
+                    <label className="FolderCreateModalLabel">공개 설정</label>
+                    <div className="FolderCreateModalDropdown">
+                        <select
+                            value={visible ? 'public' : 'private'}
+                            onChange={(e) => setVisible(e.target.value === 'public')}
+                            className="FolderCreateModalSelect"
+                        >
+                            <option value="public">공개</option>
+                            <option value="private">비공개</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div className="FolderCreateModalButtons">
+                    <button className="FolderCreateModalCancelBtn" onClick={handleFolderCancel}>
+                        취소
+                    </button>
+                    <button className="FolderCreateModalConfirmBtn" onClick={handleFolderSubmit}>
+                        {mode === 'edit' ? '수정' : '확인'}
+                    </button>
                 </div>
             </div>
         </div>

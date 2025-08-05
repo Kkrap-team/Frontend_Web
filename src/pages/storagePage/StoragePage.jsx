@@ -115,7 +115,7 @@ export default function StoragePage() {
     };
 
     return (
-        <div className="StorageContainer">
+        <div className="StorageContainer" style={{ paddingBottom: '120px' }}>
             <FolderHeader data={myFolderProfile} />
             <div className="StorageHeader">
                 <h2 className="StorageTitle">{user.nickname}님의 폴더</h2>
@@ -146,7 +146,14 @@ export default function StoragePage() {
                 />
             )}
             {showLinkModal && (
-                <LinkAddModal onClose={() => setShowLinkModal(false)} onSubmit={handleAddLink} folders={ownFolders} />
+                <LinkAddModal
+                    onClose={() => setShowLinkModal(false)}
+                    onSubmit={handleAddLink}
+                    folders={[
+                        ...ownFolders.map((folder) => ({ ...folder, type: 'own' })),
+                        ...sharedFolders.map((folder) => ({ ...folder, type: 'shared' })),
+                    ]}
+                />
             )}
             {showPermissionModal && (
                 <PermissionModal
