@@ -45,32 +45,44 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId 
 
     return (
         <div className="MyFolderCard" ref={cardRef} onClick={handleFolderClick}>
-            {defaultFolder ? (
-                <div className="MultiThumbnailGrid">
-                    {(links || []).map((link, idx) => (
-                        <img
-                            key={link.linkId || idx}
-                            className="MultiThumbnail"
-                            src={link.thumbnailUrl || link.faviconUrl || '/Kkrap_logo.png'}
-                            alt={folderName}
-                            onError={(e) => {
-                                e.target.onError = null;
-                                e.target.src = '/Kkrap_logo.png';
-                            }}
-                        />
-                    ))}
+            {/* 상단 이미지 영역 */}
+            <div className="MyFolderImageContainer">
+                {defaultFolder ? (
+                    <div className="MultiThumbnailGrid">
+                        {(links || []).map((link, idx) => (
+                            <img
+                                key={link.linkId || idx}
+                                className="MultiThumbnail"
+                                src={link.thumbnailUrl || link.faviconUrl || '/Kkrap_logo.png'}
+                                alt={folderName}
+                                onError={(e) => {
+                                    e.target.onError = null;
+                                    e.target.src = '/Kkrap_logo.png';
+                                }}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <img
+                        className="MyFolderImage"
+                        src={thumbnail}
+                        alt={folderName}
+                        onError={(e) => {
+                            e.target.onError = null;
+                            e.target.src = '/Kkrap_logo.png';
+                        }}
+                    />
+                )}
+                {/* 자물쇠 아이콘 */}
+                <div className="MyFolderLock">
+                    <img
+                        src={visible ? '/visible_icon.png' : '/invisible_icon.png'}
+                        alt={visible ? '공개' : '비공개'}
+                    />
                 </div>
-            ) : (
-                <img
-                    className="MyFolderImage"
-                    src={thumbnail}
-                    alt={folderName}
-                    onError={(e) => {
-                        e.target.onError = null;
-                        e.target.src = '/Kkrap_logo.png';
-                    }}
-                />
-            )}
+            </div>
+
+            {/* 하단 콘텐츠 영역 */}
             <div className="MyFolderInfo">
                 <div className="MyFolderHeader">
                     <div className="MyFolderTitle">{folderName}</div>
@@ -85,14 +97,8 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId 
                             ⋮
                         </button>
                         {showMenu && (
-                            <div
-                                className="FolderMenuOverlay"
-                                onClick={() => setShowMenu(false)} //메뉴 바깥(오버레이) 클릭 -> 메뉴 닫힘
-                            >
-                                <div
-                                    className="FolderMenu"
-                                    onClick={(e) => e.stopPropagation()} // 메뉴 안쪽 클릭 -> 메뉴는 안 닫힘 (버튼 동작만 실행)
-                                >
+                            <div className="FolderMenuOverlay" onClick={() => setShowMenu(false)}>
+                                <div className="FolderMenu" onClick={(e) => e.stopPropagation()}>
                                     <button className="FolderMenuItem" onClick={() => onEdit(folder)}>
                                         <img className="FolderMenuIcon" src="/edit_folder.png" alt="수정" />
                                         폴더 수정하기
@@ -123,14 +129,6 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId 
                         <div className="MyFolderView">
                             <img src="/view_icon.png" alt="조회수" /> {viewCount}
                         </div>
-                    </div>
-
-                    <div className="MyFolderVisible">
-                        <img
-                            src={visible ? '/visible_icon.png' : '/invisible_icon.png'}
-                            alt={visible ? '공개' : '비공개'}
-                        />
-                        {visible ? '공개' : '비공개'}
                     </div>
                 </div>
             </div>
