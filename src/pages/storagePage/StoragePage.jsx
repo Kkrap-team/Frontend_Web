@@ -106,6 +106,7 @@ export default function StoragePage() {
                 onEdit={handleEditClick}
                 onPermission={openPermissionModal}
                 defaultFolderId={ownFolders[0]?.folderId}
+                allFolders={allFolders}
             />
             <div className="StorageHeader">
                 <br />
@@ -116,6 +117,7 @@ export default function StoragePage() {
                     onEdit={handleEditClick}
                     onPermission={openPermissionModal}
                     defaultFolderId={ownFolders[0]?.folderId}
+                    allFolders={allFolders}
                 />
             </div>
 

@@ -14,9 +14,13 @@ export default function StorageFolderDetail() {
     // Route API 방식으로 파라미터 추출
     const { folderId } = routeApi.useParams();
 
-    // URL 파라미터에서 defaultFolderId 추출
+    // URL 파라미터에서 정보 추출
     const searchParams = new URLSearchParams(window.location.search);
     const defaultFolderId = searchParams.get('defaultFolderId');
+    const allFoldersParam = searchParams.get('allFolders');
+
+    // 전체 폴더 정보 파싱
+    const parsedAllFolders = allFoldersParam ? JSON.parse(decodeURIComponent(allFoldersParam)) : [];
 
     // 사용자 정보 가져오기
     const { user } = useContext(AuthContext);
@@ -25,19 +29,13 @@ export default function StorageFolderDetail() {
     // 폴더 상세 정보 및 링크 목록 조회
     const { folderInfo, links, loading, error, refetch } = useFolderDetail(folderId);
 
-    // 현재 폴더만 사용
-    const currentFolder = {
-        folderId,
-        folderName: folderInfo?.folderName || '현재 폴더',
-        type: folderInfo?.share ? 'shared' : 'own',
-    };
-
-    // useCreate 훅 사용 (현재 폴더만 + defaultFolderId)
+    // useCreate 훅 사용 (URL 파라미터로 받은 전체 폴더 + 현재 폴더 ID, 디폴트 폴더 ID)
     const { addLink, showLinkModal, openLinkModal, closeLinkModal, folders } = useCreate(
-        [currentFolder], // 현재 폴더만
+        parsedAllFolders, // URL 파라미터로 받은 전체 폴더 정보
         userId,
         refetch,
-        defaultFolderId // URL 파라미터로 받은 defaultFolderId
+        defaultFolderId,
+        folderId // 현재 폴더 ID를 기본값으로 설정
     );
 
     if (loading) {

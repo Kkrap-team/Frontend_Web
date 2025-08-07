@@ -1,9 +1,23 @@
 import React, { useState } from 'react';
+import { getRouteApi } from '@tanstack/react-router';
 import '@/features/create/styles/LinkAddModal.css';
 
 export default function LinkAddModal({ onClose, onSubmit, folders = [] }) {
+    let folderId;
+    try {
+        const routeApi = getRouteApi('/storage/$folderId');
+        folderId = routeApi.useParams().folderId;
+    } catch (e) {
+        folderId = null; // 스토리지 페이지에서는 null
+    }
+    const currentFolder = folders.find((folder) => folder.folderId === Number(folderId));
     const [link, setLink] = useState('');
-    const [selectedFolder, setSelectedFolder] = useState(folders[0]?.folderId || '');
+    const [selectedFolder, setSelectedFolder] = useState(currentFolder?.folderId || folders[0]?.folderId || '');
+
+    console.log('folderId', folderId);
+    console.log('currentFolder', currentFolder);
+    console.log('folders', folders);
+    console.log('folders[0].folderId:', folders[0]?.folderId, typeof folders[0]?.folderId);
 
     const handlePaste = async () => {
         try {
