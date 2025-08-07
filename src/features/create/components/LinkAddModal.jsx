@@ -34,7 +34,7 @@ export default function LinkAddModal({ onClose, onSubmit, folders = [] }) {
         <div className="LinkAddModalBackdrop" onClick={handleLinkCancel}>
             <div className="LinkAddModal" onClick={(e) => e.stopPropagation()}>
                 <button className="LinkAddModalClose" onClick={handleLinkCancel}>
-                    &times;
+                    &times;{/* $times는 X 버튼 */}
                 </button>
                 <h3 className="LinkAddModalTitle">링크 추가</h3>
 

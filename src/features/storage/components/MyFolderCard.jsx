@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import '@/features/storage/styles/MyFolderCard.css';
 
-const MyFolderCard = ({ folder, onDelete, onEdit, onPermission }) => {
+const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId }) => {
     const { folderId, folderName, folderDescription, links, defaultFolder, scrapCount, viewCount, visible } = folder;
     const [showMenu, setShowMenu] = useState(false);
     const navigate = useNavigate();
@@ -36,7 +36,11 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission }) => {
             setShowMenu(false);
             return;
         }
-        navigate({ to: `/storage/${folderId}` });
+        // defaultFolderId를 URL 파라미터로 전달
+        const url = defaultFolderId
+            ? `/storage/${folderId}?defaultFolderId=${defaultFolderId}`
+            : `/storage/${folderId}`;
+        navigate({ to: url });
     };
 
     return (
