@@ -1,0 +1,137 @@
+/* 메인 페이지용 폴더 카드 스타일 오버라이드 */
+.MyFoldersSection .MyFolderCard,
+.SharedFoldersSection .MyFolderCard {
+    width: 160px !important;
+    height: 180px !important;
+    border-radius: 12px;
+    flex-shrink: 0;
+    position: relative;
+    background: white;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.MyFoldersSection .MyFolderImageContainer,
+.SharedFoldersSection .MyFolderImageContainer {
+    width: 100% !important;
+    height: 120px !important; /* 이미지 영역 */
+    position: relative;
+}
+
+.MyFoldersSection .MyFolderImage,
+.SharedFoldersSection .MyFolderImage {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+    border-radius: 12px 12px 0 0;
+}
+
+/* 자물쇠 아이콘 위치 조정 */
+.MyFoldersSection .MyFolderLock,
+.SharedFoldersSection .MyFolderLock {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.MyFoldersSection .MyFolderLock img,
+.SharedFoldersSection .MyFolderLock img {
+    width: 12px;
+    height: 12px;
+}
+
+/* 텍스트 영역 다시 표시 */
+.MyFoldersSection .MyFolderInfo,
+.SharedFoldersSection .MyFolderInfo {
+    padding: 8px 12px 0 12px !important;
+    height: 100px !important;
+    background: white;
+    border-radius: 0 0 12px 12px;
+}
+
+.MyFoldersSection .MyFolderTitle,
+.SharedFoldersSection .MyFolderTitle {
+    font-size: 14px !important;
+    font-weight: 600;
+    margin-bottom: 2px;
+    line-height: 1.2;
+}
+
+.MyFoldersSection .MyFolderDesc,
+.SharedFoldersSection .MyFolderDesc {
+    margin-bottom: 0 !important;
+    font-size: 12px !important;
+    color: #666;
+    line-height: 1.2;
+    /* 1줄 말줄임표 처리 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* 한 줄로 제한 */
+    max-width: 100%;
+}
+
+/* 하단 카운터 스타일 */
+.MyFoldersSection .MyFolderStats,
+.SharedFoldersSection .MyFolderStats {
+    display: none !important;
+}
+
+/* 가로 스크롤 */
+.MyFoldersSection .FoldersGrid,
+.SharedFoldersSection .FoldersGrid {
+    display: flex !important;
+    gap: 16px !important;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+
+.MyFoldersSection .FoldersGrid::-webkit-scrollbar,
+.SharedFoldersSection .FoldersGrid::-webkit-scrollbar {
+    display: none;
+}
+
+.MyFoldersSection .MyFolderHeader {
+    margin: 4px 0 !important;
+}
+
+.MyFoldersSection .MoreBtn {
+    display: none;
+}
+
+/* 섹션 헤더 스타일 */
+.SectionHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 20px;
+}
+
+.SectionTitle {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.SectionArrow {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    cursor: pointer;
+    color: #757575;
+}
+
+/* 섹션 구분선 */
+.MainPageSectionDivider {
+    height: 20px;
+    background-color: #f7f7f7;
+    margin: 20px 0;
+}
