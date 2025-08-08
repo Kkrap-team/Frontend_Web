@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { AuthContext } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/stores/authStore';
 import { useNavigate } from '@tanstack/react-router';
 
 import useProfileEdit from '@/features/profile/hook/useProfileEdit';
@@ -8,7 +8,7 @@ import ProfileForm from '@/features/profile/components/ProfileForm';
 import ProfileImageEdit from '@/features/profile/components/ProfileImageEdit';
 
 export default function EditProfilePage() {
-    const { user } = useContext(AuthContext);
+    const { user } = useAuthStore();
     const navigate = useNavigate();
 
     // 닉네임, 소개, 프로필 이미지 변경 hook

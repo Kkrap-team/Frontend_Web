@@ -1,11 +1,11 @@
-import axios from 'axios';
+import api from '@/utils/axiosConfig';
 
 const url = import.meta.env.VITE_URL;
 
 export const searchFolders = async (query) => {
     try {
         console.log('검색 요청:', query);
-        const response = await axios.get(`${url}/folders-search/search/text?keyword=${encodeURIComponent(query)}`);
+        const response = await api.get(`${url}/folders-search/search/text?keyword=${encodeURIComponent(query)}`);
 
         console.log('검색 API 응답 상태:', response.status);
         console.log('검색 API 응답 데이터:', response.data);
@@ -28,7 +28,7 @@ export const searchFolders = async (query) => {
 
 export const getRankings = async () => {
     try {
-        const response = await axios.get(`${url}/folders-search/rankings`);
+        const response = await api.get(`${url}/folders-search/rankings`);
 
         console.log('랭킹 API 응답 상태:', response.status);
         console.log('랭킹 API 응답 데이터:', response.data);

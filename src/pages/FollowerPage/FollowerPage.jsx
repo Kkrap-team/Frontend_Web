@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./FollowerPage.module.css";
 import FollowerSidebar from "@/features/followingList/components/FollowerSidebar";
 import { useFetchFollowingList } from "@/features/followingList/hooks/useFetchFollowingList";
 import { useModal } from "@/contexts/ModalContext";
+import { useAuthStore } from "@/stores/authStore";
 
 const FollowerPage = () => {
-  const { data: followers, loading, error } = useFetchFollowingList({ userId: 5 });
+  const { user } = useAuthStore();
+  const userId = user.userId;
+  const { data: followers, loading, error } = useFetchFollowingList({ userId });
   const { showModal } = useModal();
 
   if (loading) return <div>로딩 중...</div>;

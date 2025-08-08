@@ -1,11 +1,10 @@
-import axios from 'axios';
-
+import api from '@/utils/axiosConfig';
 const url = import.meta.env.VITE_URL;
 
 //폴더 권한 제어 목록 조회 (팔로우 목록 조회)
 export const getFolderPermissionList = async (userId, folderId) => {
     console.log('getFolderPermissionList 받는 데이터', userId, folderId);
-    const res = await axios.get(`${url}/folderspermissions/${userId}/folders/${folderId}/candidates`);
+    const res = await api.get(`${url}/folderspermissions/folders/${folderId}/candidates`);
 
     console.log('폴더 권한 제어 목록 데이터', res.data);
     return res.data;
@@ -14,7 +13,7 @@ export const getFolderPermissionList = async (userId, folderId) => {
 //폴더 권한 부여 (폴더 공유)
 export const grantFolderPermission = async (userId, folderId, invitedUserIds) => {
     console.log('폴더 권한 부여 데이터', userId, folderId, invitedUserIds);
-    const res = await axios.post(`${url}/folderspermissions/${userId}/share`, {
+    const res = await api.post(`${url}/folderspermissions/share`, {
         folderId: folderId,
         invitedUserIds: invitedUserIds,
     });
@@ -25,7 +24,7 @@ export const grantFolderPermission = async (userId, folderId, invitedUserIds) =>
 //폴더 권한 삭제 (폴더 공유 취소)
 export const revokeFolderPermission = async (userId, folderId, invitedUserId) => {
     console.log('폴더 권한 삭제 데이터', userId, folderId, invitedUserId);
-    const res = await axios.delete(`${url}/folderspermissions/${userId}/share`, {
+    const res = await api.delete(`${url}/folderspermissions/share`, {
         data: {
             folderId: folderId,
             invitedUserId: invitedUserId,

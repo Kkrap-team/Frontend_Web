@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
-import { nicknameCheckApi, profileFormUpdateApi, profileImageUpdateApi } from '@/features/profile/api/profileApi';
-import { AuthContext } from '@/contexts/AuthContext';
+import { nicknameCheckApi, profileFormUpdateApi} from '@/features/profile/api/profileApi';
+import { useAuthStore } from '@/stores/authStore';
 import { useNavigate } from '@tanstack/react-router';
 
 export default function useProfileEdit(initialUser) {
@@ -8,7 +8,7 @@ export default function useProfileEdit(initialUser) {
     const [bio, setBio] = useState(initialUser.bio || '');
     const [isAvailable, setIsAvailable] = useState(null);
     const [message, setMessage] = useState('');
-    const { setUser } = useContext(AuthContext);
+    const { setUser } = useAuthStore();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -64,39 +64,46 @@ export default function useProfileEdit(initialUser) {
         try {
             const res = await profileFormUpdateApi(initialUser.userId, nickname, bio);
             alert('프로필이 저장되었습니다!');
-            setUser((prev) => ({
-                ...prev,
+            
+            // 현재 store의 user 상태 확인
+            const currentUser = useAuthStore.getState().user;
+            // store의 user 정보 업데이트
+            const updatedUser = {
+                ...initialUser,
                 nickname: res.nickname,
                 bio: res.bio,
-            }));
-            navigate({ to: '/' });
+            };
+          
+            setUser(updatedUser);
+            
+            navigate({ to: '/editProfile' });
         } catch (error) {
             alert('프로필 저장 중 오류가 발생했습니다.');
             console.error('저장 실패:', error);
         }
     };
 
-    const changeImageHandler = async (file) => {
-        const formData = new FormData();
-        formData.append('file', file);
+    // const changeImageHandler = async (file) => {
+    //     const formData = new FormData();
+    //     formData.append('file', file);
 
-        try {
-            const res = await profileImageUpdateApi(initialUser.userId, formData);
+    //     try {
+    //         const res = await profileImageUpdateApi(initialUser.userId, formData);
 
-            setUser((prev) => ({
-                ...prev,
-                profile: res.profile,
-                nickname: res.nickname,
-                bio: res.bio,
-                email: res.email,
-                userId: res.userId,
-                kakaoId: res.kakaoId,
-            }));
-        } catch (error) {
-            console.error('이미지 변경 실패:', error);
-            alert('이미지 업로드에 실패했습니다.');
-        }
-    };
+    //         setUser((prev) => ({
+    //             ...prev,
+    //             profile: res.profile,
+    //             nickname: res.nickname,
+    //             bio: res.bio,
+    //             email: res.email,
+    //             userId: res.userId,
+    //             kakaoId: res.kakaoId,
+    //         }));
+    //     } catch (error) {
+    //         console.error('이미지 변경 실패:', error);
+    //         alert('이미지 업로드에 실패했습니다.');
+    //     }
+    // };
 
     return {
         nickname,
@@ -107,6 +114,6 @@ export default function useProfileEdit(initialUser) {
         message,
         checkDuplicateHandler,
         onSubmit,
-        changeImageHandler,
+        // changeImageHandler,
     };
 }

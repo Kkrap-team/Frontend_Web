@@ -1,15 +1,14 @@
 import React, { useContext } from 'react';
+import { useAuthStore } from '@/stores/authStore';
 import { useNavigate } from '@tanstack/react-router';
 import KakaoLoginBtn from '../../auth/components/KakaoLoginBtn';
 import useLogout from '../../auth/hooks/useLogout';
-import { AuthContext } from '@/contexts/AuthContext';
 
 const url = import.meta.env.VITE_URL;
 
 export default function LoginMenu() {
-    const { user } = useContext(AuthContext);
+    const { user } = useAuthStore();
     const navigate = useNavigate();
-
     const logout = useLogout();
 
     return (
