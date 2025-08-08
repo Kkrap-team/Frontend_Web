@@ -4,6 +4,7 @@ import FollowerSidebar from "@/features/followingList/components/FollowerSidebar
 import { useFetchFollowingList } from "@/features/followingList/hooks/useFetchFollowingList";
 import { useModal } from "@/contexts/ModalContext";
 import { useAuthStore } from "@/stores/authStore";
+import FollowContents from "@/features/followContents/components/FollowContents";
 
 const FollowerPage = () => {
   const { user } = useAuthStore();
@@ -32,7 +33,7 @@ const FollowerPage = () => {
             </button>
           </div>
           <div className={styles.contentArea}>
-            팔로워 콘텐츠 표시 예정.
+            <FollowContents />
           </div>
         </div>
       </div>

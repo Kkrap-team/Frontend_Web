@@ -1,14 +1,14 @@
-.search-preview-list {
+.searchPreviewList {
     flex: 1;
     background: white;
     padding: 24px;
 }
 
-.preview-header {
+.previewHeader {
     margin-bottom: 20px;
 }
 
-.preview-title {
+.previewTitle {
     font-size: 1.2rem;
     font-weight: 700;
     color: #2d3748;
@@ -16,14 +16,14 @@
     transition: color 0.3s ease;
 }
 
-.preview-content {
+.previewContent {
     display: flex;
     flex-direction: column;
     gap: 1px;
     transition: opacity 0.3s ease;
 }
 
-.preview-item {
+.previewItem {
     display: flex;
     align-items: flex-start;
     gap: 16px;
@@ -37,12 +37,12 @@
     animation: fadeInUp 0.3s ease;
 }
 
-.preview-item:hover {
+.previewItem:hover {
     background: #e9ecef;
     transform: translateX(4px);
 }
 
-.preview-avatar {
+.previewAvatar {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -50,23 +50,23 @@
     flex-shrink: 0;
 }
 
-.preview-avatar img {
+.previewAvatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.2s ease;
 }
 
-.preview-item:hover .preview-avatar img {
+.previewItem:hover .previewAvatar img {
     transform: scale(1.05);
 }
 
-.preview-item-content {
+.previewItemContent {
     flex: 1;
     min-width: 0;
 }
 
-.preview-item-content h4 {
+.previewItemContent h4 {
     font-size: 1rem;
     font-weight: 600;
     color: #2d3748;
@@ -74,7 +74,7 @@
     line-height: 1.3;
 }
 
-.preview-description {
+.previewDescription {
     font-size: 0.9rem;
     color: #666;
     margin: 0 0 12px 0;
@@ -84,7 +84,7 @@
     overflow: hidden;
 }
 
-.preview-meta {
+.previewMeta {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -93,20 +93,20 @@
     flex-wrap: wrap;
 }
 
-.preview-author {
+.previewAuthor {
     color: #667eea;
     font-weight: 500;
 }
 
-.preview-stats {
+.previewStats {
     font-weight: 500;
 }
 
-.preview-date {
+.previewDate {
     color: #999;
 }
 
-.loading-state {
+.loadingState {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -116,7 +116,7 @@
     animation: fadeIn 0.5s ease;
 }
 
-.loading-spinner {
+.loadingSpinner {
     width: 40px;
     height: 40px;
     border: 3px solid #f3f3f3;
@@ -126,26 +126,26 @@
     margin-bottom: 16px;
 }
 
-.loading-state p {
+.loadingState p {
     margin: 0;
     font-size: 1rem;
     color: #888;
 }
 
-.no-preview-results {
+.noPreviewResults {
     text-align: center;
     padding: 60px 20px;
     color: #666;
     animation: fadeIn 0.5s ease;
 }
 
-.no-preview-results p {
+.noPreviewResults p {
     margin: 0 0 8px 0;
     font-size: 1rem;
     color: #888;
 }
 
-.no-results-hint {
+.noResultsHint {
     font-size: 0.9rem !important;
     color: #aaa !important;
     font-style: italic;
@@ -176,4 +176,4 @@
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-} 
+}

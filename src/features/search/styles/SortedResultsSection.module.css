@@ -1,4 +1,4 @@
-.sorted-results-section {
+.sortedResultsSection {
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -10,24 +10,24 @@
     max-height: calc(100vh - 200px);
 }
 
-.sorted-section {
+.sortedSection {
     flex: 1;
 }
 
-.sorted-title {
+.sortedTitle {
     font-size: 1.2rem;
     font-weight: 700;
     color: #2d3748;
     margin-bottom: 20px;
 }
 
-.sorted-content {
+.sortedContent {
     display: flex;
     flex-direction: column;
     gap: 1px;
 }
 
-.sorted-item {
+.sortedItem {
     display: flex;
     align-items: flex-start;
     gap: 16px;
@@ -40,11 +40,11 @@
     margin: 0;
 }
 
-.sorted-item:hover {
+.sortedItem:hover {
     background: #e9ecef;
 }
 
-.sorted-avatar {
+.sortedAvatar {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -52,18 +52,18 @@
     flex-shrink: 0;
 }
 
-.sorted-avatar img {
+.sortedAvatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.sorted-item-content {
+.sortedItemContent {
     flex: 1;
     min-width: 0;
 }
 
-.sorted-item-title {
+.sortedItemTitle {
     font-size: 1rem;
     font-weight: 600;
     color: #2d3748;
@@ -71,7 +71,7 @@
     line-height: 1.3;
 }
 
-.sorted-item-description {
+.sortedItemDescription {
     font-size: 0.9rem;
     color: #666;
     margin: 0 0 12px 0;
@@ -82,7 +82,7 @@
     overflow: hidden;
 }
 
-.sorted-item-meta {
+.sortedItemMeta {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -91,20 +91,20 @@
     flex-wrap: wrap;
 }
 
-.sorted-item-author {
+.sortedItemAuthor {
     color: #667eea;
     font-weight: 500;
 }
 
-.sorted-item-stats {
+.sortedItemStats {
     font-weight: 500;
 }
 
-.sorted-item-date {
+.sortedItemDate {
     color: #999;
 }
 
-.loading-state {
+.loadingState {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -114,7 +114,7 @@
     animation: fadeIn 0.5s ease;
 }
 
-.loading-spinner {
+.loadingSpinner {
     width: 40px;
     height: 40px;
     border: 3px solid #f3f3f3;
@@ -124,19 +124,19 @@
     margin-bottom: 16px;
 }
 
-.loading-state p {
+.loadingState p {
     margin: 0;
     font-size: 1rem;
     color: #888;
 }
 
-.no-sorted-results {
+.noSortedResults {
     text-align: center;
     padding: 40px 20px;
     color: #666;
 }
 
-.no-sorted-results p {
+.noSortedResults p {
     margin: 0;
     font-size: 0.9rem;
 }
@@ -155,4 +155,4 @@
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-} 
+}

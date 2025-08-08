@@ -1,28 +1,28 @@
 import React from 'react';
-import './SearchPreviewList.css';
+import styles from '../styles/SearchPreviewList.module.css';
 
 const SearchPreviewList = ({ results, loading, onItemClick }) => {
     return (
-        <div className="search-preview-list">
-            <div className="preview-header">
-                <h3 className="preview-title">
+        <div className={styles.searchPreviewList}>
+            <div className={styles.previewHeader}>
+                <h3 className={styles.previewTitle}>
                     {loading ? '검색 중...' : `검색 결과 (${results.length})`}
                 </h3>
             </div>
-            <div className="preview-content">
+            <div className={styles.previewContent}>
                 {loading ? (
-                    <div className="loading-state">
-                        <div className="loading-spinner"></div>
+                    <div className={styles.loadingState}>
+                        <div className={styles.loadingSpinner}></div>
                         <p>검색 중입니다...</p>
                     </div>
                 ) : results.length > 0 ? (
                     results.map((result) => (
                         <div 
                             key={result.folderId} 
-                            className="preview-item"
+                            className={styles.previewItem}
                             onClick={() => onItemClick(result)}
                         >
-                            <div className="preview-avatar">
+                            <div className={styles.previewAvatar}>
                                 <img 
                                     src={result.profileImage || '/public/account_circle.png'} 
                                     alt={result.nickname}
@@ -31,15 +31,15 @@ const SearchPreviewList = ({ results, loading, onItemClick }) => {
                                     }}
                                 />
                             </div>
-                            <div className="preview-item-content">
-                                <h4 className="preview-title">{result.folderName}</h4>
-                                <p className="preview-description">{result.folderDescription}</p>
-                                <div className="preview-meta">
-                                    <span className="preview-author">{result.nickname}</span>
-                                    <span className="preview-stats">
+                            <div className={styles.previewItemContent}>
+                                <h4 className={styles.previewTitle}>{result.folderName}</h4>
+                                <p className={styles.previewDescription}>{result.folderDescription}</p>
+                                <div className={styles.previewMeta}>
+                                    <span className={styles.previewAuthor}>{result.nickname}</span>
+                                    <span className={styles.previewStats}>
                                         조회 {result.viewCount} • 스크랩 {result.scrapCount}
                                     </span>
-                                    <span className="preview-date">
+                                    <span className={styles.previewDate}>
                                         {new Date(result.createTime).toLocaleDateString()}
                                     </span>
                                 </div>
@@ -47,9 +47,9 @@ const SearchPreviewList = ({ results, loading, onItemClick }) => {
                         </div>
                     ))
                 ) : (
-                    <div className="no-preview-results">
+                    <div className={styles.noPreviewResults}>
                         <p>검색 결과가 없습니다.</p>
-                        <p className="no-results-hint">다른 키워드로 검색해보세요.</p>
+                        <p className={styles.noResultsHint}>다른 키워드로 검색해보세요.</p>
                     </div>
                 )}
             </div>

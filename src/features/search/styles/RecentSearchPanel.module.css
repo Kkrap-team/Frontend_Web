@@ -1,4 +1,4 @@
-.recent-search-panel {
+.recentSearchPanel {
     padding: 24px;
     background: white;
     border-right: 1px solid #e9ecef;
@@ -6,20 +6,20 @@
     flex-shrink: 0;
 }
 
-.recent-search-title {
+.recentSearchTitle {
     font-size: 1rem;
     font-weight: 700;
     color: #2d3748;
     margin-bottom: 16px;
 }
 
-.recent-search-list {
+.recentSearchList {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.recent-search-item {
+.recentSearchItem {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -30,27 +30,27 @@
     transition: color 0.2s;
 }
 
-.recent-search-item:hover {
+.recentSearchItem:hover {
     color: #2d3748;
 }
 
-.recent-search-text {
+.recentSearchText {
     display: flex;
     align-items: center;
     gap: 8px;
     flex: 1;
 }
 
-.recent-search-icon {
+.recentSearchIcon {
     font-size: 0.8rem;
     color: #999;
 }
 
-.recent-search-term {
+.recentSearchTerm {
     flex: 1;
 }
 
-.recent-search-remove {
+.recentSearchRemove {
     font-size: 0.8rem;
     color: #999;
     cursor: pointer;
@@ -61,7 +61,7 @@
     transition: all 0.2s;
 }
 
-.recent-search-remove:hover {
+.recentSearchRemove:hover {
     color: #dc3545;
     background: #fef2f2;
-} 
+}
