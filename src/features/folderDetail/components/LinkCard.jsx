@@ -10,7 +10,7 @@ const LinkCard = ({ link, onKebabClick }) => {
     };
 
     // 대표 이미지 (썸네일 우선, 없으면 파비콘, 둘 다 없으면 기본 이미지)
-    const displayImage = thumbnailUrl || faviconUrl || '/Kkrap_logo.png';
+    const displayImage = thumbnailUrl || faviconUrl || '/Kkrap_logo_large.png';
 
     return (
         <div className="LinkCard" onClick={handleLinkClick}>
@@ -20,7 +20,7 @@ const LinkCard = ({ link, onKebabClick }) => {
                     alt={linkName || 'LinkThumbnail'}
                     onError={(e) => {
                         e.target.onError = null;
-                        e.target.src = '/Kkrap_logo.png';
+                        e.target.src = '/Kkrap_logo_large.png';
                     }}
                 />
             </div>

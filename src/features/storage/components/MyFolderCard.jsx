@@ -10,8 +10,8 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId,
     // 대표 썸네일: links 배열의 첫 번째 썸네일(없으면 기본 이미지)
     const thumbnail =
         links && links.length > 0
-            ? links[0].thumbnailUrl || links[0].faviconUrl || '/Kkrap_logo.png'
-            : '/Kkrap_logo.png';
+            ? links[0].thumbnailUrl || links[0].faviconUrl || '/Kkrap_logo_large.png'
+            : '/Kkrap_logo_large.png';
 
     // 외부 클릭 감지해서 메뉴 닫기
     useEffect(() => {
@@ -55,11 +55,11 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId,
                             <img
                                 key={link.linkId || idx}
                                 className="MultiThumbnail"
-                                src={link.thumbnailUrl || link.faviconUrl || '/Kkrap_logo.png'}
+                                src={link.thumbnailUrl || link.faviconUrl || '/Kkrap_logo_large.png'}
                                 alt={folderName}
                                 onError={(e) => {
                                     e.target.onError = null;
-                                    e.target.src = '/Kkrap_logo.png';
+                                    e.target.src = '/Kkrap_logo_large.png';
                                 }}
                             />
                         ))}
@@ -71,7 +71,7 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId,
                         alt={folderName}
                         onError={(e) => {
                             e.target.onError = null;
-                            e.target.src = '/Kkrap_logo.png';
+                            e.target.src = '/Kkrap_logo_large.png';
                         }}
                     />
                 )}

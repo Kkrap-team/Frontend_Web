@@ -75,10 +75,10 @@ const PermissionModal = ({
                         <div className="OwnerItem">
                             <img
                                 className="OwnerAvatar"
-                                src={owner.profile || '/Kkrap_logo.png'}
+                                src={owner.profile || '/Kkrap_logo_large.png'}
                                 alt={owner.nickname}
                                 onError={(e) => {
-                                    e.target.src = '/Kkrap_logo.png';
+                                    e.target.src = '/Kkrap_logo_large.png';
                                 }}
                             />
                             <div className="OwnerDetails">
@@ -138,10 +138,10 @@ const PermissionModal = ({
                             <div key={user.followingId} className="UserItem">
                                 <img
                                     className="UserAvatar"
-                                    src={user.profile || '/Kkrap_logo.png'}
+                                    src={user.profile || '/Kkrap_logo_large.png'}
                                     alt={user.nickname}
                                     onError={(e) => {
-                                        e.target.src = '/Kkrap_logo.png';
+                                        e.target.src = '/Kkrap_logo_large.png';
                                     }}
                                 />
                                 <div className="UserInfo">
