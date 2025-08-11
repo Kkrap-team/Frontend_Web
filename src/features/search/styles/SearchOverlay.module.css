@@ -32,7 +32,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow-y: auto; /* 스크롤 가능하도록 변경 */
 }
 
 @keyframes fadeIn {

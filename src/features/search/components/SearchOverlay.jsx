@@ -36,12 +36,13 @@ const SearchOverlay = ({ isVisible, onClose }) => {
 
         if (isVisible) {
             document.addEventListener('keydown', handleKeyDown);
-            document.body.style.overflow = 'hidden';
+            // 전체 페이지 스크롤을 막지 않도록 주석 처리
+            // document.body.style.overflow = 'hidden';
         }
 
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
-            document.body.style.overflow = 'unset';
+            // document.body.style.overflow = 'unset';
         };
     }, [isVisible]);
 
@@ -80,7 +81,7 @@ const SearchOverlay = ({ isVisible, onClose }) => {
             if (!recentSearches.includes(searchTerm)) {
                 setRecentSearches(prev => [searchTerm, ...prev.slice(0, 2)]);
             }
-            // navigate({ to: '/search', search: { term: searchTerm.trim() } });
+            navigate({ to: '/search', search: { term: searchTerm.trim() } });
             handleClose();
         }
     };

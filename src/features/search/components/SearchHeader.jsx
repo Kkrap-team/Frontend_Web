@@ -24,7 +24,7 @@ const SearchHeader = ({ query, onQueryChange, onClose, onSearch }) => {
                     ref={inputRef}
                     type="text"
                     className={styles.searchInput}
-                    placeholder="검색"
+                    placeholder="폴더 검색"
                     value={query}
                     onChange={(e) => onQueryChange(e.target.value)}
                     onKeyPress={handleKeyPress}

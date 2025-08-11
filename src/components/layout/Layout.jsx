@@ -20,6 +20,40 @@ export default function Layout({ children }) {
         return () => document.removeEventListener('searchToggle', handleSearchToggle);
     }, []);
 
+    // 검색 오버레이가 열려있을 때 body 스크롤 막기 및 네비게이션 공간 조정
+    useEffect(() => {
+        if (isSearchOpen) {
+            // 스크롤바 너비 계산
+            const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+            
+            // body 스크롤 차단
+            document.body.style.overflow = 'hidden';
+            
+            // 네비게이션에 스크롤바 공간만큼 오른쪽 여백 추가
+            const header = document.querySelector('.Header');
+            if (header) {
+                header.style.paddingRight = `${scrollbarWidth}px`;
+            }
+        } else {
+            // body 스크롤 복원
+            document.body.style.overflow = 'unset';
+            
+            // 네비게이션 여백 제거
+            const header = document.querySelector('.Header');
+            if (header) {
+                header.style.paddingRight = '0px';
+            }
+        }
+
+        return () => {
+            document.body.style.overflow = 'unset';
+            const header = document.querySelector('.Header');
+            if (header) {
+                header.style.paddingRight = '0px';
+            }
+        };
+    }, [isSearchOpen]);
+
     return (
         <div
             style={{

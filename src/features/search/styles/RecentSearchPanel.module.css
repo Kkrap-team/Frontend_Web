@@ -2,6 +2,7 @@
     padding: 24px;
     background: white;
     border-right: 1px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef; /* 아래쪽 스트로크 추가 */
     width: 300px;
     flex-shrink: 0;
 }

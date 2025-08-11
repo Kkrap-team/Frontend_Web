@@ -128,7 +128,21 @@
     transform: translateY(-1px);
 }
 
-/* 검색 결과 */
+/* 검색 결과 - 5열 그리드 */
+.search-results-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+
+.search-result-card {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+/* 기존 스타일 유지 (참고용) */
 .search-results {
     display: flex;
     flex-direction: column;
@@ -256,6 +270,13 @@
 }
 
 /* 반응형 디자인 */
+@media (max-width: 1200px) {
+    .search-results-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+}
+
 @media (max-width: 768px) {
     .search-page {
         padding: 16px;
@@ -263,6 +284,11 @@
     
     .search-title {
         font-size: 1.5rem;
+    }
+    
+    .search-results-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
     }
     
     .search-result-item {
@@ -280,5 +306,12 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-results-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
     }
 } 
