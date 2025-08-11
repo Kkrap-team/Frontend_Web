@@ -1,14 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useRecommendedFeed from '@/features/main/hooks/useRecommendedFeed';
 import MyFolderCard from '@/features/storage/components/MyFolderCard';
+import UserFolderCardHeader from './UserFolderCardHeader';
 import '../styles/ExploreSharedSection.css';
+import '../styles/UserFolderCardHeader.css';
 import { useAuthStore } from '@/stores/authStore';
 
 export default function ExploreSharedSection() {
     const { user } = useAuthStore();
     const userId = user?.userId;
 
-    const { items, loadMore, loading, hasMore } = useRecommendedFeed(userId);
+    const { items, loadMore, loading, hasMore, scrapFolder, scrapLoading } = useRecommendedFeed();
     const sentinelRef = useRef(null);
     const ioRef = useRef(null);
     const lastLoadAtRef = useRef(0);
@@ -38,6 +40,17 @@ export default function ExploreSharedSection() {
             }
         } catch (_) {
             setWaiting(false);
+        }
+    };
+
+    // 폴더 스크랩 처리
+    const handleScrapFolder = async (folderData) => {
+        const result = await scrapFolder(folderData);
+
+        if (result.success) {
+            alert('폴더가 성공적으로 스크랩되었습니다!');
+        } else {
+            alert('폴더 스크랩에 실패했습니다. 다시 시도해주세요.');
         }
     };
 
@@ -96,21 +109,13 @@ export default function ExploreSharedSection() {
 
                     return (
                         <div key={`${folder.folderId}-${idx}`} className="ExploreCard">
-                            <div className="ExploreCardHeader">
-                                <div className="ExploreUser">
-                                    <img
-                                        className="ExploreAvatar"
-                                        src={avatarSrc}
-                                        alt="user"
-                                        onError={(e) => {
-                                            e.currentTarget.onerror = null;
-                                            e.currentTarget.src = '/Kkrap_logo.png';
-                                        }}
-                                    />
-                                    <span className="ExploreUserName">{displayName}</span>
-                                </div>
-                                <button className="ExploreMore">⋮</button>
-                            </div>
+                            <UserFolderCardHeader
+                                displayName={displayName}
+                                avatarSrc={avatarSrc}
+                                onScrap={handleScrapFolder}
+                                folderData={folder}
+                                disabled={scrapLoading}
+                            />
                             <MyFolderCard folder={adaptedFolder} />
                         </div>
                     );

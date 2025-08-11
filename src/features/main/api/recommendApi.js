@@ -12,11 +12,19 @@ export const fetchRecommendedScroll = async () => {
     return { status: res.status, data: res.data };
 };
 
+// 추천 피드 초기화: Redis에 리스트/커서 생성
 // 백엔드 스펙: GET /scroll-init (405는 메서드 불일치)
 export const initRecommendedScroll = async () => {
     const res = await api.get(`${url}/folders/users/scroll-init`, {
         validateStatus: (status) => status >= 200 && status < 300,
     });
     console.log('스크롤-init', res);
+    return res.data;
+};
+
+// 폴더 스크랩
+export const scrapFolder = async (scrapData) => {
+    const res = await api.post(`${url}/folders/users/scrap`, scrapData);
+    console.log('폴더 스크랩 결과:', res.data);
     return res.data;
 };

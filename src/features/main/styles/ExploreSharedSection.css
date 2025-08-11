@@ -5,8 +5,6 @@
     align-items: center;
     margin-bottom: 16px;
 }
-.ExploreTitle {
-}
 
 /* 그리드 */
 .ExploreGrid {
@@ -49,10 +47,6 @@
     font-size: 16px;
     color: #777;
     cursor: pointer;
-}
-
-/* 센티널 */
-.ExploreSentinel {
 }
 
 /* 로딩/스피너 */
