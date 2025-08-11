@@ -1,9 +1,23 @@
 import React, { useState } from 'react';
+import { getRouteApi } from '@tanstack/react-router';
 import '@/features/create/styles/LinkAddModal.css';
 
 export default function LinkAddModal({ onClose, onSubmit, folders = [] }) {
+    let folderId;
+    try {
+        const routeApi = getRouteApi('/storage/$folderId');
+        folderId = routeApi.useParams().folderId;
+    } catch (e) {
+        folderId = null; // 스토리지 페이지에서는 null
+    }
+    const currentFolder = folders.find((folder) => folder.folderId === Number(folderId));
     const [link, setLink] = useState('');
-    const [selectedFolder, setSelectedFolder] = useState(folders[0].folderId || '');
+    const [selectedFolder, setSelectedFolder] = useState(currentFolder?.folderId || folders[0]?.folderId || '');
+
+    console.log('folderId', folderId);
+    console.log('currentFolder', currentFolder);
+    console.log('folders', folders);
+    console.log('folders[0].folderId:', folders[0]?.folderId, typeof folders[0]?.folderId);
 
     const handlePaste = async () => {
         try {
@@ -15,7 +29,10 @@ export default function LinkAddModal({ onClose, onSubmit, folders = [] }) {
     };
 
     const handleLinkSubmit = () => {
-        if (!link) return alert('링크 주소를 입력해주세요.');
+        if (!link.trim()) {
+            alert('링크 주소를 입력해주세요.');
+            return;
+        }
         onSubmit({ link, folderId: selectedFolder });
     };
 
@@ -23,35 +40,59 @@ export default function LinkAddModal({ onClose, onSubmit, folders = [] }) {
         onClose();
     };
 
+    // 폴더를 타입별로 분류
+    const ownFolders = folders.filter((folder) => folder.type === 'own');
+    const sharedFolders = folders.filter((folder) => folder.type === 'shared');
+
     return (
-        <div className="LinkAddModalBackdrop">
-            <div className="LinkAddModal">
+        <div className="LinkAddModalBackdrop" onClick={handleLinkCancel}>
+            <div className="LinkAddModal" onClick={(e) => e.stopPropagation()}>
                 <button className="LinkAddModalClose" onClick={handleLinkCancel}>
-                    &times;
+                    &times;{/* $times는 X 버튼 */}
                 </button>
-                <h3 className="LinkAddModalTitle">업로드</h3>
-                <input
-                    className="LinkAddModalInput"
-                    type="text"
-                    placeholder="링크 주소를 입력해주세요."
-                    value={link}
-                    onChange={(e) => setLink(e.target.value)}
-                />
-                <div className="LinkAddModalSelectWrapper">
-                    <label htmlFor="folder-select">저장할 위치</label>
-                    <select
-                        id="folder-select"
-                        className="LinkAddModalSelect"
-                        value={selectedFolder}
-                        onChange={(e) => setSelectedFolder(e.target.value)}
-                    >
-                        {folders.map((folder) => (
-                            <option key={folder.folderId} value={folder.folderId}>
-                                {folder.folderName || '이름 없는 폴더'}
-                            </option>
-                        ))}
-                    </select>
+                <h3 className="LinkAddModalTitle">링크 추가</h3>
+
+                <div className="LinkAddModalField">
+                    <label className="LinkAddModalLabel">저장할 위치</label>
+                    <div className="LinkAddModalDropdown">
+                        <select
+                            className="LinkAddModalSelect"
+                            value={selectedFolder}
+                            onChange={(e) => setSelectedFolder(e.target.value)}
+                        >
+                            {ownFolders.length > 0 && (
+                                <optgroup label="내 폴더">
+                                    {ownFolders.map((folder) => (
+                                        <option key={folder.folderId} value={folder.folderId}>
+                                            {folder.folderName || '이름 없는 폴더'}
+                                        </option>
+                                    ))}
+                                </optgroup>
+                            )}
+                            {sharedFolders.length > 0 && (
+                                <optgroup label="공유된 폴더">
+                                    {sharedFolders.map((folder) => (
+                                        <option key={folder.folderId} value={folder.folderId}>
+                                            {folder.folderName || '이름 없는 폴더'}
+                                        </option>
+                                    ))}
+                                </optgroup>
+                            )}
+                        </select>
+                    </div>
                 </div>
+
+                <div className="LinkAddModalField">
+                    <label className="LinkAddModalLabel">링크 주소</label>
+                    <input
+                        className="LinkAddModalInput"
+                        type="text"
+                        placeholder="링크 주소를 입력해주세요."
+                        value={link}
+                        onChange={(e) => setLink(e.target.value)}
+                    />
+                </div>
+
                 <div className="LinkAddModalButtons">
                     <button className="LinkAddModalPaste" onClick={handlePaste}>
                         붙여넣기

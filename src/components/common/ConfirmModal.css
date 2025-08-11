@@ -8,20 +8,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 3000;
 }
 
 .ConfirmModal {
     background: white;
     border-radius: 12px;
-    width: 90%;
-    max-width: 320px;
+    width: 100%;
+    max-width: 360px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
 
 .ConfirmModalHeader {
-    padding: 20px 24px 16px 24px;
+    padding: 24px 24px 16px 24px;
     text-align: center;
     border-bottom: 1px solid #f0f0f0;
 }
@@ -29,7 +29,7 @@
 .ConfirmModalHeader h3 {
     margin: 0;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: bold;
     color: #212120;
 }
 
@@ -49,7 +49,6 @@
     padding: 16px 24px 24px 24px;
     display: flex;
     gap: 12px;
-    border-top: 1px solid #f0f0f0;
 }
 
 .ConfirmModalCancelBtn {

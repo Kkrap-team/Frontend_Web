@@ -1,14 +1,17 @@
-import React from "react";
-import KakaoLoginButton from "../../features/auth/components/KakaoLoginBtn";
-import TestToken from "@/features/auth/components/testToken";
+import React from 'react';
+import MyFoldersSection from '../../features/main/components/MyFoldersSection';
+import '../../features/main/styles/MainPage.css';
+import './MainPage.css';
+import ExploreSharedSection from '@/features/main/components/ExploreSharedSection';
+
 function MainPage() {
-  return (
-    <div>
-      <h1>메인 페이지</h1>
-      <KakaoLoginButton/>
-      <TestToken/>
-    </div>
-  );
+    return (
+        <div className="MainPage">
+            <MyFoldersSection />
+            <div className="MainPageSectionDivider"></div>
+            <ExploreSharedSection />
+        </div>
+    );
 }
 
 export default MainPage;

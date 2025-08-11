@@ -33,7 +33,6 @@ export default function useFolderDetail(folderId) {
 
     useEffect(() => {
         fetchFolderDetail();
-        console.log('sad', folderId);
     }, [folderId]);
 
     return {

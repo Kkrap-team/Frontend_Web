@@ -7,7 +7,6 @@ import FolderHeader from '@/features/storage/components/FolderHeader';
 import FolderList from '@/features/storage/components/MyFolderList';
 import CreateDropdown from '@/features/create/components/CreateDropdown';
 import FolderCreateModal from '@/features/create/components/FolderCreateModal';
-import LinkAddModal from '@/features/create/components/LinkAddModal';
 import PermissionModal from '@/features/storage/components/PermissionModal';
 import usePermissionUsers from '@/features/storage/hooks/usePermissionUsers';
 
@@ -22,7 +21,26 @@ export default function StoragePage() {
         myFolderProfile,
         editFolder,
     } = useMyFolder(userId) || {};
-    const { addFolder, addLink } = useCreate();
+
+    // 모든 폴더를 하나의 배열로 합치기
+    const allFolders = [
+        ...ownFolders.map((folder) => ({ ...folder, type: 'own' })),
+        ...sharedFolders.map((folder) => ({ ...folder, type: 'shared' })),
+    ];
+
+    // useCreate 훅 사용 (모든 로직 포함)
+    const {
+        addFolder,
+        addLink,
+        showFolderModal,
+        showLinkModal,
+        openFolderModal,
+        openLinkModal,
+        closeFolderModal,
+        closeLinkModal,
+        folders,
+    } = useCreate(allFolders, userId, fetchFolders);
+
     const {
         users: followingUsers,
         invitedUsers,
@@ -39,59 +57,24 @@ export default function StoragePage() {
         handlePermissionRevoke,
     } = usePermissionUsers(userId, fetchFolders);
 
-    const [showCreateModal, setShowCreateModal] = useState(false);
-    const [showLinkModal, setShowLinkModal] = useState(false);
     const [modalMode, setModalMode] = useState(null);
     const [editTargetFolder, setEditTargetFolder] = useState(null);
-
-    // 폴더 생성 버튼 클릭
-    const handleCreateClick = () => {
-        setModalMode('create');
-        setEditTargetFolder(null);
-        setShowCreateModal(true);
-    };
-
-    // 폴더 생성/수정 모달 닫기
-    const handleCloseModal = () => {
-        setShowCreateModal(false);
-        setEditTargetFolder(null);
-        setModalMode(null);
-    };
 
     // 폴더 수정 버튼 클릭 (MyFolderCard에서 호출)
     const handleEditClick = (folder) => {
         setModalMode('edit');
         setEditTargetFolder(folder);
-        setShowCreateModal(true);
-    };
-
-    //폴더 생성/수정 모달 제출 함수
-    const handleSubmit = async (data) => {
-        if (modalMode === 'create') {
-            await handleCreate(data);
-        } else if (modalMode === 'edit') {
-            await handleEdit(data);
-        }
-        setShowCreateModal(false);
-        setEditTargetFolder(null);
-        setModalMode(null);
-    };
-
-    //폴더 생성 함수
-    const handleCreate = async (data) => {
-        await addFolder(data, userId, fetchFolders);
+        // 폴더 수정 모달은 별도로 관리
     };
 
     //폴더 수정 함수
     const handleEdit = async (data) => {
-        if (!editTargetFolder) {
-            alert('수정할 폴더 정보가 없습니다.');
-            return;
-        }
         await editFolder(
             { ...data, folderId: editTargetFolder.folderId, userId }, // 폴더 id와 수정 데이터 합쳐서 전달
             fetchFolders
         );
+        setModalMode(null);
+        setEditTargetFolder(null);
     };
 
     //폴더 삭제 함수
@@ -99,33 +82,31 @@ export default function StoragePage() {
         await removeFolder(folder, userId);
     };
 
-    // 링크 추가 함수
-    const handleAddLink = async ({ link, folderId }) => {
-        await addLink(
-            {
-                linkUrl: link,
-                foldersId: Number(folderId),
-                defaultFoldersId: Number(ownFolders[0].folderId),
-            },
-            userId,
-            fetchFolders
-        );
-        console.log('링크 추가 함수 실행', link, folderId, ownFolders[0].folderId, userId);
-        setShowLinkModal(false);
-    };
-
     return (
-        <div className="StorageContainer">
+        <div className="StorageContainer" style={{ paddingBottom: '120px' }}>
             <FolderHeader data={myFolderProfile} />
             <div className="StorageHeader">
                 <h2 className="StorageTitle">{user.nickname}님의 폴더</h2>
-                <CreateDropdown onCreateFolder={handleCreateClick} onAddLink={() => setShowLinkModal(true)} />
+                <CreateDropdown
+                    openFolderModal={openFolderModal}
+                    openLinkModal={openLinkModal}
+                    showFolderModal={showFolderModal}
+                    showLinkModal={showLinkModal}
+                    closeFolderModal={closeFolderModal}
+                    closeLinkModal={closeLinkModal}
+                    addFolder={addFolder}
+                    addLink={addLink}
+                    folders={folders}
+                    showFolderCreate={true}
+                />
             </div>
             <FolderList
                 folders={ownFolders}
                 onDelete={handleDelete}
                 onEdit={handleEditClick}
                 onPermission={openPermissionModal}
+                defaultFolderId={ownFolders[0]?.folderId}
+                allFolders={allFolders}
             />
             <div className="StorageHeader">
                 <br />
@@ -135,19 +116,24 @@ export default function StoragePage() {
                     onDelete={handleDelete}
                     onEdit={handleEditClick}
                     onPermission={openPermissionModal}
+                    defaultFolderId={ownFolders[0]?.folderId}
+                    allFolders={allFolders}
                 />
             </div>
-            {showCreateModal && (
+
+            {/* 폴더 수정 모달 */}
+            {modalMode === 'edit' && editTargetFolder && (
                 <FolderCreateModal
                     mode={modalMode}
                     initialData={editTargetFolder}
-                    onClose={handleCloseModal}
-                    onSubmit={handleSubmit}
+                    onClose={() => {
+                        setModalMode(null);
+                        setEditTargetFolder(null);
+                    }}
+                    onSubmit={handleEdit}
                 />
             )}
-            {showLinkModal && (
-                <LinkAddModal onClose={() => setShowLinkModal(false)} onSubmit={handleAddLink} folders={ownFolders} />
-            )}
+
             {showPermissionModal && (
                 <PermissionModal
                     isOpen={showPermissionModal}

@@ -1,0 +1,34 @@
+.MainPageUserSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.ContentTitle {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.SortOptions {
+    display: flex;
+    gap: 20px;
+}
+
+.SortOption {
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.2s;
+}
+
+/* 전체 레이아웃 고치기 전 임시로 전체 채우기 */
+.MainPageSectionDivider {
+    height: 20px;
+    background-color: #f7f7f7;
+    margin: 20px 0;
+    width: 100vw;
+    margin-left: calc(49.4% - 50vw);
+}
