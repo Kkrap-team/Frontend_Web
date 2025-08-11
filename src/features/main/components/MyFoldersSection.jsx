@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '@/contexts/AuthContext';
+import React from 'react';
+import { useAuthStore } from '@/stores/authStore';
 import useMyFolder from '@/features/storage/hooks/useMyFolder';
 import MyFolderCard from '@/features/storage/components/MyFolderCard';
 import '../styles/MyFoldersSection.css';
 import { useNavigate } from '@tanstack/react-router';
 
 const MyFoldersSection = () => {
-    const { user } = useContext(AuthContext);
+    const { user } = useAuthStore();
     const navigate = useNavigate();
     const userId = user?.userId;
     const { ownFolders = [], sharedFolders = [] } = useMyFolder(userId) || {};

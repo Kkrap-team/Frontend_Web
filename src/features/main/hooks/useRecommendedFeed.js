@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { fetchRecommendedScroll, initRecommendedScroll } from '@/features/main/api/recommendApi';
 
-export default function useRecommendedFeed(userId) {
+export default function useRecommendedFeed() {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
@@ -20,7 +20,6 @@ export default function useRecommendedFeed(userId) {
     }, [hasMore]);
 
     const loadMore = useCallback(async () => {
-        if (!userId) return;
         if (loadingRef.current || inFlightRef.current || !hasMoreRef.current) return;
 
         setLoading(true);
@@ -28,11 +27,11 @@ export default function useRecommendedFeed(userId) {
         inFlightRef.current = true;
         setError(null);
         try {
-            let { status, data } = await fetchRecommendedScroll(userId);
+            let { status, data } = await fetchRecommendedScroll();
             if (status === 204 && !isInitTriedRef.current) {
-                await initRecommendedScroll(userId);
+                await initRecommendedScroll();
                 isInitTriedRef.current = true;
-                ({ status, data } = await fetchRecommendedScroll(userId));
+                ({ status, data } = await fetchRecommendedScroll());
             }
 
             if (status === 200) {
@@ -48,27 +47,30 @@ export default function useRecommendedFeed(userId) {
                 hasMoreRef.current = false;
             }
         } catch (e) {
+            console.error('추천 피드 로드 실패:', e);
             setError(e);
         } finally {
             inFlightRef.current = false;
             setLoading(false);
             loadingRef.current = false;
         }
-    }, [userId]);
+    }, []);
 
-    // 최초 로드 또는 사용자 변경 시 초기화
+    // 최초 로드 시 초기화
     useEffect(() => {
-        setItems([]);
-        setHasMore(true);
-        hasMoreRef.current = true;
-        setLoading(false);
-        loadingRef.current = false;
-        isInitTriedRef.current = false;
-        if (userId) {
+        const initializeFeed = async () => {
+            setItems([]);
+            setHasMore(true);
+            hasMoreRef.current = true;
+            setLoading(false);
+            loadingRef.current = false;
+            isInitTriedRef.current = false;
             // 초기 1회만 호출
-            loadMore();
-        }
-    }, [userId]);
+            await loadMore();
+        };
+
+        initializeFeed();
+    }, [loadMore]);
 
     return { items, loadMore, loading, hasMore, error };
 }

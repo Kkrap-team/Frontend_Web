@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { AuthContext } from '@/contexts/AuthContext';
+import React, { useEffect, useRef, useState } from 'react';
 import useRecommendedFeed from '@/features/main/hooks/useRecommendedFeed';
 import MyFolderCard from '@/features/storage/components/MyFolderCard';
 import '../styles/ExploreSharedSection.css';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function ExploreSharedSection() {
-    const { user } = useContext(AuthContext);
+    const { user } = useAuthStore();
     const userId = user?.userId;
 
     const { items, loadMore, loading, hasMore } = useRecommendedFeed(userId);

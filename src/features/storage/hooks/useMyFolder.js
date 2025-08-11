@@ -49,6 +49,7 @@ export default function useMyFolders(userId) {
 
     // 폴더 삭제
     const removeFolder = async (folder) => {
+        console.log('removeFolder 데이터', folder);
         if (folder.defaultFolder) {
             showConfirm({
                 title: '삭제 불가',
@@ -68,7 +69,7 @@ export default function useMyFolders(userId) {
             confirmType: 'delete',
             onConfirm: async () => {
                 try {
-                    await deleteMyFolder(userId, folder.folderId);
+                    await deleteMyFolder(folder.folderId);
                     fetchFolders();
                 } catch (err) {
                     console.error('폴더 delete 안됨 :', err);

@@ -26,7 +26,7 @@ export default function useLinkSettings(userId, refetch) {
             confirmType: 'save',
             onConfirm: async () => {
                 try {
-                    await updateLinkTitle(userId, link.linkId, newName);
+                    await updateLinkTitle(link.linkId, newName);
                     // Hook에서 상태 관리
                     refetch(); // 링크 목록 새로고침
                     closeModal();
@@ -47,7 +47,7 @@ export default function useLinkSettings(userId, refetch) {
             confirmType: 'delete',
             onConfirm: async () => {
                 try {
-                    await deleteLink(userId, link.linkId, link.folderId, link.defaultFolderId);
+                    await deleteLink(link.linkId, link.folderId, link.defaultFolderId);
                     // Hook에서 상태 관리
                     refetch(); // 링크 목록 새로고침
                     closeModal();
