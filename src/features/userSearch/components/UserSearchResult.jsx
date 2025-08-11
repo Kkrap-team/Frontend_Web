@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from '../styles/userSearchModal.module.css';
+import FollowBtn from '../../follow/components/FollowBtn';
 
-const UserSearchResult = ({ user }) => {
+const UserSearchResult = ({ user, onFollowChange }) => {
   return (
     <div className={styles.row}>
       <div className={styles.userInfo}>
@@ -19,7 +20,11 @@ const UserSearchResult = ({ user }) => {
           <div className={styles.email}>{user.email || '이메일 없음'}</div>
         </div>
       </div>
-      <button className={styles.addBtn}>＋</button>
+      <FollowBtn 
+        userId={user.userId} 
+        isFollowing={user.isFollowing || false}
+        onFollowChange={onFollowChange}
+      />
     </div>
   );
 };

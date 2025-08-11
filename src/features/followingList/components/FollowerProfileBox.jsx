@@ -10,7 +10,12 @@ const FollowerProfileBox = ({ follower }) => {
           backgroundImage: `url(${follower.profile || '/default-profile.png'})`,
         }}
       />
-      <div className={styles.nickname}>{follower.nickname}</div>
+      <div className={styles.profileInfo}>
+        <div className={styles.nickname}>{follower.nickname}</div>
+        {follower.email && (
+          <div className={styles.email}>{follower.email}</div>
+        )}
+      </div>
     </div>
   );
 };

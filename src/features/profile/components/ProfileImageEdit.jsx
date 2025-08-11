@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import '@/features/profile/styles/ProfileImageEdit.css';
-import { AuthContext } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function ProfileImageEdit({ changeImageHandler }) {
-    const { user } = useContext(AuthContext);
+    const { user } = useAuthStore();
     const url = import.meta.env.VITE_URL;
 
     const handleImageUpload = (e) => {

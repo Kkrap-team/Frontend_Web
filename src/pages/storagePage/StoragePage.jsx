@@ -1,6 +1,6 @@
 // src/pages/storagePage/StoragePage.jsx
 import React, { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/stores/authStore';
 import useMyFolder from '@/features/storage/hooks/useMyFolder';
 import useCreate from '@/features/create/hooks/useCreate';
 import FolderHeader from '@/features/storage/components/FolderHeader';
@@ -11,7 +11,7 @@ import PermissionModal from '@/features/storage/components/PermissionModal';
 import usePermissionUsers from '@/features/storage/hooks/usePermissionUsers';
 
 export default function StoragePage() {
-    const { user } = useAuth();
+    const { user } = useAuthStore();
     const userId = user?.userId;
     const {
         ownFolders = [],

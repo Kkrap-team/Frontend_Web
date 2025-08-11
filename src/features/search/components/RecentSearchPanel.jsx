@@ -1,22 +1,22 @@
 import React from 'react';
-import './RecentSearchPanel.css';
+import styles from '../styles/RecentSearchPanel.module.css';
 
 const RecentSearchPanel = ({ recentSearches, onSearchClick, onRemoveSearch }) => {
     return (
-        <div className="recent-search-panel">
-            <h3 className="recent-search-title">최근 검색</h3>
-            <ul className="recent-search-list">
+        <div className={styles.recentSearchPanel}>
+            <h3 className={styles.recentSearchTitle}>최근 검색</h3>
+            <ul className={styles.recentSearchList}>
                 {recentSearches.map((search, index) => (
-                    <li key={index} className="recent-search-item">
+                    <li key={index} className={styles.recentSearchItem}>
                         <div 
-                            className="recent-search-text"
+                            className={styles.recentSearchText}
                             onClick={() => onSearchClick(search)}
                         >
-                            <span className="recent-search-icon">🕐</span>
-                            <span className="recent-search-term">{search}</span>
+                            <span className={styles.recentSearchIcon}>🕐</span>
+                            <span className={styles.recentSearchTerm}>{search}</span>
                         </div>
                         <button 
-                            className="recent-search-remove"
+                            className={styles.recentSearchRemove}
                             onClick={(e) => {
                                 e.stopPropagation();
                                 onRemoveSearch(search);

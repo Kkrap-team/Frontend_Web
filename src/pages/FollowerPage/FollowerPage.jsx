@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./FollowerPage.module.css";
 import FollowerSidebar from "@/features/followingList/components/FollowerSidebar";
 import { useFetchFollowingList } from "@/features/followingList/hooks/useFetchFollowingList";
 import { useModal } from "@/contexts/ModalContext";
+import { useAuthStore } from "@/stores/authStore";
+import FollowContents from "@/features/followContents/components/FollowContents";
 
 const FollowerPage = () => {
-  const { data: followers, loading, error } = useFetchFollowingList({ userId: 5 });
+  const { user } = useAuthStore();
+  const userId = user.userId;
+  const { data: followers, loading, error } = useFetchFollowingList({ userId });
   const { showModal } = useModal();
 
   if (loading) return <div>로딩 중...</div>;
@@ -29,7 +33,7 @@ const FollowerPage = () => {
             </button>
           </div>
           <div className={styles.contentArea}>
-            팔로워 콘텐츠 표시 예정.
+            <FollowContents />
           </div>
         </div>
       </div>

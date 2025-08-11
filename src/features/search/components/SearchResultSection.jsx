@@ -1,7 +1,7 @@
 import React from 'react';
 import RecentSearchPanel from './RecentSearchPanel';
 import SearchPreviewList from './SearchPreviewList';
-import './SearchResultSection.css';
+import styles from '../styles/SearchResultSection.module.css';
 
 const SearchResultSection = ({ 
     recentSearches, 
@@ -12,7 +12,7 @@ const SearchResultSection = ({
     onPreviewItemClick 
 }) => {
     return (
-        <div className="search-result-section">
+        <div className={styles.searchResultSection}>
             <RecentSearchPanel 
                 recentSearches={recentSearches}
                 onSearchClick={onSearchClick}

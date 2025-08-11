@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import './SearchHeader.css';
+import styles from '../styles/SearchHeader.module.css';
 
 const SearchHeader = ({ query, onQueryChange, onClose, onSearch }) => {
     const inputRef = useRef(null);
@@ -17,14 +17,14 @@ const SearchHeader = ({ query, onQueryChange, onClose, onSearch }) => {
     };
 
     return (
-        <div className="search-header">
-            <div className="search-input-container">
-                <img src="/search.png" alt="검색" className="search-icon" />
+        <div className={styles.searchHeader}>
+            <div className={styles.searchInputContainer}>
+                <img src="/search.png" alt="검색" className={styles.searchIcon} />
                 <input
                     ref={inputRef}
                     type="text"
-                    className="search-input"
-                    placeholder="검색"
+                    className={styles.searchInput}
+                    placeholder="폴더 검색"
                     value={query}
                     onChange={(e) => onQueryChange(e.target.value)}
                     onKeyPress={handleKeyPress}
@@ -32,7 +32,7 @@ const SearchHeader = ({ query, onQueryChange, onClose, onSearch }) => {
                 />
             </div>
             <button 
-                className="close-button" 
+                className={styles.closeButton} 
                 onClick={onClose}
                 aria-label="검색 닫기"
             >
