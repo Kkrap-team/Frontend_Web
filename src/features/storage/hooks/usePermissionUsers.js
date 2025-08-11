@@ -24,7 +24,7 @@ export default function usePermissionUsers(userId, onFoldersUpdate) {
         setLoading(true);
         setError(null);
 
-        getFolderPermissionList(userId, targetFolder.folderId)
+        getFolderPermissionList(targetFolder.folderId)
             .then((data) => {
                 setUsers(data.allCandidates || []); // 전체 후보들
                 setInvitedUsers(data.invited || []); // 초대된 사용자들
@@ -103,7 +103,7 @@ export default function usePermissionUsers(userId, onFoldersUpdate) {
 
                     // 권한 모달 목록 새로고침
                     if (targetFolder) {
-                        getFolderPermissionList(userId, targetFolder.folderId)
+                        getFolderPermissionList(targetFolder.folderId)
                             .then((data) => {
                                 setUsers(data.allCandidates || []); // 전체 후보들
                                 setInvitedUsers(data.invited || []); // 초대된 사용자들
@@ -156,7 +156,7 @@ export default function usePermissionUsers(userId, onFoldersUpdate) {
                         confirmType: 'save',
                         onConfirm: () => {
                             // 권한 모달 목록 새로고침
-                            getFolderPermissionList(userId, targetFolder.folderId)
+                            getFolderPermissionList(targetFolder.folderId)
                                 .then((data) => {
                                     setUsers(data.allCandidates || []); // 전체 후보들
                                     setInvitedUsers(data.invited || []); // 초대된 사용자들

@@ -78,8 +78,8 @@ export default function StoragePage() {
     };
 
     //폴더 삭제 함수
-    const handleDelete = async (folder, userId) => {
-        await removeFolder(folder, userId);
+    const handleDelete = async (folder) => {
+        await removeFolder(folder);
     };
 
     return (

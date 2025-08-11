@@ -1,12 +1,15 @@
 .FolderHeader {
     position: relative;
-    width: 100%;
+    width: 100vw !important;
     height: 40vh;
     min-height: 350px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 40px;
+    margin-left: calc(49.4% - 50vw);
+
+    box-sizing: border-box;
 }
 .FolderCoverBlur {
     position: absolute;

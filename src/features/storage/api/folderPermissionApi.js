@@ -2,8 +2,7 @@ import api from '@/utils/axiosConfig';
 const url = import.meta.env.VITE_URL;
 
 //폴더 권한 제어 목록 조회 (팔로우 목록 조회)
-export const getFolderPermissionList = async (userId, folderId) => {
-    console.log('getFolderPermissionList 받는 데이터', userId, folderId);
+export const getFolderPermissionList = async (folderId) => {
     const res = await api.get(`${url}/folderspermissions/folders/${folderId}/candidates`);
 
     console.log('폴더 권한 제어 목록 데이터', res.data);

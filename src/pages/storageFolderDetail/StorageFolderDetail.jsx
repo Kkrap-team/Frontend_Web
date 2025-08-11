@@ -1,6 +1,5 @@
 import React from 'react';
 import { getRouteApi } from '@tanstack/react-router';
-import { useContext } from 'react';
 import { useAuthStore } from '@/stores/authStore';
 import useFolderDetail from '@/features/folderDetail/hooks/useFolderDetail';
 import useCreate from '@/features/create/hooks/useCreate';
