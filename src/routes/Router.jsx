@@ -10,6 +10,7 @@ import { ModalProvider } from '@/contexts/ModalContext';
 import ModalRenderer from '@/components/common/ModalRenderer';
 import StoragePage from '@/pages/StoragePage/StoragePage';
 import StorageFolderDetail from '@/pages/storageFolderDetail/StorageFolderDetail';
+import SearchPage from '@/pages/SearchPage/SearchPage';
 
 const rootRoute = createRootRoute({
     component: () => (
@@ -61,6 +62,12 @@ const folderDetailRoute = createRoute({
     component: StorageFolderDetail,
 });
 
+const searchRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/search',
+    component: SearchPage,
+});
+
 const notFoundRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: '*',
@@ -74,6 +81,7 @@ export const router = createRouter({
         storageRoute,
         editProfileRoute,
         folderDetailRoute,
+        searchRoute,
         notFoundRoute,
         followerRoute,
     ]),

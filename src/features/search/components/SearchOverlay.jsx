@@ -5,7 +5,7 @@ import { getRankings } from '../api/searchApi';
 import SearchHeader from './SearchHeader';
 import SearchResultSection from './SearchResultSection';
 import SortedResultsSection from './SortedResultsSection';
-import './SearchOverlay.css';
+import styles from '../styles/SearchOverlay.module.css';
 
 const SearchOverlay = ({ isVisible, onClose }) => {
     const [query, setQuery] = useState('');
@@ -36,12 +36,13 @@ const SearchOverlay = ({ isVisible, onClose }) => {
 
         if (isVisible) {
             document.addEventListener('keydown', handleKeyDown);
-            document.body.style.overflow = 'hidden';
+            // 전체 페이지 스크롤을 막지 않도록 주석 처리
+            // document.body.style.overflow = 'hidden';
         }
 
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
-            document.body.style.overflow = 'unset';
+            // document.body.style.overflow = 'unset';
         };
     }, [isVisible]);
 
@@ -80,7 +81,7 @@ const SearchOverlay = ({ isVisible, onClose }) => {
             if (!recentSearches.includes(searchTerm)) {
                 setRecentSearches(prev => [searchTerm, ...prev.slice(0, 2)]);
             }
-            // navigate({ to: '/search', search: { term: searchTerm.trim() } });
+            navigate({ to: '/search', search: { term: searchTerm.trim() } });
             handleClose();
         }
     };
@@ -95,13 +96,13 @@ const SearchOverlay = ({ isVisible, onClose }) => {
     };
 
     const handlePreviewItemClick = (item) => {
-        // 폴더 상세 페이지로 이동
+        // 해당 검색어 폴더 페이지로 이동
         console.log('폴더 클릭:', item);
     };
 
     return (
-        <div className={`search-overlay ${isVisible ? 'visible' : ''}`}>
-            <div className="search-overlay-content">
+        <div className={`${styles.searchOverlay} ${isVisible ? styles.visible : ''}`}>
+            <div className={styles.searchOverlayContent}>
                 <SearchHeader 
                     query={query}
                     onQueryChange={handleQueryChange}

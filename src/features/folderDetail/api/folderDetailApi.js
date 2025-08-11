@@ -1,17 +1,18 @@
-import axios from 'axios';
+
+import api from '@/utils/axiosConfig';
 
 const url = import.meta.env.VITE_URL;
 
 // 폴더 상세 정보 및 전체 링크 목록 조회
 export const getFolderDetail = async (folderId) => {
-    const res = await axios.get(`${url}/folders/me/folders/${folderId}/links`);
+    const res = await api.get(`${url}/folders/me/folders/${folderId}/links`);
     console.log('폴더 상세 정보 및 링크 목록:', res.data);
     return res.data;
 };
 
 // 링크 제목 수정
-export const updateLinkTitle = async (userId, linkId, linkName) => {
-    const res = await axios.patch(`${url}/links/users/${userId}/links/title`, {
+export const updateLinkTitle = async (linkId, linkName) => {
+    const res = await api.patch(`${url}/links/users/links/title`, {
         linkId,
         linkName,
     });
@@ -20,8 +21,8 @@ export const updateLinkTitle = async (userId, linkId, linkName) => {
 };
 
 // 링크 삭제
-export const deleteLink = async (userId, linkId, folderId, defaultFolderId) => {
-    const res = await axios.delete(`${url}/links/users/${userId}/links`, {
+export const deleteLink = async (linkId, folderId, defaultFolderId) => {
+    const res = await api.delete(`${url}/links/users/links`, {
         data: {
             defaultFoldersId: defaultFolderId,
             foldersId: folderId,

@@ -3,7 +3,7 @@ import styles from '../styles/userSearchModal.module.css';
 import UserSearchSkeleton from './UserSearchSkeleton';
 import UserSearchResult from './UserSearchResult';
 
-const UserSearchList = ({ loading, error, results, query }) => {
+const UserSearchList = ({ loading, error, results, query, onFollowChange }) => {
   if (loading) {
     return <UserSearchSkeleton />;
   }
@@ -19,7 +19,11 @@ const UserSearchList = ({ loading, error, results, query }) => {
   return (
     <div className={styles.list}>
       {results.map(user => (
-        <UserSearchResult key={user.userId} user={user} />
+        <UserSearchResult 
+          key={user.userId} 
+          user={user} 
+          onFollowChange={onFollowChange}
+        />
       ))}
     </div>
   );

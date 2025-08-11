@@ -1,7 +1,7 @@
 import React from 'react';
 import { getRouteApi } from '@tanstack/react-router';
 import { useContext } from 'react';
-import { AuthContext } from '@/contexts/AuthContext';
+import { useAuthStore } from '@/stores/authStore';
 import useFolderDetail from '@/features/folderDetail/hooks/useFolderDetail';
 import FolderHeader from '@/features/folderDetail/components/FolderHeader';
 import LinkList from '@/features/folderDetail/components/LinkList';
@@ -13,7 +13,7 @@ export default function StorageFolderDetail() {
     const { folderId } = routeApi.useParams();
 
     // 사용자 정보 가져오기
-    const { user } = useContext(AuthContext);
+    const { user } = useAuthStore();
     const userId = user?.userId;
 
     // 폴더 상세 정보 및 링크 목록 조회

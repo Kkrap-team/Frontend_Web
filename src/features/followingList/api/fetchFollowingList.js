@@ -1,8 +1,9 @@
 import axios from 'axios';
+import api from '@/utils/axiosConfig';
 const url = import.meta.env.VITE_URL;
 
 export const fetchFollowingList = async (userId) => {
-  const response = await axios.get(`${url}/follows/${userId}/following`);
+  const response = await api.get(`${url}/follows/following`);
   return response.data;
 };
 
