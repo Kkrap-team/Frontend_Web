@@ -80,8 +80,8 @@ api.interceptors.response.use(
             if (originalRequest.url === '/api/auth/refresh') {
                 console.log('refreshToken 요청이 401 에러, 로그아웃 처리');
                 useAuthStore.getState().logout();
-                if (window.location.pathname !== '/login') {
-                    window.location.href = '/login';
+                if (window.location.pathname !== '/') {
+                    window.location.href = '/';
                 }
                 return Promise.reject(error);
             }
@@ -110,8 +110,8 @@ api.interceptors.response.use(
                 if (!storedRefreshToken) {
                     console.warn('저장된 refreshToken 없음 → 로그아웃 처리');
                     useAuthStore.getState().logout();
-                    if (window.location.pathname !== '/login') {
-                        window.location.href = '/login';
+                    if (window.location.pathname !== '/') {
+                        window.location.href = '/';
                     }
                     return Promise.reject(error);
                 }
@@ -155,8 +155,8 @@ api.interceptors.response.use(
 
                 // 로그인 페이지로 리다이렉트
                 //todo : 컨펌모달 추가, 메인페이지로 이동 추가 해야함
-                if (window.location.pathname !== '/login') {
-                    window.location.href = '/login';
+                if (window.location.pathname !== '/') {
+                    window.location.href = '/';
                 }
 
                 return Promise.reject(refreshError);
