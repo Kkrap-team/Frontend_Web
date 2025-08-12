@@ -93,13 +93,15 @@ export default function ExploreSharedSection() {
     return (
         <section className="ExploreSharedSection">
             <div className="ExploreHeaderRow">
-                <h2 className="ExploreTitle">공유 폴더 둘러보기</h2>
+                <h2 className="ExploreTitle">폴더 둘러보기</h2>
             </div>
 
             <div className="ExploreGrid">
                 {items.map((folder, idx) => {
                     const displayName = folder.nickname ?? '사용자';
                     const avatarSrc = folder.profileImage ?? '/Kkrap_logo.png';
+                    const userFolderCreateTime = folder.createTime;
+                    console.log('userFolderCreateTime', userFolderCreateTime);
 
                     const links =
                         folder.thumbnailUrl || folder.faviconUrl
@@ -115,6 +117,7 @@ export default function ExploreSharedSection() {
                                 onScrap={handleScrapFolder}
                                 folderData={folder}
                                 disabled={scrapLoading}
+                                userFolderCreateTime={userFolderCreateTime}
                             />
                             <MyFolderCard folder={adaptedFolder} />
                         </div>

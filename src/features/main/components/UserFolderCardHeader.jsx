@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { formatRelativeKorean } from '@/utils/formatRelativeTime';
 
 const UserFolderCardHeader = ({
     displayName = '사용자',
@@ -8,6 +9,7 @@ const UserFolderCardHeader = ({
     onScrap,
     folderData,
     disabled = false,
+    userFolderCreateTime,
 }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
@@ -53,7 +55,12 @@ const UserFolderCardHeader = ({
                         e.currentTarget.src = '/Kkrap_logo.png';
                     }}
                 />
-                <span className="UserFolderCardName">{displayName}</span>
+                <div className="UserFolderCardText">
+                    <span className="UserFolderCardName">{displayName}</span>
+                    {userFolderCreateTime && (
+                        <span className="UserFolderCardCreateTime">{formatRelativeKorean(userFolderCreateTime)}</span>
+                    )}
+                </div>
             </div>
             {showMoreButton && (
                 <div className="UserFolderCardMoreContainer" ref={dropdownRef}>

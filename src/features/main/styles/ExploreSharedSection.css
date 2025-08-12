@@ -9,22 +9,18 @@
 /* 그리드 */
 .ExploreGrid {
     display: grid;
-    gap: 16px;
+    gap: 40px 24px;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    margin-top: 24px;
 }
 
-/* 카드 */
+/*카드 */
 .ExploreCard {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
-.ExploreCardHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 4px;
-}
+
 .ExploreUser {
     display: flex;
     align-items: center;

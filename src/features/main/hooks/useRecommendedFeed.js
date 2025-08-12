@@ -30,8 +30,15 @@ export default function useRecommendedFeed() {
         try {
             let { status, data } = await fetchRecommendedScroll();
             if (status === 204 && !isInitTriedRef.current) {
-                await initRecommendedScroll();
+                // init이 실제 데이터를 반환할 수 있으므로 우선 사용
+                const initData = await initRecommendedScroll();
                 isInitTriedRef.current = true;
+                const initBatch = Array.isArray(initData) ? initData : initData?.folders || [];
+                if (initBatch.length > 0) {
+                    setItems((prev) => [...prev, ...initBatch]);
+
+                    return;
+                }
                 ({ status, data } = await fetchRecommendedScroll());
             }
 
