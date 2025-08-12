@@ -1,4 +1,3 @@
-import React, { useContext } from 'react';
 import '@/features/profile/styles/ProfileImageEdit.css';
 import { useAuthStore } from '@/stores/authStore';
 
@@ -18,9 +17,9 @@ export default function ProfileImageEdit({ changeImageHandler }) {
             <label htmlFor="ProfileImageInput">
                 {/* 카카오 기본 이미지로 올때는 http가 붙어와서 http가 있으면 url을 안붙힘 */}
                 <img
-                src={`${user.profile.startsWith('http') ? user.profile : `${url}${user.profile}`}?t=${Date.now()}`}
-                alt="프로필"
-                className="ProfileImage"
+                    src={`${user.profile.startsWith('http') ? user.profile : `${url}${user.profile}`}?t=${Date.now()}`}
+                    alt="프로필"
+                    className="ProfileImage"
                 />
 
                 

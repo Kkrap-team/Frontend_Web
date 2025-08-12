@@ -32,10 +32,10 @@ export default function Layout({ children }) {
         if (isSearchOpen) {
             // 스크롤바 너비 계산
             const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-            
+
             // body 스크롤 차단
             document.body.style.overflow = 'hidden';
-            
+
             // 네비게이션에 스크롤바 공간만큼 오른쪽 여백 추가
             const header = document.querySelector('.Header');
             if (header) {
@@ -44,7 +44,7 @@ export default function Layout({ children }) {
         } else {
             // body 스크롤 복원
             document.body.style.overflow = 'unset';
-            
+
             // 네비게이션 여백 제거
             const header = document.querySelector('.Header');
             if (header) {

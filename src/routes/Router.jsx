@@ -2,10 +2,12 @@ import { createRootRoute, createRoute, createRouter, RouterProvider } from '@tan
 import { Outlet } from '@tanstack/react-router';
 import Header from '@/features/header/components/Header';
 import Layout from '@/components/layout/Layout';
-import MainPage from '@/pages/MainPage/MainPage';
-import LoginPage from '@/pages/LoginPage/LoginPage';
+
+import MainPage from '@/pages/mainPage/MainPage';
+import LoginPage from '@/pages/loginPage/LoginPage';
+
 import FollowerPage from '@/pages/FollowerPage/FollowerPage';
-import EditProfilePage from '@/pages/UserPage/EditProfilePage';
+import EditProfilePage from '@/pages/userPage/EditProfilePage';
 import { ModalProvider } from '@/contexts/ModalContext';
 import ModalRenderer from '@/components/common/ModalRenderer';
 import StoragePage from '@/pages/storagePage/StoragePage';

@@ -8,7 +8,15 @@ export default function FolderHeader({ data }) {
         <div className="FolderHeader">
             <div className="FolderCoverBlur" />
             <div className="FolderProfileSection">
-                <img className="FolderProfileImage" src={`${url}${data.profile}`} alt="프로필" />
+                <img
+                    className="FolderProfileImage"
+                    src={
+                        data?.profile
+                            ? `${data.profile.startsWith('http') ? data.profile : `${url}${data.profile}`}?t=${Date.now()}`
+                            : '/Kkrap_logo.png'
+                    }
+                    alt="프로필"
+                />
                 <div className="FolderNickname">{data.nickname}</div>
                 <div className="FolderBio">{data.bio}</div>
 
