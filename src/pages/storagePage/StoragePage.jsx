@@ -70,7 +70,7 @@ export default function StoragePage() {
     //폴더 수정 함수
     const handleEdit = async (data) => {
         await editFolder(
-            { ...data, folderId: editTargetFolder.folderId, userId }, // 폴더 id와 수정 데이터 합쳐서 전달
+            { ...data, folderId: editTargetFolder.folderId }, // 폴더 id와 수정 데이터 합쳐서 전달
             fetchFolders
         );
         setModalMode(null);

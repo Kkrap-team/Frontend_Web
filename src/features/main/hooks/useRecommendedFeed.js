@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { fetchRecommendedScroll, initRecommendedScroll } from '@/features/main/api/recommendApi';
+import { fetchRecommendedScroll, initRecommendedScroll, scrapFolder } from '@/features/main/api/recommendApi';
 
 export default function useRecommendedFeed() {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [error, setError] = useState(null);
+    const [scrapLoading, setScrapLoading] = useState(false);
 
     const isInitTriedRef = useRef(false);
     const inFlightRef = useRef(false);
@@ -29,8 +30,15 @@ export default function useRecommendedFeed() {
         try {
             let { status, data } = await fetchRecommendedScroll();
             if (status === 204 && !isInitTriedRef.current) {
-                await initRecommendedScroll();
+                // init이 실제 데이터를 반환할 수 있으므로 우선 사용
+                const initData = await initRecommendedScroll();
                 isInitTriedRef.current = true;
+                const initBatch = Array.isArray(initData) ? initData : initData?.folders || [];
+                if (initBatch.length > 0) {
+                    setItems((prev) => [...prev, ...initBatch]);
+
+                    return;
+                }
                 ({ status, data } = await fetchRecommendedScroll());
             }
 
@@ -56,6 +64,37 @@ export default function useRecommendedFeed() {
         }
     }, []);
 
+    // 폴더 스크랩 처리
+    const handleScrapFolder = useCallback(
+        async (folderData) => {
+            if (scrapLoading) return; // 중복 요청 방지
+
+            setScrapLoading(true);
+            setError(null);
+
+            try {
+                const scrapData = {
+                    sourceFolderId: folderData.folderId,
+                    folderName: folderData.folderName,
+                    folderDescription: folderData.folderDescription,
+                    visible: folderData.visible,
+                };
+
+                console.log('스크랩 요청 데이터:', scrapData);
+                await scrapFolder(scrapData);
+
+                return { success: true };
+            } catch (error) {
+                console.error('스크랩 실패:', error);
+                setError(error);
+                return { success: false };
+            } finally {
+                setScrapLoading(false);
+            }
+        },
+        [scrapLoading]
+    );
+
     // 최초 로드 시 초기화
     useEffect(() => {
         const initializeFeed = async () => {
@@ -72,5 +111,13 @@ export default function useRecommendedFeed() {
         initializeFeed();
     }, [loadMore]);
 
-    return { items, loadMore, loading, hasMore, error };
+    return {
+        items,
+        loadMore,
+        loading,
+        hasMore,
+        error,
+        scrapFolder: handleScrapFolder,
+        scrapLoading,
+    };
 }

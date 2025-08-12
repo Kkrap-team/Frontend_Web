@@ -64,6 +64,9 @@
     font-size: 14px !important;
     font-weight: 600;
     line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* 한 줄로 제한 */
 }
 
 .MyFoldersSection .MyFolderDesc,

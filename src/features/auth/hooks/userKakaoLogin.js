@@ -46,26 +46,23 @@ const useKakaoLogin = () => {
 
                     // TODO: 배포 전 쿠키 기반으로 전환
                     // 임시: 도메인 상이로 쿠키 미전송 → 응답의 refreshToken을 로컬에 저장
-                    const response = await api.post(
-                      `${url}/api/auth/kakao-login`,
-                      { accesstoken: kakaoAccessToken },
-                    );
+                    const response = await api.post(`${url}/api/auth/kakao-login`, { accesstoken: kakaoAccessToken });
 
                     const { token, profile } = response.data;
 
                     // 임시: refreshToken도 로컬에 저장해 사용 (쿠키 전환 시 null로 변경)
                     const accessToken =
-                      token && token.accessToken
-                        ? token.accessToken
-                        : token && token.access_token
-                        ? token.access_token
-                        : null;
+                        token && token.accessToken
+                            ? token.accessToken
+                            : token && token.access_token
+                              ? token.access_token
+                              : null;
                     const refreshToken =
-                      token && token.refreshToken
-                        ? token.refreshToken
-                        : token && token.refresh_token
-                        ? token.refresh_token
-                        : null;
+                        token && token.refreshToken
+                            ? token.refreshToken
+                            : token && token.refresh_token
+                              ? token.refresh_token
+                              : null;
                     setTokens(accessToken, refreshToken);
                     setUser(profile);
 
@@ -78,7 +75,7 @@ const useKakaoLogin = () => {
                     navigate({ to: '/' });
                 } catch (err) {
                     console.error('카카오 로그인 실패:', err);
-                    navigate({ to: '/login' }); // 로그인 실패 시 로그인 페이지로 리다이렉트
+                    navigate({ to: '/' }); // 로그인 실패 시 메인 페이지로 리다이렉트
                 }
             };
 
