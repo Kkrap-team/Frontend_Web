@@ -2,16 +2,16 @@ import React from 'react';
 import styles from '../styles/userSearchModal.module.css';
 import FollowBtn from '../../follow/components/FollowBtn';
 
-const UserSearchResult = ({ user, onFollowChange }) => {
+const UserSearchResult = ({ user }) => {
   return (
     <div className={styles.row}>
       <div className={styles.userInfo}>
         <div className={styles.profileImage}>
           <img 
-            src={user.profile || '/public/account_circle.png'} 
+            src={user.profile || '/account_circle.png'} 
             alt={user.nickname}
             onError={(e) => {
-              e.target.src = '/public/account_circle.png';
+              e.target.src = '/account_circle.png';
             }}
           />
         </div>
@@ -22,8 +22,7 @@ const UserSearchResult = ({ user, onFollowChange }) => {
       </div>
       <FollowBtn 
         userId={user.userId} 
-        isFollowing={user.isFollowing || false}
-        onFollowChange={onFollowChange}
+        isFollowing={user.following}
       />
     </div>
   );

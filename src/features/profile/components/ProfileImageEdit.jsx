@@ -22,7 +22,7 @@ export default function ProfileImageEdit({ changeImageHandler }) {
                     className="ProfileImage"
                 />
 
-                <p className="ChangeImageText">프로필 사진 변경</p>
+                
                 {console.log('최종 이미지 경로:', `${url}${user.profile}?t=${Date.now()}`)}
             </label>
             <input

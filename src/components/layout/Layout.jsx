@@ -20,6 +20,13 @@ export default function Layout({ children }) {
         return () => document.removeEventListener('searchToggle', handleSearchToggle);
     }, []);
 
+    // 라우터 위치 변경 시 검색 오버레이 상태 즉시 초기화
+    useEffect(() => {
+        if (isSearchOpen) {
+            setIsSearchOpen(false);
+        }
+    }, [location.pathname, location.search]);
+
     // 검색 오버레이가 열려있을 때 body 스크롤 막기 및 네비게이션 공간 조정
     useEffect(() => {
         if (isSearchOpen) {
@@ -62,6 +69,7 @@ export default function Layout({ children }) {
                 opacity: isSearchOpen ? 0 : 1,
                 transition: isSearchOpen ? 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
                 pointerEvents: isSearchOpen ? 'none' : 'auto',
+                visibility: isSearchOpen ? 'hidden' : 'visible',
             }}
         >
             {children}
