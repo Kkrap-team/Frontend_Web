@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import '@/features/storage/styles/MyFolderCard.css';
 
-const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId, allFolders }) => {
+const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId, allFolders, showMenu = true }) => {
     const { folderId, folderName, folderDescription, links, defaultFolder, scrapCount, viewCount, visible } = folder;
-    const [showMenu, setShowMenu] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
     const cardRef = useRef(null);
     // 대표 썸네일: links 배열의 첫 번째 썸네일(없으면 기본 이미지)
@@ -17,23 +17,23 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId,
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (cardRef.current && !cardRef.current.contains(event.target)) {
-                setShowMenu(false);
+                setIsMenuOpen(false);
             }
         };
 
-        if (showMenu) {
+        if (isMenuOpen) {
             document.addEventListener('mousedown', handleClickOutside);
         }
 
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [showMenu]);
+    }, [isMenuOpen]);
 
     const handleFolderClick = () => {
         // 메뉴가 열려있으면 메뉴만 닫고 페이지 이동하지 않음
-        if (showMenu) {
-            setShowMenu(false);
+        if (isMenuOpen) {
+            setIsMenuOpen(false);
             return;
         }
 
@@ -88,38 +88,40 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId,
             <div className="MyFolderInfo">
                 <div className="MyFolderHeader">
                     <div className="MyFolderTitle">{folderName}</div>
-                    <div className="MoreWrapper">
-                        <button
-                            className="MoreBtn"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setShowMenu((prev) => !prev);
-                            }}
-                        >
-                            ⋮
-                        </button>
-                        {showMenu && (
-                            <div className="FolderMenuOverlay" onClick={() => setShowMenu(false)}>
-                                <div className="FolderMenu" onClick={(e) => e.stopPropagation()}>
-                                    <button className="FolderMenuItem" onClick={() => onEdit(folder)}>
-                                        <img className="FolderMenuIcon" src="/edit_folder.png" alt="수정" />
-                                        폴더 수정하기
-                                    </button>
-                                    <button className="FolderMenuItem" onClick={() => onPermission(folder)}>
-                                        <img className="FolderMenuIcon" src="/folder_permission.png" alt="권한" />
-                                        폴더 권한 제어
-                                    </button>
-                                    <button
-                                        className="FolderMenuItem FolderMenuDelete"
-                                        onClick={() => onDelete(folder)}
-                                    >
-                                        <img className="FolderMenuIcon" src="/delete.png" alt="삭제" />
-                                        삭제하기
-                                    </button>
+                    {showMenu && (
+                        <div className="MoreWrapper">
+                            <button
+                                className="MoreBtn"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setIsMenuOpen((prev) => !prev);
+                                }}
+                            >
+                                ⋮
+                            </button>
+                            {isMenuOpen && (
+                                <div className="FolderMenuOverlay" onClick={() => setIsMenuOpen(false)}>
+                                    <div className="FolderMenu" onClick={(e) => e.stopPropagation()}>
+                                        <button className="FolderMenuItem" onClick={() => onEdit(folder)}>
+                                            <img className="FolderMenuIcon" src="/edit_folder.png" alt="수정" />
+                                            폴더 수정하기
+                                        </button>
+                                        <button className="FolderMenuItem" onClick={() => onPermission(folder)}>
+                                            <img className="FolderMenuIcon" src="/folder_permission.png" alt="권한" />
+                                            폴더 권한 제어
+                                        </button>
+                                        <button
+                                            className="FolderMenuItem FolderMenuDelete"
+                                            onClick={() => onDelete(folder)}
+                                        >
+                                            <img className="FolderMenuIcon" src="/delete.png" alt="삭제" />
+                                            삭제하기
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        )}
-                    </div>
+                            )}
+                        </div>
+                    )}
                 </div>
                 <div className="MyFolderDesc">{folderDescription}</div>
 

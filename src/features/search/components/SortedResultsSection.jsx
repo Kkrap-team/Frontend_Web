@@ -4,6 +4,11 @@ import styles from '../styles/SortedResultsSection.module.css';
 
 const SortedResultsSection = ({ rankings, loading }) => {
 
+    // 랭킹 카드에서는 메뉴 기능을 사용하지 않으므로 빈 함수로 정의
+    const handleDelete = () => {};
+    const handleEdit = () => {};
+    const handlePermission = () => {};
+
     if (loading) {
         return (
             <div className={styles.sortedResultsSection}>
@@ -60,6 +65,9 @@ const SortedResultsSection = ({ rankings, loading }) => {
                           onDelete={handleDelete}
                           onEdit={handleEdit}
                           onPermission={handlePermission}
+                          showMenu={false}
+                          allFolders={[]}
+                          defaultFolderId={null}
                         />
                       </div>
                     ))}
@@ -107,6 +115,9 @@ const SortedResultsSection = ({ rankings, loading }) => {
                           onDelete={handleDelete}
                           onEdit={handleEdit}
                           onPermission={handlePermission}
+                          showMenu={false}
+                          allFolders={[]}
+                          defaultFolderId={null}
                         />
                       </div>
                     ))}
