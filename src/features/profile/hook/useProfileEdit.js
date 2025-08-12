@@ -11,6 +11,12 @@ export default function useProfileEdit(initialUser) {
     const { setUser } = useAuthStore();
     const navigate = useNavigate();
 
+    // initialUser가 변경될 때마다 로컬 상태 업데이트
+    useEffect(() => {
+        setNickname(initialUser.nickname || '');
+        setBio(initialUser.bio || '');
+    }, [initialUser.nickname, initialUser.bio]);
+
     useEffect(() => {
         setIsAvailable(null);
         setMessage('');
@@ -65,9 +71,7 @@ export default function useProfileEdit(initialUser) {
             const res = await profileFormUpdateApi(initialUser.userId, nickname, bio);
             alert('프로필이 저장되었습니다!');
             
-            // 현재 store의 user 상태 확인
-            const currentUser = useAuthStore.getState().user;
-            // store의 user 정보 업데이트
+            // store의 user 정보 업데이트 (email과 bio는 제외)
             const updatedUser = {
                 ...initialUser,
                 nickname: res.nickname,
@@ -76,7 +80,7 @@ export default function useProfileEdit(initialUser) {
           
             setUser(updatedUser);
             
-            navigate({ to: '/editProfile' });
+            // navigate({ to: '/editProfile' });
         } catch (error) {
             alert('프로필 저장 중 오류가 발생했습니다.');
             console.error('저장 실패:', error);

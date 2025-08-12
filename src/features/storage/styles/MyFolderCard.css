@@ -47,7 +47,7 @@
     background-position: center;
     border-radius: 8px 8px 0 0;
     aspect-ratio: 1/1; /* 정사각형 유지 */
-    object-fit: contain;
+    object-fit: cover;
     margin: 0 auto;
 }
 

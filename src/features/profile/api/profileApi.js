@@ -3,6 +3,12 @@ import api from '@/utils/axiosConfig';
 
 const url = import.meta.env.VITE_URL;
 
+// 현재 사용자 프로필 정보 가져오기
+export async function getCurrentUserProfileApi() {
+    const res = await api.get(`/users/me`);
+    return res.data;
+}
+
 // 닉네임 중복 확인
 export async function nicknameCheckApi(userId, nickname) {
     console.log('닉넴확인', userId, nickname);

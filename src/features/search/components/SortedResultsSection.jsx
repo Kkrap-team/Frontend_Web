@@ -15,18 +15,13 @@ const SortedResultsSection = ({ rankings, loading }) => {
         );
     }
 
-    // 더미 함수들 (MyFolderCard에서 필요한 props)
-    const handleDelete = () => {};
-    const handleEdit = () => {};
-    const handlePermission = () => {};
-
     // 데이터 구조 확인 및 디버깅
     console.log('SortedResultsSection rankings:', rankings);
     console.log('topViewCount:', rankings?.topViewCount);
     console.log('topscrapCount:', rankings?.topscrapCount);
     console.log('전체 rankings 키들:', rankings ? Object.keys(rankings) : 'rankings 없음');
     
-    // API 응답 구조에 맞는 정확한 키 사용
+    // API 응답 데이터 넣기.
     const scrapData = rankings?.topscrapCount || [];
     const viewData = rankings?.topViewCount || [];
 

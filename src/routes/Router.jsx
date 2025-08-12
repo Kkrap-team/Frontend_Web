@@ -1,14 +1,14 @@
 import { createRootRoute, createRoute, createRouter, RouterProvider } from '@tanstack/react-router';
 import { Outlet } from '@tanstack/react-router';
 import Header from '@/features/header/components/Header';
-import Layout from '@/components/layout/layout';
+import Layout from '@/components/layout/Layout';
 import MainPage from '@/pages/MainPage/MainPage';
 import LoginPage from '@/pages/LoginPage/LoginPage';
 import FollowerPage from '@/pages/FollowerPage/FollowerPage';
 import EditProfilePage from '@/pages/UserPage/EditProfilePage';
 import { ModalProvider } from '@/contexts/ModalContext';
 import ModalRenderer from '@/components/common/ModalRenderer';
-import StoragePage from '@/pages/StoragePage/StoragePage';
+import StoragePage from '@/pages/storagePage/StoragePage';
 import StorageFolderDetail from '@/pages/storageFolderDetail/StorageFolderDetail';
 import SearchPage from '@/pages/SearchPage/SearchPage';
 

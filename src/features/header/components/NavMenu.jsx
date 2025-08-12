@@ -22,11 +22,11 @@ export default function NavMenu({ toggleSearch, showSearchInput }) {
             </button>
 
             <button
-                className={`NavItem${pathname.startsWith('/follower') ? 'Active' : ''}`}
+                className={`NavItem ${pathname.startsWith('/follower') ? 'Active' : ''}`}
                 onClick={() => navigate({ to: '/follower' })}
             >
                 <img src="/follower.png" alt="팔로워" className="NavIcon" />
-                <span>팔로워</span>
+                <span>팔로우</span>
             </button>
 
             <button className={`NavItem ${showSearchInput ? 'Active' : ''}`} onClick={toggleSearch}>

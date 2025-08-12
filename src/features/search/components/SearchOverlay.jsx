@@ -81,14 +81,23 @@ const SearchOverlay = ({ isVisible, onClose }) => {
             if (!recentSearches.includes(searchTerm)) {
                 setRecentSearches(prev => [searchTerm, ...prev.slice(0, 2)]);
             }
-            navigate({ to: '/search', search: { term: searchTerm.trim() } });
+            // 먼저 검색 오버레이를 닫고 페이지 이동
             handleClose();
+            // 약간의 지연 후 페이지 이동하여 상태 업데이트가 완료되도록 함
+            setTimeout(() => {
+                navigate({ to: '/search', search: { term: searchTerm.trim() } });
+            }, 100);
         }
     };
 
     const handleSearchClick = (searchTerm) => {
         setQuery(searchTerm);
-        handleSearch(searchTerm);
+        // 먼저 검색 오버레이를 닫고 페이지 이동
+        handleClose();
+        // 약간의 지연 후 페이지 이동하여 상태 업데이트가 완료되도록 함
+        setTimeout(() => {
+            navigate({ to: '/search', search: { term: searchTerm.trim() } });
+        }, 100);
     };
 
     const handleRemoveSearch = (searchToRemove) => {

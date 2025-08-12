@@ -19,6 +19,10 @@ const useSearchToggle = () => {
     useEffect(() => {
         if (showSearchInput) {
             setShowSearchInput(false);
+            // 검색 상태 변경을 이벤트로 알림
+            document.dispatchEvent(new CustomEvent('searchToggle', {
+                detail: { isOpen: false }
+            }));
         }
     }, [location.pathname, location.search]);
     
