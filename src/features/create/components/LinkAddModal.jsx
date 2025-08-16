@@ -40,9 +40,10 @@ export default function LinkAddModal({ onClose, onSubmit, folders = [] }) {
         onClose();
     };
 
-    // 폴더를 타입별로 분류
-    const ownFolders = folders.filter((folder) => folder.type === 'own');
-    const sharedFolders = folders.filter((folder) => folder.type === 'shared');
+    // 폴더를 타입별로 분류 (type 정보가 없으면 전체를 단일 리스트로 표시)
+    const hasType = folders.some((f) => f && typeof f === 'object' && 'type' in f);
+    const ownFolders = hasType ? folders.filter((folder) => folder.type === 'own') : folders;
+    const sharedFolders = hasType ? folders.filter((folder) => folder.type === 'shared') : [];
 
     return (
         <div className="LinkAddModalBackdrop" onClick={handleLinkCancel}>
