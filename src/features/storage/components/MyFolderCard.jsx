@@ -42,13 +42,15 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId,
             return;
         }
 
-        // 디버깅 로그 추가
-        console.log('MyFolderCard handleFolderClick - folder:', folder);
-        console.log('MyFolderCard handleFolderClick - folderId:', folderId);
-        console.log('MyFolderCard handleFolderClick - folder.userId:', folder.userId);
-
-        // 전체 폴더 정보를 JSON으로 인코딩하여 URL 파라미터로 전달
-        const allFoldersParam = allFolders ? encodeURIComponent(JSON.stringify(allFolders)) : '';
+        // 상세 페이지에서 필요한 최소 정보(폴더ID, 폴더명)만 전달
+        const allFoldersParam = allFolders
+            ? encodeURIComponent(
+                  JSON.stringify(
+                      allFolders.map((f) => ({ folderId: f.folderId, folderName: f.folderName, type: f.type }))
+                  )
+              )
+            : '';
+      
         const defaultFolderIdParam = defaultFolderId ? `&defaultFolderId=${defaultFolderId}` : '';
         const targetUserIdParam = folder.userId ? `&targetUserId=${folder.userId}` : '';
 
