@@ -9,14 +9,15 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000; /* 검색 컴포넌트보다 높은 z-index */
+    z-index: 1000;
 }
 
-.Logo {
+.HeaderLogo {
     margin-left: 120px;
     display: flex;
     align-items: center;
     justify-self: start;
+    cursor: pointer;
 }
 
 .LogoImage {
@@ -33,6 +34,30 @@
     font-weight: bold;
     font-size: 16px;
     color: #5ab7fc;
+}
+
+.UserGuideButton {
+    margin-left: 16px;
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #cfd8dc;
+    border-radius: 50%;
+    background: #fff;
+    color: #546e7a;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+}
+.UserGuideButton:hover {
+    background: #f5f8fa;
+    border-color: #b0bec5;
+}
+.UserGuideButton:active {
+    background: #e3f2fd;
+    border-color: #90a4ae;
 }
 
 .NavMenu {

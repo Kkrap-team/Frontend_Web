@@ -101,7 +101,6 @@ export default function ExploreSharedSection() {
                     const displayName = folder.nickname ?? '사용자';
                     const avatarSrc = folder.profileImage ?? '/Kkrap_logo.png';
                     const userFolderCreateTime = folder.createTime;
-                    console.log('userFolderCreateTime', userFolderCreateTime);
 
                     const links =
                         folder.thumbnailUrl || folder.faviconUrl
