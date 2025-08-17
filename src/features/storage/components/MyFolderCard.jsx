@@ -4,6 +4,11 @@ import '@/features/storage/styles/MyFolderCard.css';
 
 const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId, allFolders, showMenu = true }) => {
     const { folderId, folderName, folderDescription, links, defaultFolder, scrapCount, viewCount, visible } = folder;
+    
+    // 디버깅 로그 추가
+    console.log('MyFolderCard received folder:', folder);
+    console.log('MyFolderCard extracted folderId:', folderId);
+    
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
     const cardRef = useRef(null);
@@ -37,11 +42,19 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId,
             return;
         }
 
+        // 디버깅 로그 추가
+        console.log('MyFolderCard handleFolderClick - folder:', folder);
+        console.log('MyFolderCard handleFolderClick - folderId:', folderId);
+        console.log('MyFolderCard handleFolderClick - folder.userId:', folder.userId);
+
         // 전체 폴더 정보를 JSON으로 인코딩하여 URL 파라미터로 전달
         const allFoldersParam = allFolders ? encodeURIComponent(JSON.stringify(allFolders)) : '';
         const defaultFolderIdParam = defaultFolderId ? `&defaultFolderId=${defaultFolderId}` : '';
+        const targetUserIdParam = folder.userId ? `&targetUserId=${folder.userId}` : '';
 
-        const url = `/storage/${folderId}?allFolders=${allFoldersParam}${defaultFolderIdParam}`;
+        const url = `/folder/${folderId}?allFolders=${allFoldersParam}${defaultFolderIdParam}${targetUserIdParam}`;
+        console.log('MyFolderCard generated URL:', url);
+        
         navigate({ to: url });
     };
 

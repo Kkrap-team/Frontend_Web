@@ -4,8 +4,8 @@ import api from '@/utils/axiosConfig';
 const url = import.meta.env.VITE_URL;
 
 // 폴더 상세 정보 및 전체 링크 목록 조회
-export const getFolderDetail = async (folderId) => {
-    const res = await api.get(`${url}/folders/me/folders/${folderId}/links`);
+export const getFolderDetail = async (folderId, targetUserId) => {
+    const res = await api.get(`${url}/folders/users/folders/${folderId}/links/${targetUserId}`);
     console.log('폴더 상세 정보 및 링크 목록:', res.data);
     return res.data;
 };

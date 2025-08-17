@@ -3,7 +3,7 @@ import styles from '../styles/userSearchModal.module.css';
 import UserSearchSkeleton from './UserSearchSkeleton';
 import UserSearchResult from './UserSearchResult';
 
-const UserSearchList = ({ loading, error, results, query }) => {
+const UserSearchList = ({ loading, error, results, query, onClose }) => {
   if (loading) {
     return <UserSearchSkeleton />;
   }
@@ -22,6 +22,7 @@ const UserSearchList = ({ loading, error, results, query }) => {
         <UserSearchResult 
           key={user.userId} 
           user={user} 
+          onClose={onClose}
         />
       ))}
     </div>

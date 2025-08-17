@@ -19,6 +19,7 @@ const UserSearchModal = ({ onClose }) => {
           error={error} 
           results={results} 
           query={query} 
+          onClose={onClose}
         />
         <button className={styles.closeBtn} onClick={handleClose}>×</button>
       </div>

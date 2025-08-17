@@ -5,7 +5,7 @@ import '@/features/create/styles/LinkAddModal.css';
 export default function LinkAddModal({ onClose, onSubmit, folders = [] }) {
     let folderId;
     try {
-        const routeApi = getRouteApi('/storage/$folderId');
+        const routeApi = getRouteApi('/folder/$folderId');
         folderId = routeApi.useParams().folderId;
     } catch (e) {
         folderId = null; // 스토리지 페이지에서는 null

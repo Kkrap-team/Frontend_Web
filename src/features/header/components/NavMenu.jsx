@@ -1,10 +1,13 @@
 // src/features/header/components/NavMenu.jsx
 import React from 'react';
 import { useNavigate, useRouterState } from '@tanstack/react-router';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function NavMenu({ toggleSearch, showSearchInput }) {
     const navigate = useNavigate();
     const pathname = useRouterState({ select: (state) => state.location.pathname });
+    const { user } = useAuthStore();
+    const userId = user?.userId;
 
     return (
         <nav className="NavMenu">
@@ -15,7 +18,7 @@ export default function NavMenu({ toggleSearch, showSearchInput }) {
 
             <button
                 className={`NavItem ${pathname.startsWith('/storage') ? 'Active' : ''}`}
-                onClick={() => navigate({ to: '/storage' })}
+                onClick={() => navigate({ to: `/storage/${userId}` })}
             >
                 <img src="/storage_box.png" alt="보관함" className="NavIcon" />
                 <span>보관함</span>

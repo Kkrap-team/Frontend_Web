@@ -36,7 +36,7 @@ const mainRoute = createRoute({
 
 const storageRoute = createRoute({
     getParentRoute: () => rootRoute,
-    path: '/storage',
+    path: '/storage/$userId',
     component: StoragePage,
 });
 
@@ -60,7 +60,7 @@ const editProfileRoute = createRoute({
 
 const folderDetailRoute = createRoute({
     getParentRoute: () => rootRoute,
-    path: '/storage/$folderId',
+    path: '/folder/$folderId',
     component: StorageFolderDetail,
 });
 
