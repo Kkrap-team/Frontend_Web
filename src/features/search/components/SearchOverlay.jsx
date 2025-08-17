@@ -4,7 +4,7 @@ import { useSearchSuggestions } from '../hooks/useSearchSuggestions';
 import { getRankings } from '../api/searchApi';
 import SearchHeader from './SearchHeader';
 import SearchResultSection from './SearchResultSection';
-import SortedResultsSection from './SortedResultsSection';
+import SortedRankingSection from './SortedRankingSection';
 import styles from '../styles/SearchOverlay.module.css';
 
 const SearchOverlay = ({ isVisible, onClose }) => {
@@ -129,7 +129,7 @@ const SearchOverlay = ({ isVisible, onClose }) => {
                             onRemoveSearch={handleRemoveSearch}
                             onPreviewItemClick={handlePreviewItemClick}
                         />
-                        <SortedResultsSection 
+                        <SortedRankingSection 
                             rankings={rankings}
                             loading={rankingsLoading}
                         />

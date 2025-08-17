@@ -1,5 +1,6 @@
 // src/pages/storagePage/StoragePage.jsx
 import React, { useState } from 'react';
+import { getRouteApi } from '@tanstack/react-router';
 import { useAuthStore } from '@/stores/authStore';
 import useMyFolder from '@/features/storage/hooks/useMyFolder';
 import useCreate from '@/features/create/hooks/useCreate';
@@ -10,9 +11,17 @@ import FolderCreateModal from '@/features/create/components/FolderCreateModal';
 import PermissionModal from '@/features/storage/components/PermissionModal';
 import usePermissionUsers from '@/features/storage/hooks/usePermissionUsers';
 
+const routeApi = getRouteApi('/storage/$userId');
+
 export default function StoragePage() {
+    const { userId: routeUserId } = routeApi.useParams();
     const { user } = useAuthStore();
-    const userId = user?.userId;
+    const currentUserId = user?.userId;
+    
+    // URL의 userId와 현재 로그인한 사용자의 userId가 다르면 다른 사람의 보관함
+    const isOwnStorage = routeUserId === currentUserId?.toString();
+    const targetUserId = routeUserId || currentUserId;
+
     const {
         ownFolders = [],
         sharedFolders = [],
@@ -20,7 +29,7 @@ export default function StoragePage() {
         fetchFolders,
         myFolderProfile,
         editFolder,
-    } = useMyFolder(userId) || {};
+    } = useMyFolder(targetUserId) || {};
 
     // 모든 폴더를 하나의 배열로 합치기
     const allFolders = [
@@ -39,7 +48,7 @@ export default function StoragePage() {
         closeFolderModal,
         closeLinkModal,
         folders,
-    } = useCreate(allFolders, userId, fetchFolders);
+    } = useCreate(allFolders, targetUserId, fetchFolders);
 
     const {
         users: followingUsers,
@@ -55,7 +64,7 @@ export default function StoragePage() {
         handleUserSelect,
         handlePermissionConfirm,
         handlePermissionRevoke,
-    } = usePermissionUsers(userId, fetchFolders);
+    } = usePermissionUsers(targetUserId, fetchFolders);
 
     const [modalMode, setModalMode] = useState(null);
     const [editTargetFolder, setEditTargetFolder] = useState(null);
@@ -86,40 +95,49 @@ export default function StoragePage() {
         <div className="StorageContainer" style={{ paddingBottom: '120px' }}>
             <FolderHeader data={myFolderProfile} />
             <div className="StorageHeader">
-                <h2 className="StorageTitle">{user.nickname}님의 폴더</h2>
-                <CreateDropdown
-                    openFolderModal={openFolderModal}
-                    openLinkModal={openLinkModal}
-                    showFolderModal={showFolderModal}
-                    showLinkModal={showLinkModal}
-                    closeFolderModal={closeFolderModal}
-                    closeLinkModal={closeLinkModal}
-                    addFolder={addFolder}
-                    addLink={addLink}
-                    folders={folders}
-                    showFolderCreate={true}
-                />
+                <h2 className="StorageTitle">
+                    {isOwnStorage ? `${user.nickname}님의 폴더` : `사용자의 폴더`}
+                </h2>
+                {isOwnStorage && (
+                    <CreateDropdown
+                        openFolderModal={openFolderModal}
+                        openLinkModal={openLinkModal}
+                        showFolderModal={showFolderModal}
+                        showLinkModal={showLinkModal}
+                        closeFolderModal={closeFolderModal}
+                        closeLinkModal={closeLinkModal}
+                        addFolder={addFolder}
+                        addLink={addLink}
+                        folders={folders}
+                        showFolderCreate={true}
+                    />
+                )}
             </div>
             <FolderList
                 folders={ownFolders}
-                onDelete={handleDelete}
-                onEdit={handleEditClick}
-                onPermission={openPermissionModal}
+                onDelete={isOwnStorage ? handleDelete : undefined}
+                onEdit={isOwnStorage ? handleEditClick : undefined}
+                onPermission={isOwnStorage ? openPermissionModal : undefined}
                 defaultFolderId={ownFolders[0]?.folderId}
                 allFolders={allFolders}
+                showMenu={isOwnStorage}
             />
-            <div className="StorageHeader">
-                <br />
-                <h2 className="StorageTitle">{user.nickname}님과 공유된 폴더</h2>
-                <FolderList
-                    folders={sharedFolders}
-                    onDelete={handleDelete}
-                    onEdit={handleEditClick}
-                    onPermission={openPermissionModal}
-                    defaultFolderId={ownFolders[0]?.folderId}
-                    allFolders={allFolders}
-                />
-            </div>
+            {isOwnStorage && (
+                <>
+                    <div className="StorageHeader">
+                        <br />
+                        <h2 className="StorageTitle">{user.nickname}님과 공유된 폴더</h2>
+                        <FolderList
+                            folders={sharedFolders}
+                            onDelete={handleDelete}
+                            onEdit={handleEditClick}
+                            onPermission={openPermissionModal}
+                            defaultFolderId={ownFolders[0]?.folderId}
+                            allFolders={allFolders}
+                        />
+                    </div>
+                </>
+            )}
 
             {/* 폴더 수정 모달 */}
             {modalMode === 'edit' && editTargetFolder && (

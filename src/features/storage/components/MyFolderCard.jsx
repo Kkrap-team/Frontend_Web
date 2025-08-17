@@ -4,6 +4,11 @@ import '@/features/storage/styles/MyFolderCard.css';
 
 const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId, allFolders, showMenu = true }) => {
     const { folderId, folderName, folderDescription, links, defaultFolder, scrapCount, viewCount, visible } = folder;
+    
+    // 디버깅 로그 추가
+    console.log('MyFolderCard received folder:', folder);
+    console.log('MyFolderCard extracted folderId:', folderId);
+    
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
     const cardRef = useRef(null);
@@ -45,9 +50,13 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId,
                   )
               )
             : '';
+      
         const defaultFolderIdParam = defaultFolderId ? `&defaultFolderId=${defaultFolderId}` : '';
+        const targetUserIdParam = folder.userId ? `&targetUserId=${folder.userId}` : '';
 
-        const url = `/storage/${folderId}?allFolders=${allFoldersParam}${defaultFolderIdParam}`;
+        const url = `/folder/${folderId}?allFolders=${allFoldersParam}${defaultFolderIdParam}${targetUserIdParam}`;
+        console.log('MyFolderCard generated URL:', url);
+        
         navigate({ to: url });
     };
 

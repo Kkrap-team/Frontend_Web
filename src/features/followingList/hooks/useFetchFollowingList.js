@@ -10,17 +10,26 @@ export const useFetchFollowingList = ({ userId } = {}) => {
   // 전역 스토어에서 팔로우 상태 가져오기
   const { setMultipleFollowStates, getFollowState } = useFollowStore();
 
+  console.log('useFetchFollowingList called with userId:', userId);
+
   useEffect(() => {
-    if (!userId) return;
+    if (!userId) {
+      console.log('No userId provided, skipping fetch');
+      setLoading(false);
+      return;
+    }
 
     const fetchData = async () => {
       try {
+        console.log('Fetching following list for userId:', userId);
         const response = await fetchFollowingList(userId);
         console.log('=== fetchFollowingList response ===');
         console.log('Response:', response);
+        console.log('Response type:', typeof response);
+        console.log('Is array:', Array.isArray(response));
         console.log('First user example:', response?.[0]);
         
-        setData(response);
+        setData(response || []);
         
         // 팔로우 상태를 전역 스토어에 설정
         if (response && Array.isArray(response)) {

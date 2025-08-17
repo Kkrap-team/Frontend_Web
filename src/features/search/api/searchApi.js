@@ -5,7 +5,7 @@ const url = import.meta.env.VITE_URL;
 export const searchFolders = async (query) => {
     try {
         console.log('검색 요청:', query);
-        const response = await api.get(`${url}/folders-search/search/text?keyword=${encodeURIComponent(query)}`);
+        const response = await api.get(`${url}/folders-search/text?keyword=${encodeURIComponent(query)}`);
 
         console.log('검색 API 응답 상태:', response.status);
         console.log('검색 API 응답 데이터:', response.data);
@@ -30,7 +30,7 @@ export const searchFolders = async (query) => {
 export const searchFoldersByEnter = async (query) => {
     try {
         console.log('Enter 검색 요청:', query);
-        const response = await api.get(`${url}/folders-search/search/enter?keyword=${encodeURIComponent(query)}`);
+        const response = await api.get(`${url}/folders-search/enter?keyword=${encodeURIComponent(query)}`);
 
         console.log('Enter 검색 API 응답 상태:', response.status);
         console.log('Enter 검색 API 응답 데이터:', response.data);

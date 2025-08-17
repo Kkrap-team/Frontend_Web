@@ -56,7 +56,7 @@ const MyFoldersSection = () => {
             <div className="MyFoldersSection">
                 <div className="SectionHeader">
                     <h2 className="SectionTitle">{user ? `${user.nickname}님의 폴더` : '나의 폴더'}</h2>
-                    <span className="SectionArrow" onClick={() => navigate({ to: '/storage' })}>
+                    <span className="SectionArrow" onClick={() => navigate({ to: `/storage/${userId}` })}>
                         &gt;
                     </span>
                 </div>
@@ -67,7 +67,7 @@ const MyFoldersSection = () => {
             <div className="SharedFoldersSection">
                 <div className="SectionHeader">
                     <h2 className="SectionTitle">{user ? `${user.nickname}님과 공유된 폴더` : '공유된 폴더'}</h2>
-                    <span className="SectionArrow" onClick={() => navigate({ to: '/storage' })}>
+                    <span className="SectionArrow" onClick={() => navigate({ to: `/storage/${userId}` })}>
                         &gt;
                     </span>
                 </div>

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getFolderDetail } from '../api/folderDetailApi';
 import { useAuthStore } from '@/stores/authStore';
 
-export default function useFolderDetail(folderId) {
+export default function useFolderDetail(folderId, targetUserId) {
     const [folderInfo, setFolderInfo] = useState(null);
     const [links, setLinks] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -12,14 +12,16 @@ export default function useFolderDetail(folderId) {
 
     // 폴더 상세 정보 및 링크 목록 조회
     const fetchFolderDetail = async () => {
-        if (!folderId) return;
+        if (!folderId || !targetUserId) return;
 
         setLoading(true);
         setError(null);
 
         try {
             // 하나의 API로 폴더 정보와 링크 목록을 모두 가져옴
-            const data = await getFolderDetail(folderId, userId);
+
+            const data = await getFolderDetail(folderId, targetUserId);
+
 
             // 폴더 정보 분리
             const { links: linksList, ...folderData } = data;
@@ -36,7 +38,7 @@ export default function useFolderDetail(folderId) {
 
     useEffect(() => {
         fetchFolderDetail();
-    }, [folderId]);
+    }, [folderId, targetUserId]);
 
     return {
         folderInfo,

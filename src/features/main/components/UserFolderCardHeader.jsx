@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from '@tanstack/react-router';
 import { formatRelativeKorean } from '@/utils/formatRelativeTime';
 
 const UserFolderCardHeader = ({
@@ -13,6 +14,7 @@ const UserFolderCardHeader = ({
 }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
+    const navigate = useNavigate();
 
     // 외부 클릭 감지해서 드롭다운 닫기
     useEffect(() => {
@@ -43,6 +45,12 @@ const UserFolderCardHeader = ({
         setShowDropdown(false);
     };
 
+    const handleProfileClick = () => {
+        if (folderData?.userId) {
+            navigate({ to: `/storage/${folderData.userId}` });
+        }
+    };
+
     return (
         <div className="UserFolderCardHeader">
             <div className="UserFolderCardInfo">
@@ -50,6 +58,8 @@ const UserFolderCardHeader = ({
                     className="UserFolderCardAvatar"
                     src={avatarSrc}
                     alt="user"
+                    onClick={handleProfileClick}
+                    style={{ cursor: 'pointer' }}
                     onError={(e) => {
                         e.currentTarget.onerror = null;
                         e.currentTarget.src = '/Kkrap_logo.png';

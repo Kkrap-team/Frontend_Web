@@ -7,7 +7,7 @@ import FolderHeader from '@/features/folderDetail/components/FolderHeader';
 import LinkList from '@/features/folderDetail/components/LinkList';
 import CreateDropdown from '@/features/create/components/CreateDropdown';
 
-const routeApi = getRouteApi('/storage/$folderId');
+const routeApi = getRouteApi('/folder/$folderId');
 
 export default function StorageFolderDetail() {
     // Route API 방식으로 파라미터 추출
@@ -17,6 +17,7 @@ export default function StorageFolderDetail() {
     const searchParams = new URLSearchParams(window.location.search);
     const defaultFolderId = searchParams.get('defaultFolderId');
     const allFoldersParam = searchParams.get('allFolders');
+    const targetUserId = searchParams.get('targetUserId');
 
     // 전체 폴더 정보 파싱
     const parsedAllFolders = allFoldersParam ? JSON.parse(decodeURIComponent(allFoldersParam)) : [];
@@ -26,7 +27,7 @@ export default function StorageFolderDetail() {
     const userId = user?.userId;
 
     // 폴더 상세 정보 및 링크 목록 조회
-    const { folderInfo, links, loading, error, refetch } = useFolderDetail(folderId);
+    const { folderInfo, links, loading, error, refetch } = useFolderDetail(folderId, targetUserId);
 
     // useCreate 훅 사용 (URL 파라미터로 받은 전체 폴더 + 현재 폴더 ID, 디폴트 폴더 ID)
     const { addLink, showLinkModal, openLinkModal, closeLinkModal, folders } = useCreate(
