@@ -38,6 +38,7 @@ export default function FollowContents() {
                         onDelete={() => console.log('삭제:', content.folderId)}
                         onEdit={() => console.log('수정:', content.folderId)}
                         onPermission={() => console.log('권한:', content.folderId)}
+                        showMenu={false}
                     />
                 ))}
             </div>

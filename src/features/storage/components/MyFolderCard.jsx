@@ -54,7 +54,7 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId,
         const defaultFolderIdParam = defaultFolderId ? `&defaultFolderId=${defaultFolderId}` : '';
         const targetUserIdParam = folder.userId ? `&targetUserId=${folder.userId}` : '';
 
-        const url = `/folder/${folderId}?allFolders=${allFoldersParam}${defaultFolderIdParam}${targetUserIdParam}`;
+        const url = `/folder/${folderId}?allFolders=${targetUserIdParam}${allFoldersParam}${defaultFolderIdParam}`;
         console.log('MyFolderCard generated URL:', url);
         
         navigate({ to: url });

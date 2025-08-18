@@ -2,7 +2,7 @@ import FolderCard from './MyFolderCard';
 import '@/features/storage/styles/MyFolderList.css';
 
 // 내 폴더 목록 컴포넌트
-export default function FolderList({ folders, onDelete, onEdit, onPermission, defaultFolderId, allFolders }) {
+export default function FolderList({ folders, onDelete, onEdit, onPermission, defaultFolderId, allFolders, showMenu = true }) {
     return (
         <div className="FolderList">
             {folders.map((folder) => (
@@ -14,6 +14,7 @@ export default function FolderList({ folders, onDelete, onEdit, onPermission, de
                     onPermission={onPermission}
                     defaultFolderId={defaultFolderId}
                     allFolders={allFolders}
+                    showMenu={showMenu}
                 />
             ))}
         </div>
