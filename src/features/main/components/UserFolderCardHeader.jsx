@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { formatRelativeKorean } from '@/utils/formatRelativeTime';
+import { useAuthStore } from '@/stores/authStore';
+import { useModal } from '@/contexts/ModalContext';
 
 const UserFolderCardHeader = ({
     displayName = '사용자',
@@ -15,6 +17,8 @@ const UserFolderCardHeader = ({
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
+    const { user } = useAuthStore();
+    const { showConfirm } = useModal();
 
     // 외부 클릭 감지해서 드롭다운 닫기
     useEffect(() => {
@@ -39,6 +43,21 @@ const UserFolderCardHeader = ({
     };
 
     const handleScrapClick = () => {
+        // 자신의 폴더인지 확인
+        if (folderData?.userId && user?.userId && folderData.userId === user.userId) {
+            showConfirm({
+                title: '스크랩 에러',
+                message: '자신의 폴더는 스크랩할 수 없습니다.',
+                confirmText: '확인',
+                cancelText: null,
+                onConfirm: () => {
+                    setShowDropdown(false);
+                }
+            });
+            return;
+        }
+
+        // 다른 사용자의 폴더인 경우 정상 스크랩 처리
         if (onScrap && folderData && !disabled) {
             onScrap(folderData);
         }

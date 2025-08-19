@@ -2,15 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import '@/features/storage/styles/MyFolderCard.css';
 
-const MyFolderCard = ({
-    folder,
-    onDelete,
-    onEdit,
-    onPermission,
-    allFolders,
-    showMenu = true,
-    showLockIcon = false,
-}) => {
+
+const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, allFolders, showMenu = true, showLockIcon = false }) => {
+
     const { folderId, folderName, folderDescription, links, defaultFolder, scrapCount, viewCount, visible } = folder;
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);

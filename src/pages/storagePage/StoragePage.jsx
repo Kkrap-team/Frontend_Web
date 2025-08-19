@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { getRouteApi } from '@tanstack/react-router';
 import { useAuthStore } from '@/stores/authStore';
+import { useModal } from '@/contexts/ModalContext';
 import useMyFolder from '@/features/storage/hooks/useMyFolder';
 import useCreate from '@/features/create/hooks/useCreate';
 import FolderHeader from '@/features/storage/components/FolderHeader';
@@ -16,8 +17,9 @@ const routeApi = getRouteApi('/storage/$userId');
 export default function StoragePage() {
     const { userId: routeUserId } = routeApi.useParams();
     const { user } = useAuthStore();
+    const { showConfirm } = useModal();
     const currentUserId = user?.userId;
-
+    
     // URL의 userId와 현재 로그인한 사용자의 userId가 다르면 다른 사람의 보관함
     const isOwnStorage = routeUserId === currentUserId?.toString();
     const targetUserId = routeUserId || currentUserId;
@@ -71,6 +73,18 @@ export default function StoragePage() {
 
     // 폴더 수정 버튼 클릭 (MyFolderCard에서 호출)
     const handleEditClick = (folder) => {
+        // 폴더 소유자 체크
+        if (folder.ownerUserId && folder.ownerUserId !== user.userId) {
+            showConfirm({
+                title: '수정 불가',
+                message: '폴더의 소유자가 아닌 사람은\n폴더 수정이 불가능합니다.',
+                confirmText: '확인',
+                confirmType: 'save',
+                onConfirm: () => {},
+            });
+            return;
+        }
+
         setModalMode('edit');
         setEditTargetFolder(folder);
         // 폴더 수정 모달은 별도로 관리
@@ -91,14 +105,13 @@ export default function StoragePage() {
         await removeFolder(folder);
     };
 
-    //제목 표시 이름
-    const displayName = isOwnStorage ? user.nickname : myFolderProfile?.nickname ?? '사용자';
-
     return (
         <div className="StorageContainer" style={{ paddingBottom: '120px' }}>
             <FolderHeader data={myFolderProfile} />
             <div className="StorageHeader">
-                <h2 className="StorageTitle">{`${displayName}님의 폴더`}</h2>
+                <h2 className="StorageTitle">
+                    {isOwnStorage ? `${user.nickname}님의 폴더` : `사용자의 폴더`}
+                </h2>
                 {isOwnStorage && (
                     <CreateDropdown
                         openFolderModal={openFolderModal}
@@ -119,7 +132,6 @@ export default function StoragePage() {
                 onDelete={isOwnStorage ? handleDelete : undefined}
                 onEdit={isOwnStorage ? handleEditClick : undefined}
                 onPermission={isOwnStorage ? openPermissionModal : undefined}
-                defaultFolderId={ownFolders[0]?.folderId}
                 allFolders={allFolders}
                 showMenu={isOwnStorage}
                 showLockIcon={isOwnStorage}
@@ -128,13 +140,12 @@ export default function StoragePage() {
                 <>
                     <div className="StorageHeader">
                         <br />
-                        <h2 className="StorageTitle">{displayName}님과 공유된 폴더</h2>
+                        <h2 className="StorageTitle">{user.nickname}님과 공유된 폴더</h2>
                         <FolderList
                             folders={sharedFolders}
                             onDelete={handleDelete}
                             onEdit={handleEditClick}
                             onPermission={openPermissionModal}
-                            defaultFolderId={ownFolders[0]?.folderId}
                             allFolders={allFolders}
                             showLockIcon={isOwnStorage}
                         />

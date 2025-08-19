@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createMyFolder, createLink } from '../api/createApi';
 
-export default function useCreate(folders = [], userId, onSuccess, defaultFolderId = null) {
+export default function useCreate(folders = [], userId, onSuccess) {
     // 모달 상태 관리
     const [showFolderModal, setShowFolderModal] = useState(false);
     const [showLinkModal, setShowLinkModal] = useState(false);
@@ -21,11 +21,9 @@ export default function useCreate(folders = [], userId, onSuccess, defaultFolder
     // 링크 추가 함수
     const addLink = async ({ link, folderId }) => {
         try {
-            // defaultFolderId가 있으면 사용, 없으면 folders[0] 사용
             const linkData = {
                 linkUrl: link,
                 foldersId: Number(folderId),
-                defaultFoldersId: Number(defaultFolderId || folders[0]?.folderId || folderId),
             };
 
             await createLink(linkData, userId);

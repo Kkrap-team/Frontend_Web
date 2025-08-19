@@ -45,6 +45,8 @@ export default function ExploreSharedSection() {
 
     // 폴더 스크랩 처리
     const handleScrapFolder = async (folderData) => {
+        // UserFolderCardHeader에서 이미 자신의 폴더 체크를 수행하므로
+        // 여기서는 바로 스크랩 처리만 진행
         const result = await scrapFolder(folderData);
 
         if (result.success) {

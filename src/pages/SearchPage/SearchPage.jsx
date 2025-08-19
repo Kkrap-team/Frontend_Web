@@ -68,7 +68,6 @@ const SearchPage = () => {
                                         links: result.imageUrl ? [{ thumbnailUrl: result.imageUrl }] : 
                                                result.thumbnailUrl ? [{ thumbnailUrl: result.thumbnailUrl }] :
                                                result.faviconUrl ? [{ faviconUrl: result.faviconUrl }] : [],
-                                        defaultFolder: false,
                                         scrapCount: result.scrapCount || 0,
                                         viewCount: result.viewCount || 0,
                                         visible: true

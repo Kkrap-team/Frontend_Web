@@ -16,9 +16,7 @@ const MyFoldersSection = () => {
         ...ownFolders.map((folder) => ({ ...folder, type: 'own' })),
         ...sharedFolders.map((folder) => ({ ...folder, type: 'shared' })),
     ];
-
-    // 디폴트 폴더 ID (ownFolders의 첫 번째 폴더)
-    const defaultFolderId = ownFolders.length > 0 ? ownFolders[0].folderId : null;
+    
 
     const renderGridContent = (folders) => {
         if (!user) {
@@ -45,7 +43,6 @@ const MyFoldersSection = () => {
                 key={folder.folderId}
                 folder={folder}
                 allFolders={allFolders}
-                defaultFolderId={defaultFolderId}
                 showMenu={false}
             />
         ));
