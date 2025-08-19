@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { getRouteApi } from '@tanstack/react-router';
 import { useModal } from '@/contexts/ModalContext';
 import { updateLinkTitle, deleteLink } from '@/features/folderDetail/api/folderDetailApi';
 
@@ -6,6 +7,8 @@ export default function useLinkSettings(userId, refetch) {
     const { showConfirm } = useModal();
     const [selectedLink, setSelectedLink] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const routeApi = getRouteApi('/folder/$folderId');
+    const { folderId } = routeApi.useParams();
 
     const openModal = (link) => {
         setSelectedLink(link);
@@ -47,7 +50,8 @@ export default function useLinkSettings(userId, refetch) {
             confirmType: 'delete',
             onConfirm: async () => {
                 try {
-                    await deleteLink(link.linkId, link.folderId, link.defaultFolderId);
+                    const currentFolderId = Number(folderId || link.folderId);
+                    await deleteLink(link.linkId, currentFolderId);
                     // Hook에서 상태 관리
                     refetch(); // 링크 목록 새로고침
                     closeModal();

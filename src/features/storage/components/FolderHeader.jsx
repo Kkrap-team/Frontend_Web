@@ -21,13 +21,6 @@ export default function FolderHeader({ data }) {
         <div className="FolderHeader">
             <div className="FolderCoverBlur" />
             <div className="FolderProfileSection">
-                <div className="FollowBtnContainer">
-                    {targetUserId && targetUserId !== myUserId && (
-                        <button className="FollowBtn" onClick={handleFollowClick} disabled={isLoading}>
-                            {following ? '팔로우 취소' : '팔로우하기'}
-                        </button>
-                    )}
-                </div>
                 <img
                     className="FolderProfileImage"
                     src={
@@ -53,6 +46,13 @@ export default function FolderHeader({ data }) {
                         <span className="FolderStatNum">{data.followingCount}+</span>
                         <span className="FolderStatLabel">follower</span>
                     </div>
+                </div>
+                <div className="FollowBtnContainer">
+                    {targetUserId && targetUserId !== myUserId && (
+                        <button className="FollowBtn" onClick={handleFollowClick} disabled={isLoading}>
+                            {following ? '팔로우취소' : '팔로우'}
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
