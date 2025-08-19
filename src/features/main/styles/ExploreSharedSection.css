@@ -7,18 +7,29 @@
 }
 
 /* 그리드 */
-.ExploreGrid {
+/* .ExploreGrid {
     display: grid;
     gap: 40px 24px;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     margin-top: 24px;
+} */
+ .ExploreGrid {
+    display: grid;
+    gap: 40px 32px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    margin-top: 24px;
+
+    max-width: calc(4 * 320px + 3 * 24px); /* 카드 4개 + 간격 3개 */
+    margin-left: auto;
+    margin-right: auto;
 }
 
-/*카드 */
+/* 카드 */
 .ExploreCard {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    max-width: 320px;
 }
 
 .ExploreUser {
