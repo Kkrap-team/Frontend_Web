@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import '@/features/storage/styles/PermissionModal.css';
 import { useAuthStore } from '@/stores/authStore';
 
@@ -18,10 +18,18 @@ const PermissionModal = ({
 }) => {
     const { user } = useAuthStore();
     const [searchTerm, setSearchTerm] = useState('');
-    const [activeTab, setActiveTab] = useState('invite'); // 'invite' | 'permissions'
-
     // 현재 사용자가 폴더 주인인지 확인
     const isOwner = user?.userId === owner?.userId;
+    // 소유자가 아닐 경우 기본 탭을 'permissions'로 열기
+    const [activeTab, setActiveTab] = useState(isOwner ? 'invite' : 'permissions'); // 'invite' | 'permissions'
+
+    // 모달이 열릴 때마다, 그리고 소유자 여부가 바뀔 때 탭/검색어 초기화
+    useEffect(() => {
+        if (isOpen) {
+            setActiveTab(isOwner ? 'invite' : 'permissions');
+            setSearchTerm('');
+        }
+    }, [isOpen, isOwner]);
 
     // allCandidates에서 전체 검색 후 탭별로 필터링
     const filteredUsers = useMemo(() => {
@@ -96,9 +104,7 @@ const PermissionModal = ({
 
                 {/* 폴더 주인이 아닌 경우 권한 부여 불가 메시지 */}
                 {!isOwner && (
-                    <div className="PermissionDeniedMessage">
-                        폴더 소유자만 초대 및 권한을 부여할 수 있습니다.
-                    </div>
+                    <div className="PermissionDeniedMessage">폴더 소유자만 초대 및 권한을 부여할 수 있습니다.</div>
                 )}
 
                 {/* 검색창 */}
@@ -139,7 +145,9 @@ const PermissionModal = ({
                             {searchTerm
                                 ? '검색 결과가 없습니다.'
                                 : activeTab === 'invite'
-                                  ? '초대 가능한 사용자가 없습니다.'
+                                  ? isOwner
+                                      ? '초대 가능한 사용자가 없습니다.'
+                                      : '폴더 소유자만 초대가 가능합니다.'
                                   : '초대된 사용자가 없습니다.'}
                         </div>
                     )}
@@ -163,24 +171,22 @@ const PermissionModal = ({
                                     </div>
                                     <div className="UserEmail">{user.email}</div>
                                 </div>
-                                {!user.invited ? (
-                                    // 미초대 사용자: 체크박스 표시 (폴더 주인만)
-                                    isOwner && (
-                                        <input
-                                            type="checkbox"
-                                            className="UserCheckbox"
-                                            checked={isUserSelected(user)}
-                                            onChange={() => handleUserToggle(user)}
-                                        />
-                                    )
-                                ) : (
-                                    // 초대된 사용자: 삭제 버튼 표시 (폴더 주인만)
-                                    isOwner && (
-                                        <button className="RevokeButton" onClick={() => onRevoke(user.followingId)}>
-                                            삭제
-                                        </button>
-                                    )
-                                )}
+                                {!user.invited
+                                    ? // 미초대 사용자: 체크박스 표시 (폴더 주인만)
+                                      isOwner && (
+                                          <input
+                                              type="checkbox"
+                                              className="UserCheckbox"
+                                              checked={isUserSelected(user)}
+                                              onChange={() => handleUserToggle(user)}
+                                          />
+                                      )
+                                    : // 초대된 사용자: 삭제 버튼 표시 (폴더 주인만)
+                                      isOwner && (
+                                          <button className="RevokeButton" onClick={() => onRevoke(user.followingId)}>
+                                              삭제
+                                          </button>
+                                      )}
                             </div>
                         ))}
                 </div>

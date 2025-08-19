@@ -1,31 +1,40 @@
 import { createRootRoute, createRoute, createRouter, RouterProvider } from '@tanstack/react-router';
-import { Outlet } from '@tanstack/react-router';
+import { Outlet, useLocation } from '@tanstack/react-router';
 import Header from '@/features/header/components/Header';
 import Layout from '@/components/layout/Layout';
+import { useAuthStore } from '@/stores/authStore';
 
 import MainPage from '@/pages/mainPage/MainPage';
 import LoginPage from '@/pages/loginPage/LoginPage';
-
 import FollowerPage from '@/pages/FollowerPage/FollowerPage';
 import EditProfilePage from '@/pages/userPage/EditProfilePage';
-import { ModalProvider } from '@/contexts/ModalContext';
-import ModalRenderer from '@/components/common/ModalRenderer';
 import StoragePage from '@/pages/storagePage/StoragePage';
 import StorageFolderDetail from '@/pages/storageFolderDetail/StorageFolderDetail';
 import SearchPage from '@/pages/SearchPage/SearchPage';
 
-const rootRoute = createRootRoute({
-    component: () => (
+import { ModalProvider } from '@/contexts/ModalContext';
+import ModalRenderer from '@/components/common/ModalRenderer';
+
+function RootPage() {
+    const { user } = useAuthStore();
+    const userId = user?.userId;
+    const location = useLocation();
+    const isRootAndGuest = location.pathname === '/' && !userId;
+    const isLoginPath = location.pathname === '/login';
+    const showHeader = !(isLoginPath || isRootAndGuest);
+    return (
         <>
             <ModalProvider>
-                <Header />
-                <Layout>
-                    <Outlet />
-                </Layout>
+                {showHeader && <Header />}
+                <Layout isLoginUI={isRootAndGuest}>{isRootAndGuest ? <LoginPage /> : <Outlet />}</Layout>
                 <ModalRenderer />
             </ModalProvider>
         </>
-    ),
+    );
+}
+
+const rootRoute = createRootRoute({
+    component: RootPage,
 });
 
 const mainRoute = createRoute({
