@@ -3,10 +3,20 @@ import LinkCard from './LinkCard';
 import LinkSettingsModal from './LinkSettingsModal';
 import useLinkSettings from '../hooks/useLinkSettings';
 import '../styles/LinkList.css';
+import SharedUsersPanel from './SharedUsersPanel';
 
-const LinkList = ({ links, folderInfo, userId, refetch }) => {
+const LinkList = ({
+    links,
+    folderInfo,
+    userId,
+    refetch,
+    invitedUsers = [],
+    sharingLoading = false,
+    onOpenPermission,
+}) => {
     const { showModal, selectedLink, openModal, closeModal, handleSave, handleDelete, handleCopyLink } =
         useLinkSettings(userId, refetch);
+
     return (
         <div className="LinkListContainer">
             <div className="LinkListHeader">
@@ -18,6 +28,7 @@ const LinkList = ({ links, folderInfo, userId, refetch }) => {
                     />
                     {folderInfo?.visible ? '공개' : '비공개'}
                 </div>
+                <SharedUsersPanel users={invitedUsers} loading={sharingLoading} onManage={onOpenPermission} />
             </div>
             {links.length === 0 ? (
                 <div className="LinkListEmpty">

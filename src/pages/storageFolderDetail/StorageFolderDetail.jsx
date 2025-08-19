@@ -6,6 +6,8 @@ import useCreate from '@/features/create/hooks/useCreate';
 import FolderDetailHeader from '@/features/folderDetail/components/FolderDetailHeader';
 import LinkList from '@/features/folderDetail/components/LinkList';
 import CreateDropdown from '@/features/create/components/CreateDropdown';
+import { getFolderPermissionList } from '@/features/storage/api/folderPermissionApi';
+import PermissionModal from '@/features/storage/components/PermissionModal';
 
 const routeApi = getRouteApi('/folder/$folderId');
 
@@ -38,6 +40,30 @@ export default function StorageFolderDetail() {
         folderId // 현재 폴더 ID를 기본값으로 설정
     );
 
+    // 권한 데이터: 페이지 진입 시 1회 로드 → 아이콘/모달에서 공통 사용
+    const [permData, setPermData] = React.useState(null);
+    const [permLoading, setPermLoading] = React.useState(false);
+    const [showPerm, setShowPerm] = React.useState(false);
+
+    React.useEffect(() => {
+        if (!folderId) return;
+        let ignore = false;
+        setPermLoading(true);
+        getFolderPermissionList(folderId)
+            .then((data) => {
+                if (!ignore) setPermData(data);
+            })
+            .finally(() => {
+                if (!ignore) setPermLoading(false);
+            });
+        return () => {
+            ignore = true;
+        };
+    }, [folderId]);
+
+    // 아이콘 표시에 사용할 원본 invited 목록만 전달 (가공은 컴포넌트가 담당)
+    const invitedUsers = Array.isArray(permData?.invited) ? permData.invited : [];
+
     if (loading) {
         return (
             <div style={{ textAlign: 'center' }}>
@@ -57,7 +83,15 @@ export default function StorageFolderDetail() {
     return (
         <div>
             <FolderDetailHeader folderInfo={folderInfo} />
-            <LinkList links={links} folderInfo={folderInfo} userId={userId} refetch={refetch} />
+            <LinkList
+                links={links}
+                folderInfo={folderInfo}
+                userId={userId}
+                refetch={refetch}
+                invitedUsers={invitedUsers}
+                sharingLoading={permLoading}
+                onOpenPermission={() => setShowPerm(true)}
+            />
 
             {/* Create 버튼 (링크 추가만) */}
             <CreateDropdown
@@ -72,6 +106,22 @@ export default function StorageFolderDetail() {
                 folders={folders}
                 showFolderCreate={false}
             />
+            {showPerm && (
+                <PermissionModal
+                    isOpen={showPerm}
+                    users={permData?.allCandidates || []}
+                    invitedUsers={permData?.invited || []}
+                    notInvitedUsers={permData?.notInvited || []}
+                    owner={permData?.owner || null}
+                    selectedUsers={[]}
+                    onUserSelect={() => {}}
+                    onClose={() => setShowPerm(false)}
+                    onConfirm={() => {}}
+                    onRevoke={() => {}}
+                    loading={permLoading}
+                    error={null}
+                />
+            )}
         </div>
     );
 }
