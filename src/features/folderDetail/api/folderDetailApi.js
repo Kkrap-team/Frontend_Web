@@ -31,5 +31,3 @@ export const deleteLink = async (linkId, folderId, defaultFolderId) => {
     console.log('링크 삭제:', res.data);
     return res.data;
 };
-
-//링크 삭제
