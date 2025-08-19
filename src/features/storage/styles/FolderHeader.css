@@ -9,7 +9,7 @@
     margin-bottom: 40px;
     margin-left: calc(49.55% - 50vw);
     margin-right: calc(49.55% - 50vw);
-    padding-top: 40px;
+    padding-top: 20px;
 }
 .FollowBtnContainer {
     display: flex;
@@ -32,7 +32,7 @@
 }
 
 .FollowBtn:hover {
-    background: rgba(89, 183, 252, 0.8); /* #ff6b6b */
+    background: rgba(89, 183, 252, 0.8);
     border-color: #5ab7fc;
     color: #ffffff;
 }
