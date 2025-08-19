@@ -12,7 +12,7 @@ const FollowerPage = () => {
   const { data: followers, loading, error } = useFetchFollowingList({ userId });
   const { showModal } = useModal();
 
-  console.log('FollowerPage render:', { user, userId, followers, loading, error });
+
 
   if (loading) return <div>로딩 중...</div>;
   if (error) return <div>에러 발생 : follower Page - {error.message}</div>;

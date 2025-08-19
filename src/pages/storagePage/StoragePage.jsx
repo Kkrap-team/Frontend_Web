@@ -121,6 +121,7 @@ export default function StoragePage() {
                 defaultFolderId={ownFolders[0]?.folderId}
                 allFolders={allFolders}
                 showMenu={isOwnStorage}
+                showLockIcon={isOwnStorage}
             />
             {isOwnStorage && (
                 <>
@@ -134,6 +135,7 @@ export default function StoragePage() {
                             onPermission={openPermissionModal}
                             defaultFolderId={ownFolders[0]?.folderId}
                             allFolders={allFolders}
+                            showLockIcon={isOwnStorage}
                         />
                     </div>
                 </>

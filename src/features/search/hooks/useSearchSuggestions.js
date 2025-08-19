@@ -42,8 +42,8 @@ export const useSearchSuggestions = () => {
             setSuggestions(data || []);
             console.log('suggestions 상태 업데이트:', data || []);
             
-            // 최소 로딩 시간 보장 (500ms)
-            const minLoadingTime = 500;
+            // 최소 로딩 시간 보장 (700ms)
+            const minLoadingTime = 700;
             const startTime = performance.now();
             
             // 로딩 상태를 최소 시간까지 유지

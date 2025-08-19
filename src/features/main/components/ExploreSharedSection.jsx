@@ -118,7 +118,7 @@ export default function ExploreSharedSection() {
                                 disabled={scrapLoading}
                                 userFolderCreateTime={userFolderCreateTime}
                             />
-                            <MyFolderCard folder={adaptedFolder} />
+                            <MyFolderCard folder={adaptedFolder} showMenu={false} />
                         </div>
                     );
                 })}

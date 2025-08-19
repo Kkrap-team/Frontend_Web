@@ -76,6 +76,7 @@ const SearchPage = () => {
                                     onDelete={() => {}}
                                     onEdit={() => {}}
                                     onPermission={() => {}}
+                                    showMenu={false}
                                 />
                             </div>
                         ))}
