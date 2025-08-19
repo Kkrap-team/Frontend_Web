@@ -8,7 +8,7 @@ export const useFetchFollowingList = ({ userId } = {}) => {
   const [error, setError] = useState(null);
   
   // 전역 스토어에서 팔로우 상태 가져오기
-  const { setMultipleFollowStates, getFollowState } = useFollowStore();
+  const { setMultipleFollowStates, getFollowState, followStates } = useFollowStore();
 
   useEffect(() => {
     if (!userId) {
@@ -44,12 +44,35 @@ export const useFetchFollowingList = ({ userId } = {}) => {
     fetchData();
   }, [userId, setMultipleFollowStates]);
 
-  // 전역 스토어의 팔로우 상태 변경을 감지하여 데이터 필터링
+  // 전역 스토어의 팔로우 상태 변경을 감지하여 데이터 필터링 (안전한 필터링)
   const filteredData = data.filter(user => {
+    if (!user || typeof user !== 'object') return false;
+    
     const userId = user.followingId || user.userId;
+    if (!userId) return false;
+    
     const isFollowing = getFollowState(userId);
     return isFollowing;
   });
+
+  // 팔로우 상태가 변경될 때마다 데이터를 다시 가져오기
+  useEffect(() => {
+    if (userId && followStates.size > 0) {
+      // 팔로우 상태가 변경되었을 때 새로운 팔로워 목록 가져오기
+      const fetchUpdatedData = async () => {
+        try {
+          const response = await fetchFollowingList(userId);
+          if (response && Array.isArray(response)) {
+            setData(response);
+          }
+        } catch (err) {
+          console.error('Error fetching updated following list:', err);
+        }
+      };
+      
+      fetchUpdatedData();
+    }
+  }, [followStates, userId]);
 
   return { data: filteredData, loading, error };
 };
