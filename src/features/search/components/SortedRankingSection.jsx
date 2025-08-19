@@ -59,7 +59,6 @@ const SortedRankingSection = ({ rankings, loading }) => {
                           folderDescription: item.folderDescription || '설명이 없습니다.',
                           links: item.thumbnailUrl ? [{ thumbnailUrl: item.thumbnailUrl }] : 
                                  item.faviconUrl ? [{ faviconUrl: item.faviconUrl }] : [],
-                          defaultFolder: false,
                           scrapCount: item.scrapCount || 0,
                           viewCount: item.viewCount || 0,
                           visible: item.visible || true,
@@ -75,7 +74,6 @@ const SortedRankingSection = ({ rankings, loading }) => {
                               onPermission={handlePermission}
                               showMenu={false}
                               allFolders={[]}
-                              defaultFolderId={null}
                             />
                           </div>
                         );
@@ -120,7 +118,6 @@ const SortedRankingSection = ({ rankings, loading }) => {
                           folderDescription: item.folderDescription || '설명이 없습니다.',
                           links: item.thumbnailUrl ? [{ thumbnailUrl: item.thumbnailUrl }] : 
                                  item.faviconUrl ? [{ faviconUrl: item.faviconUrl }] : [],
-                          defaultFolder: false,
                           scrapCount: item.scrapCount || 0,
                           viewCount: item.viewCount || 0,
                           visible: item.visible || true,
@@ -136,7 +133,6 @@ const SortedRankingSection = ({ rankings, loading }) => {
                               onPermission={handlePermission}
                               showMenu={false}
                               allFolders={[]}
-                              defaultFolderId={null}
                             />
                           </div>
                         );

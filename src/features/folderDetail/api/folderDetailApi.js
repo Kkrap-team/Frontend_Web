@@ -20,10 +20,10 @@ export const updateLinkTitle = async (linkId, linkName) => {
 };
 
 // 링크 삭제
-export const deleteLink = async (linkId, folderId, defaultFolderId) => {
+export const deleteLink = async (linkId, folderId) => {
     const res = await api.delete(`${url}/links/users/links`, {
         data: {
-            defaultFoldersId: defaultFolderId,
+            
             foldersId: folderId,
             linkId: [linkId],
         },
