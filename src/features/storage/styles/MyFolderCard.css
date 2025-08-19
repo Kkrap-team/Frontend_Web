@@ -30,6 +30,9 @@
     font-weight: bold;
     text-align: left;
     font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* 한 줄로 제한 */
 }
 
 .MyFolderDesc {
@@ -38,6 +41,9 @@
     color: #757575;
     font-size: 16px;
     margin-bottom: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* 한 줄로 제한 */
 }
 
 .MyFolderImage {
