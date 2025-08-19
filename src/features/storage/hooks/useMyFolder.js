@@ -75,7 +75,7 @@ export default function useMyFolders(userId) {
                     console.error('폴더 delete 안됨 :', err);
                     showConfirm({
                         title: '삭제 실패',
-                        message: '폴더 삭제에 실패했습니다.',
+                        message: '폴더 삭제에 실패했습니다. \n소유자만 삭제할 수 있습니다.',
                         confirmText: '확인',
                         confirmType: 'save',
                         onConfirm: () => {},

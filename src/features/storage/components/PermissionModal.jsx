@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import '@/features/storage/styles/PermissionModal.css';
+import { useAuthStore } from '@/stores/authStore';
 
 const PermissionModal = ({
     isOpen,
@@ -15,8 +16,12 @@ const PermissionModal = ({
     loading = false,
     error = null,
 }) => {
+    const { user } = useAuthStore();
     const [searchTerm, setSearchTerm] = useState('');
     const [activeTab, setActiveTab] = useState('invite'); // 'invite' | 'permissions'
+
+    // 현재 사용자가 폴더 주인인지 확인
+    const isOwner = user?.userId === owner?.userId;
 
     // allCandidates에서 전체 검색 후 탭별로 필터링
     const filteredUsers = useMemo(() => {
@@ -89,6 +94,13 @@ const PermissionModal = ({
                     </div>
                 )}
 
+                {/* 폴더 주인이 아닌 경우 권한 부여 불가 메시지 */}
+                {!isOwner && (
+                    <div className="PermissionDeniedMessage">
+                        폴더 소유자만 초대 및 권한을 부여할 수 있습니다.
+                    </div>
+                )}
+
                 {/* 검색창 */}
                 <div className="SearchWrapper">
                     <input
@@ -152,18 +164,22 @@ const PermissionModal = ({
                                     <div className="UserEmail">{user.email}</div>
                                 </div>
                                 {!user.invited ? (
-                                    // 미초대 사용자: 체크박스 표시
-                                    <input
-                                        type="checkbox"
-                                        className="UserCheckbox"
-                                        checked={isUserSelected(user)}
-                                        onChange={() => handleUserToggle(user)}
-                                    />
+                                    // 미초대 사용자: 체크박스 표시 (폴더 주인만)
+                                    isOwner && (
+                                        <input
+                                            type="checkbox"
+                                            className="UserCheckbox"
+                                            checked={isUserSelected(user)}
+                                            onChange={() => handleUserToggle(user)}
+                                        />
+                                    )
                                 ) : (
-                                    // 초대된 사용자: 삭제 버튼 표시
-                                    <button className="RevokeButton" onClick={() => onRevoke(user.followingId)}>
-                                        삭제
-                                    </button>
+                                    // 초대된 사용자: 삭제 버튼 표시 (폴더 주인만)
+                                    isOwner && (
+                                        <button className="RevokeButton" onClick={() => onRevoke(user.followingId)}>
+                                            삭제
+                                        </button>
+                                    )
                                 )}
                             </div>
                         ))}
@@ -174,7 +190,7 @@ const PermissionModal = ({
                     <button className="CancelBtn" onClick={onClose}>
                         취소
                     </button>
-                    {activeTab === 'invite' && (
+                    {isOwner && activeTab === 'invite' && (
                         <button className="ConfirmBtn" onClick={onConfirm} disabled={selectedUsers.length === 0}>
                             확인
                         </button>

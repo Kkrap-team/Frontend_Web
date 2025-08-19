@@ -28,7 +28,7 @@ const ConfirmModal = ({
                     <h3>{title}</h3>
                 </div>
                 <div className="ConfirmModalContent">
-                    <p>{message}</p>
+                    <p style={{ whiteSpace: 'pre-line' }}>{message}</p>
                 </div>
                 <div className="ConfirmModalFooter">
                     {cancelText && (

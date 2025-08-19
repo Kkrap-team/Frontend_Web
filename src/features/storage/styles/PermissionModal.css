@@ -34,6 +34,17 @@
     color: #333;
 }
 
+/* 권한 부여 불가 메시지 */
+.PermissionDeniedMessage {
+    text-align: center;
+    font-size: 14px;
+    color: #757575;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
 /* 오너 정보 */
 .OwnerInfo {
     background: #ffffff;
