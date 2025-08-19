@@ -11,6 +11,28 @@
 
     box-sizing: border-box;
 }
+.FollowBtnContainer {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-right: 120px;
+}
+/* 팔로우 버튼 우측 상단 배치 */
+.FollowBtn {
+    display: flex;
+    justify-content: flex-end;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid #5ab7fc;
+    background: #5ab7fc;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+.FollowBtn:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
 .FolderCoverBlur {
     position: absolute;
     top: 0;
@@ -37,6 +59,7 @@
     align-items: center;
     width: 100%;
 }
+
 .FolderProfileImage {
     width: 120px;
     height: 120px;
