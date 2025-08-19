@@ -17,7 +17,7 @@ export default function StoragePage() {
     const { userId: routeUserId } = routeApi.useParams();
     const { user } = useAuthStore();
     const currentUserId = user?.userId;
-    
+
     // URL의 userId와 현재 로그인한 사용자의 userId가 다르면 다른 사람의 보관함
     const isOwnStorage = routeUserId === currentUserId?.toString();
     const targetUserId = routeUserId || currentUserId;
@@ -91,13 +91,14 @@ export default function StoragePage() {
         await removeFolder(folder);
     };
 
+    //제목 표시 이름
+    const displayName = isOwnStorage ? user.nickname : myFolderProfile?.nickname ?? '사용자';
+
     return (
         <div className="StorageContainer" style={{ paddingBottom: '120px' }}>
             <FolderHeader data={myFolderProfile} />
             <div className="StorageHeader">
-                <h2 className="StorageTitle">
-                    {isOwnStorage ? `${user.nickname}님의 폴더` : `사용자의 폴더`}
-                </h2>
+                <h2 className="StorageTitle">{`${displayName}님의 폴더`}</h2>
                 {isOwnStorage && (
                     <CreateDropdown
                         openFolderModal={openFolderModal}
@@ -127,7 +128,7 @@ export default function StoragePage() {
                 <>
                     <div className="StorageHeader">
                         <br />
-                        <h2 className="StorageTitle">{user.nickname}님과 공유된 폴더</h2>
+                        <h2 className="StorageTitle">{displayName}님과 공유된 폴더</h2>
                         <FolderList
                             folders={sharedFolders}
                             onDelete={handleDelete}

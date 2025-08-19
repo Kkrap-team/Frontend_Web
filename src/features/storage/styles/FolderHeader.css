@@ -7,9 +7,39 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 40px;
-    margin-left: calc(49.66% - 50vw);
+    margin-left: calc(49.55% - 50vw);
+    margin-right: calc(49.55% - 50vw);
+    padding-top: 40px;
+}
+.FollowBtnContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
 
-    box-sizing: border-box;
+.FollowBtn {
+    margin-top: 24px;
+    width: 240px;
+    height: 44px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid #000000;
+    background: transparent;
+    color: #000000;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.FollowBtn:hover {
+    background: rgba(89, 183, 252, 0.8); /* #ff6b6b */
+    border-color: #5ab7fc;
+    color: #ffffff;
+}
+
+.FollowBtn:disabled {
+    opacity: 0.6;
+    cursor: default;
 }
 .FolderCoverBlur {
     position: absolute;
@@ -37,6 +67,7 @@
     align-items: center;
     width: 100%;
 }
+
 .FolderProfileImage {
     width: 120px;
     height: 120px;
@@ -49,12 +80,11 @@
     font-size: 28px;
     font-weight: 700;
     color: #212120;
-    margin-bottom: 12px;
 }
 .FolderBio {
     font-size: 18px;
     color: #757575;
-    margin-bottom: 24px;
+    margin: 12px 0;
 }
 .FolderStats {
     display: flex;

@@ -3,7 +3,7 @@ import { getRouteApi } from '@tanstack/react-router';
 import { useAuthStore } from '@/stores/authStore';
 import useFolderDetail from '@/features/folderDetail/hooks/useFolderDetail';
 import useCreate from '@/features/create/hooks/useCreate';
-import FolderHeader from '@/features/folderDetail/components/FolderHeader';
+import FolderDetailHeader from '@/features/folderDetail/components/FolderDetailHeader';
 import LinkList from '@/features/folderDetail/components/LinkList';
 import CreateDropdown from '@/features/create/components/CreateDropdown';
 
@@ -56,7 +56,7 @@ export default function StorageFolderDetail() {
 
     return (
         <div>
-            <FolderHeader folderInfo={folderInfo} />
+            <FolderDetailHeader folderInfo={folderInfo} />
             <LinkList links={links} folderInfo={folderInfo} userId={userId} refetch={refetch} />
 
             {/* Create 버튼 (링크 추가만) */}

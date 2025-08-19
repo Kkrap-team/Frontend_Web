@@ -1,9 +1,22 @@
 import React from 'react';
 import '@/features/storage/styles/FolderHeader.css';
+import { useFollow } from '@/features/follow/hooks/useFollow';
+import { useAuthStore } from '@/stores/authStore';
 
 const url = import.meta.env.VITE_URL;
 
 export default function FolderHeader({ data }) {
+    const targetUserId = data?.userId;
+    const { user } = useAuthStore();
+    const myUserId = user?.userId;
+    const { following, isLoading, toggleFollow, performUnfollow } = useFollow(targetUserId, data?.isFollowing);
+
+    const handleFollowClick = () => {
+        if (!targetUserId || isLoading) return <div>타겟유저 아이디가 없음</div>;
+        if (following) performUnfollow();
+        else toggleFollow();
+    };
+
     return (
         <div className="FolderHeader">
             <div className="FolderCoverBlur" />
@@ -33,6 +46,13 @@ export default function FolderHeader({ data }) {
                         <span className="FolderStatNum">{data.followingCount}+</span>
                         <span className="FolderStatLabel">follower</span>
                     </div>
+                </div>
+                <div className="FollowBtnContainer">
+                    {targetUserId && targetUserId !== myUserId && (
+                        <button className="FollowBtn" onClick={handleFollowClick} disabled={isLoading}>
+                            {following ? '팔로우취소' : '팔로우'}
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

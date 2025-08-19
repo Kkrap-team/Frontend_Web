@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/FolderHeader.css';
+import '../styles/FolderDetailHeader.css';
 
 const FolderHeader = ({ folderInfo }) => {
     if (!folderInfo) return null;
