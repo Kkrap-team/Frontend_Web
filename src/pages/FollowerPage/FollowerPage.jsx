@@ -15,8 +15,7 @@ const FollowerPage = () => {
 
 
   if (loading) return <div>로딩 중...</div>;
-  if (error) return <div>에러 발생 : follower Page - {error.message}</div>;
-  if (!followers || followers.length === 0) return <div>팔로워가 없습니다.</div>;
+  if (error) return <div>에러 발생 : follower Page - {error?.message || '알 수 없는 오류'}</div>;
 
   return (
     <div className={styles.container}>
