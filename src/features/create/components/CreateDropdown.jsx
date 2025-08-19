@@ -2,20 +2,26 @@ import React, { useState } from 'react';
 import FolderCreateModal from './FolderCreateModal';
 import LinkAddModal from './LinkAddModal';
 import '@/features/create/styles/CreateDropdown.css';
+import useCreate from '@/features/create/hooks/useCreate';
+import { useAuthStore } from '@/stores/authStore';
 
-export default function CreateDropdown({
-    openFolderModal,
-    openLinkModal,
-    showFolderModal,
-    showLinkModal,
-    closeFolderModal,
-    closeLinkModal,
-    addFolder,
-    addLink,
-    folders,
-    showFolderCreate = true, // 폴더 생성 메뉴 표시 여부
-}) {
+export default function CreateDropdown({ showFolderCreate = true, onSuccess }) {
     const [showMenu, setShowMenu] = useState(false);
+    const { user } = useAuthStore();
+    const userId = user?.userId;
+
+    // 내부 훅에서 폴더 로딩/모달 상태/생성까지 모두 관리
+    const {
+        addFolder,
+        addLink,
+        showFolderModal,
+        showLinkModal,
+        openFolderModal,
+        openLinkModal,
+        closeFolderModal,
+        closeLinkModal,
+        folders,
+    } = useCreate(undefined, userId, onSuccess);
 
     return (
         <>
@@ -24,7 +30,7 @@ export default function CreateDropdown({
             </button>
             {showMenu && (
                 <div className="CreateDropdownMenu" onMouseLeave={() => setShowMenu(false)}>
-                    {showFolderCreate && ( // 조건부로 폴더 생성 메뉴 표시
+                    {showFolderCreate && (
                         <button
                             onClick={() => {
                                 openFolderModal();

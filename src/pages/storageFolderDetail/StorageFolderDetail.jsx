@@ -120,18 +120,7 @@ export default function StorageFolderDetail() {
             />
 
             {/* Create 버튼 (링크 추가만) */}
-            <CreateDropdown
-                openFolderModal={() => {}} // 폴더 생성은 비활성화
-                openLinkModal={openLinkModal}
-                showFolderModal={false}
-                showLinkModal={showLinkModal}
-                closeFolderModal={() => {}}
-                closeLinkModal={closeLinkModal}
-                addFolder={() => {}}
-                addLink={addLink}
-                folders={folders}
-                showFolderCreate={false}
-            />
+            <CreateDropdown showFolderCreate={false} onSuccess={refetch} />
             {showPermissionModal && (
                 <PermissionModal
                     isOpen={showPermissionModal}

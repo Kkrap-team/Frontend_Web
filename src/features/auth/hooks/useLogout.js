@@ -1,14 +1,24 @@
 import { useNavigate } from '@tanstack/react-router';
 import { useAuthStore } from '@/stores/authStore';
+import { useModal } from '@/contexts/ModalContext';
 
 const useLogout = () => {
     const { logout } = useAuthStore();
     const navigate = useNavigate();
+    const { showConfirm } = useModal();
 
     return () => {
-        logout(); // AuthStore의 logout 함수 사용
-        alert('로그아웃 되었습니다.');
-        navigate({ to: '/' });
+        showConfirm({
+            title: '로그아웃',
+            message: '로그아웃 하시겠습니까?',
+            confirmText: '로그아웃',
+            cancelText: '취소',
+            confirmType: 'delete',
+            onConfirm: () => {
+                logout();
+                navigate({ to: '/' });
+            },
+        });
     };
 };
 

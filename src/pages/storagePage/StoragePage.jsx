@@ -19,7 +19,7 @@ export default function StoragePage() {
     const { user } = useAuthStore();
     const { showConfirm } = useModal();
     const currentUserId = user?.userId;
-    
+
     // URL의 userId와 현재 로그인한 사용자의 userId가 다르면 다른 사람의 보관함
     const isOwnStorage = routeUserId === currentUserId?.toString();
     const targetUserId = routeUserId || currentUserId;
@@ -39,18 +39,7 @@ export default function StoragePage() {
         ...sharedFolders.map((folder) => ({ ...folder, type: 'shared' })),
     ];
 
-    // useCreate 훅 사용 (모든 로직 포함)
-    const {
-        addFolder,
-        addLink,
-        showFolderModal,
-        showLinkModal,
-        openFolderModal,
-        openLinkModal,
-        closeFolderModal,
-        closeLinkModal,
-        folders,
-    } = useCreate(allFolders, targetUserId, fetchFolders);
+    // 링크 추가는 드롭다운 내부에서 독립적으로 처리 (페이지 제어 제거)
 
     const {
         users: followingUsers,
@@ -109,23 +98,8 @@ export default function StoragePage() {
         <div className="StorageContainer" style={{ paddingBottom: '120px' }}>
             <FolderHeader data={myFolderProfile} />
             <div className="StorageHeader">
-                <h2 className="StorageTitle">
-                    {isOwnStorage ? `${user.nickname}님의 폴더` : `사용자의 폴더`}
-                </h2>
-                {isOwnStorage && (
-                    <CreateDropdown
-                        openFolderModal={openFolderModal}
-                        openLinkModal={openLinkModal}
-                        showFolderModal={showFolderModal}
-                        showLinkModal={showLinkModal}
-                        closeFolderModal={closeFolderModal}
-                        closeLinkModal={closeLinkModal}
-                        addFolder={addFolder}
-                        addLink={addLink}
-                        folders={folders}
-                        showFolderCreate={true}
-                    />
-                )}
+                <h2 className="StorageTitle">{isOwnStorage ? `${user.nickname}님의 폴더` : `사용자의 폴더`}</h2>
+                {isOwnStorage && <CreateDropdown showFolderCreate onSuccess={fetchFolders} />}
             </div>
             <FolderList
                 folders={ownFolders}
