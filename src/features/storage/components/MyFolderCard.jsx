@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import '@/features/storage/styles/MyFolderCard.css';
 
-const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId, allFolders, showMenu = true, showLockIcon = false }) => {
+const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId, allFolders, showMenu = true }) => {
     const { folderId, folderName, folderDescription, links, defaultFolder, scrapCount, viewCount, visible } = folder;
-    
+
     // 디버깅 로그 추가
     console.log('MyFolderCard received folder:', folder);
     console.log('MyFolderCard extracted folderId:', folderId);
-    
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
     const cardRef = useRef(null);
@@ -42,21 +42,16 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId,
             return;
         }
 
-        // 상세 페이지에서 필요한 최소 정보(폴더ID, 폴더명)만 전달
-        const allFoldersParam = allFolders
-            ? encodeURIComponent(
-                  JSON.stringify(
-                      allFolders.map((f) => ({ folderId: f.folderId, folderName: f.folderName, type: f.type }))
-                  )
-              )
-            : '';
-      
-        const defaultFolderIdParam = defaultFolderId ? `&defaultFolderId=${defaultFolderId}` : '';
-        const targetUserIdParam = folder.userId ? `&targetUserId=${folder.userId}` : '';
+        const targetUserIdParam = folder.userId
+            ? `&targetUserId=${folder.userId}`
+            : folder.ownerUserId
+              ? `&targetUserId=${folder.ownerUserId}`
+              : '';
 
-        const url = `/folder/${folderId}?allFolders=${targetUserIdParam}${allFoldersParam}${defaultFolderIdParam}`;
+        const url = `/folder/${folderId}?${targetUserIdParam}`;
+        console.log('타겟유저아이디', targetUserIdParam);
         console.log('MyFolderCard generated URL:', url);
-        
+
         navigate({ to: url });
     };
 
@@ -91,14 +86,12 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, defaultFolderId,
                     />
                 )}
                 {/* 자물쇠 아이콘 */}
-                {showLockIcon && (
-                    <div className="MyFolderLock">
-                        <img
-                            src={visible ? '/visible_icon.png' : '/invisible_icon.png'}
-                            alt={visible ? '공개' : '비공개'}
-                        />
-                    </div>
-                )}
+                <div className="MyFolderLock">
+                    <img
+                        src={visible ? '/visible_icon.png' : '/invisible_icon.png'}
+                        alt={visible ? '공개' : '비공개'}
+                    />
+                </div>
             </div>
 
             {/* 하단 콘텐츠 영역 */}

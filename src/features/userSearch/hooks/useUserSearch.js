@@ -15,6 +15,7 @@ export function useUserSearch(debounceTime = 300) {
         if (!query.trim()) {
             setResults([]);
             setError(null);
+            setLoading(false); // 로딩 상태를 false로 설정
             return;
         }
         

@@ -46,7 +46,7 @@ const MyFoldersSection = () => {
                 folder={folder}
                 allFolders={allFolders}
                 defaultFolderId={defaultFolderId}
-                showMenu={true}
+                showMenu={false}
             />
         ));
     };

@@ -21,10 +21,7 @@ export const useFollow = (userId, initialFollowing = false) => {
   
   const following = getFollowState(userId);
   
-  console.log(`=== useFollow Debug for user ${userId} ===`);
-  console.log('Initial following:', initialFollowing);
-  console.log('Store following state:', following);
-  console.log('All store states:', useFollowStore.getState().followStates);
+
   
   // 초기 상태 설정
   useEffect(() => {
