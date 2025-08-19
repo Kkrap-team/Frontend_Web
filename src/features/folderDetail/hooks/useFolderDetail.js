@@ -22,7 +22,6 @@ export default function useFolderDetail(folderId, targetUserId) {
 
             const data = await getFolderDetail(folderId, targetUserId);
 
-
             // 폴더 정보 분리
             const { links: linksList, ...folderData } = data;
 

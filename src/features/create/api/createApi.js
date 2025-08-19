@@ -1,4 +1,3 @@
-import axios from 'axios';
 import api from '@/utils/axiosConfig';
 
 const url = import.meta.env.VITE_URL;

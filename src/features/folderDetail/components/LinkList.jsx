@@ -28,7 +28,9 @@ const LinkList = ({
                     />
                     {folderInfo?.visible ? '공개' : '비공개'}
                 </div>
-                <SharedUsersPanel users={invitedUsers} loading={sharingLoading} onManage={onOpenPermission} />
+                {folderInfo?.share && (
+                    <SharedUsersPanel users={invitedUsers} loading={sharingLoading} onManage={onOpenPermission} />
+                )}
             </div>
             {links.length === 0 ? (
                 <div className="LinkListEmpty">
