@@ -7,6 +7,7 @@ export default function Layout({ children }) {
 
     //check :  FollowerPage에서 margin 뺐습니다.
     const isFollowerPage = location.pathname === '/follower';
+    const isLoginPage = location.pathname === '/login';
 
     // 검색 오버레이 상태 감지
     useEffect(() => {
@@ -64,7 +65,8 @@ export default function Layout({ children }) {
     return (
         <div
             style={{
-                margin: isFollowerPage ? '60px 0 0 0' : '60px 120px 0 120px',
+                margin: isFollowerPage || isLoginPage ? '60px 0 0 0' : '60px 120px 0 120px',
+                overflow: isLoginPage ? 'hidden' : 'visible',
                 height: isFollowerPage ? 'calc(100vh - 110px)' : 'calc(100vh - 60px)',
                 opacity: isSearchOpen ? 0 : 1,
                 transition: isSearchOpen ? 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
