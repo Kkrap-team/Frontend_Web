@@ -5,8 +5,8 @@ import '@/features/storage/styles/MyFolderCard.css';
 
 const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, allFolders, showMenu = true, showLockIcon = false }) => {
 
-    const { folderId, folderName, folderDescription, links, defaultFolder, scrapCount, viewCount, visible } = folder;
-
+    const { folderId, folderName, folderDescription, links, defaultFolder, scrapCount, viewCount, visible, share } = folder;
+    console.log("째2 : ", links)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
     const cardRef = useRef(null);
@@ -57,7 +57,7 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, allFolders, show
         <div className="MyFolderCard" ref={cardRef} onClick={handleFolderClick}>
             {/* 상단 이미지 영역 */}
             <div className="MyFolderImageContainer">
-                {defaultFolder ? (
+                {share ? (
                     <div className="MultiThumbnailGrid">
                         {(links || []).map((link, idx) => (
                             <img
