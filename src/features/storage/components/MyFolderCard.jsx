@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import '@/features/storage/styles/MyFolderCard.css';
 
-const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, allFolders, showMenu = true }) => {
+const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, allFolders, showMenu = true, showLockIcon = false }) => {
     const { folderId, folderName, folderDescription, links, defaultFolder, scrapCount, viewCount, visible } = folder;
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -82,12 +82,14 @@ const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, allFolders, show
                     />
                 )}
                 {/* 자물쇠 아이콘 */}
-                <div className="MyFolderLock">
-                    <img
-                        src={visible ? '/visible_icon.png' : '/invisible_icon.png'}
-                        alt={visible ? '공개' : '비공개'}
-                    />
-                </div>
+                {showLockIcon && (
+                    <div className="MyFolderLock">
+                        <img
+                            src={visible ? '/visible_icon.png' : '/invisible_icon.png'}
+                            alt={visible ? '공개' : '비공개'}
+                        />
+                    </div>
+                )}
             </div>
 
             {/* 하단 콘텐츠 영역 */}
