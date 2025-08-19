@@ -4,7 +4,6 @@ import { getRouteApi } from '@tanstack/react-router';
 import { useAuthStore } from '@/stores/authStore';
 import { useModal } from '@/contexts/ModalContext';
 import useMyFolder from '@/features/storage/hooks/useMyFolder';
-import useCreate from '@/features/create/hooks/useCreate';
 import FolderHeader from '@/features/storage/components/FolderHeader';
 import FolderList from '@/features/storage/components/MyFolderList';
 import CreateDropdown from '@/features/create/components/CreateDropdown';

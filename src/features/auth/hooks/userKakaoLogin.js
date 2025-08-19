@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { useNavigate, useSearch } from '@tanstack/react-router';
+import { useNavigate, useLocation } from '@tanstack/react-router';
 import axios from 'axios';
 import { useAuthStore } from '@/stores/authStore';
-import { loginRoute } from '@/routes/Router';
 import api from '@/utils/axiosConfig';
 
 const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
@@ -12,7 +11,8 @@ const KAKAO_TOKEN_URL = import.meta.env.VITE_KAKAO_TOKEN_URL;
 const url = import.meta.env.VITE_URL;
 
 const useKakaoLogin = () => {
-    const search = useSearch({ from: loginRoute.id });
+    // 현재 활성 경로가 어디든 동일하게 동작하도록 location에서 search 사용
+    const { search } = useLocation();
     const navigate = useNavigate();
     const { setUser, setTokens } = useAuthStore();
     const login = useRef(new Set());

@@ -2,7 +2,6 @@ import React from 'react';
 import { getRouteApi } from '@tanstack/react-router';
 import { useAuthStore } from '@/stores/authStore';
 import useFolderDetail from '@/features/folderDetail/hooks/useFolderDetail';
-import useCreate from '@/features/create/hooks/useCreate';
 import FolderDetailHeader from '@/features/folderDetail/components/FolderDetailHeader';
 import LinkList from '@/features/folderDetail/components/LinkList';
 import CreateDropdown from '@/features/create/components/CreateDropdown';
@@ -29,12 +28,7 @@ export default function StorageFolderDetail() {
     // 폴더 상세 정보 및 링크 목록 조회
     const { folderInfo, links, loading, error, refetch } = useFolderDetail(folderId, targetUserId);
 
-    // useCreate 훅 사용 (URL 파라미터로 받은 전체 폴더 + 현재 폴더 ID, 디폴트 폴더 ID)
-    const { addLink, showLinkModal, openLinkModal, closeLinkModal, folders } = useCreate(
-        userId,
-        refetch,
-        folderId // 현재 폴더 ID를 기본값으로 설정
-    );
+    // 링크 추가는 CreateDropdown 내부에서 독립적으로 처리
 
     // 권한 데이터: 페이지 진입 시 1회 로드 → 아이콘/모달에서 공통 사용
     const [permData, setPermData] = React.useState(null);
@@ -60,7 +54,7 @@ export default function StorageFolderDetail() {
         return () => {
             ignore = true;
         };
-    }, [folderId, folderInfo?.share]);
+    }, [folderId, folderInfo]);
 
     // 아이콘 표시에 사용할 원본 invited 목록만 전달 (가공은 컴포넌트가 담당)
     const invitedUsers = Array.isArray(permData?.invited) ? permData.invited : [];
@@ -72,7 +66,7 @@ export default function StorageFolderDetail() {
         getFolderPermissionList(folderId)
             .then((data) => setPermData(data))
             .finally(() => setPermLoading(false));
-    }, [folderId, folderInfo?.share]);
+    }, [folderId, folderInfo]);
 
     const {
         users: permUsers,
