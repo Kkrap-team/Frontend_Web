@@ -31,7 +31,7 @@ export default function StoragePage() {
         myFolderProfile,
         editFolder,
     } = useMyFolder(targetUserId) || {};
-    console.log("째 : " , sharedFolders);
+    console.log('째 : ', sharedFolders);
 
     // 모든 폴더를 하나의 배열로 합치기
     const allFolders = [

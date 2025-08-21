@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useAuthStore } from '@/stores/authStore';
 import { useNavigate } from '@tanstack/react-router';
-import KakaoLoginBtn from '../../auth/components/KakaoLoginBtn';
 import useLogout from '../../auth/hooks/useLogout';
 
 const url = import.meta.env.VITE_URL;
@@ -27,7 +26,10 @@ export default function LoginMenu() {
                     </button>
                 </>
             ) : (
-                <KakaoLoginBtn className="LoginButton" />
+                // 카카오 로그인 버튼 → 로그인 페이지로 네비게이션
+                <button className="LoginButton" onClick={() => navigate({ to: '/login' })}>
+                    카카오 로그인
+                </button>
             )}
             <button className="MoreButton">⋮</button>
         </div>
