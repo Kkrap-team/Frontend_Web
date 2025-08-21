@@ -8,6 +8,9 @@ export default function useCreate(initialFolders = [], userId, onSuccess) {
     const [showLinkModal, setShowLinkModal] = useState(false);
     const [fetchedFolders, setFetchedFolders] = useState([]);
     const [loadingFolders, setLoadingFolders] = useState(false);
+    // 생성/요청 중복 방지 플래그
+    const [creatingFolder, setCreatingFolder] = useState(false);
+    const [creatingLink, setCreatingLink] = useState(false);
 
     // 초기 폴더가 비어 있고 userId가 있으면 1회만 폴더 목록 로드
     const ensureFoldersLoaded = useCallback(async () => {
@@ -33,29 +36,37 @@ export default function useCreate(initialFolders = [], userId, onSuccess) {
 
     // 폴더 추가 함수
     const addFolder = async (data) => {
+        // 중복 클릭 방지: 생성 중에는 재요청 차단
+        if (creatingFolder) return;
+        setCreatingFolder(true);
         try {
-            console.log('data!@#!@#@!', data, userId, onSuccess);
             await createMyFolder(data, userId);
             setShowFolderModal(false);
-            if (onSuccess) onSuccess(); // 생성 성공 시 콜백 실행
+            if (onSuccess) onSuccess();
         } catch (err) {
             console.error('폴더 create 안됨 :', err);
+        } finally {
+            setCreatingFolder(false);
         }
     };
 
     // 링크 추가 함수
     const addLink = async ({ link, folderId }) => {
+        // 중복 클릭 방지
+        if (creatingLink) return;
+        setCreatingLink(true);
         try {
             const linkData = {
                 linkUrl: link,
                 foldersId: Number(folderId),
             };
-
             await createLink(linkData, userId);
             setShowLinkModal(false);
-            if (onSuccess) onSuccess(); // 생성 성공 시 콜백 실행
+            if (onSuccess) onSuccess();
         } catch (err) {
             console.error('링크 create 안됨 :', err);
+        } finally {
+            setCreatingLink(false);
         }
     };
 
@@ -87,5 +98,8 @@ export default function useCreate(initialFolders = [], userId, onSuccess) {
 
         // 데이터
         folders,
+        // 로딩 플래그(버튼 비활성화에 사용)
+        creatingFolder,
+        creatingLink,
     };
 }

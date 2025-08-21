@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '@/features/create/styles/FolderCreateModal.css';
 
-export default function FolderCreateModal({ mode, initialData, onClose, onSubmit }) {
+export default function FolderCreateModal({ mode, initialData, onClose, onSubmit, folderSubmitting = false }) {
     const [folderName, setFolderName] = useState(initialData?.folderName || '');
     const [folderDescription, setFolderDescription] = useState(initialData?.folderDescription || '');
     const [visible, setVisible] = useState(initialData?.visible ?? true);
@@ -11,6 +11,7 @@ export default function FolderCreateModal({ mode, initialData, onClose, onSubmit
             alert('폴더 제목을 입력해주세요.');
             return;
         }
+        if (folderSubmitting) return;
         onSubmit({ folderName, folderDescription, visible });
     };
 
@@ -65,8 +66,12 @@ export default function FolderCreateModal({ mode, initialData, onClose, onSubmit
                     <button className="FolderCreateModalCancelBtn" onClick={handleFolderCancel}>
                         취소
                     </button>
-                    <button className="FolderCreateModalConfirmBtn" onClick={handleFolderSubmit}>
-                        {mode === 'edit' ? '수정' : '확인'}
+                    <button
+                        className="FolderCreateModalConfirmBtn"
+                        onClick={handleFolderSubmit}
+                        disabled={folderSubmitting}
+                    >
+                        {folderSubmitting ? '폴더 생성 중...' : mode === 'edit' ? '수정' : '확인'}
                     </button>
                 </div>
             </div>

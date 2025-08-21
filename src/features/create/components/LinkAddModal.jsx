@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { getRouteApi } from '@tanstack/react-router';
 import '@/features/create/styles/LinkAddModal.css';
 
-export default function LinkAddModal({ onClose, onSubmit, folders = [] }) {
+export default function LinkAddModal({ onClose, onSubmit, folders = [], linkSubmitting = false }) {
     let folderId;
     try {
         const routeApi = getRouteApi('/folder/$folderId');
@@ -33,6 +33,7 @@ export default function LinkAddModal({ onClose, onSubmit, folders = [] }) {
             alert('링크 주소를 입력해주세요.');
             return;
         }
+        if (linkSubmitting) return;
         onSubmit({ link, folderId: selectedFolder });
     };
 
@@ -95,11 +96,11 @@ export default function LinkAddModal({ onClose, onSubmit, folders = [] }) {
                 </div>
 
                 <div className="LinkAddModalButtons">
-                    <button className="LinkAddModalPaste" onClick={handlePaste}>
+                    <button className="LinkAddModalPaste" onClick={handlePaste} disabled={linkSubmitting}>
                         붙여넣기
                     </button>
-                    <button className="LinkAddModalSubmit" onClick={handleLinkSubmit}>
-                        추가하기
+                    <button className="LinkAddModalSubmit" onClick={handleLinkSubmit} disabled={linkSubmitting}>
+                        {linkSubmitting ? '링크 추가 중...' : '추가하기'}
                     </button>
                 </div>
             </div>
