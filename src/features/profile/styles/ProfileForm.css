@@ -4,7 +4,7 @@
     padding-top: 10px;
 }
 
-.FormGroup {
+.ProfileFormGroup {
     margin-bottom: 20px;
 }
 
@@ -22,27 +22,43 @@ textarea {
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 14px;
+    box-sizing: border-box;
+}
+
+.ProfileInputWithCounter {
+    position: relative;
+    width: 100%;
+}
+
+.ProfileInputCounter {
+    position: absolute;
+    right: 8px;
+    bottom: 6px;
+    font-size: 11px;
+    color: #999;
+    pointer-events: none;
 }
 
 textarea {
     resize: none;
     height: 100px;
+    padding-bottom: 22px; /* counter 영역 확보 */
 }
 
-.NicknameRow {
+.ProfileNicknameRow {
     display: flex;
     gap: 10px;
 }
 
-.NicknameInput.Success {
+.ProfileNicknameInput.Success {
     border-color: green;
 }
 
-.NicknameInput.Error {
+.ProfileNicknameInput.Error {
     border-color: red;
 }
 
-.CheckBtn {
+.ProfileCheckBtn {
     padding: 0 14px;
     background-color: #5ab7fc;
     color: #fff;
@@ -53,39 +69,51 @@ textarea {
     white-space: nowrap;
 }
 
-.ErrorText {
+.ProfileErrorText {
     color: red;
     font-size: 12px;
     margin-top: 4px;
 }
 
-.SuccessText {
+.ProfileSuccessText {
     color: green;
     font-size: 12px;
     margin-top: 4px;
 }
 
-.ButtonRow {
+.ProfileHelperText {
+    color: #999;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.ProfileButtonRow {
     display: flex;
-    justify-content: center;
     gap: 12px;
     margin-top: 20px;
 }
 
-.CancelBtn {
+.ProfileButtonRow .ProfileCancelBtn,
+.ProfileButtonRow .ProfileSaveBtn {
+    flex: 1;
+}
+
+.ProfileCancelBtn {
     padding: 10px 20px;
     background-color: #ccc;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 14px;
 }
 
-.SaveBtn {
+.ProfileSaveBtn {
     padding: 10px 20px;
-    background-color: #4baef3;
+    background-color: #5ab7fc;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 14px;
 }

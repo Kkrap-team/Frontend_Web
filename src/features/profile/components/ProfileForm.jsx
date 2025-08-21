@@ -14,6 +14,12 @@ export default function ProfileForm({
     onSubmit,
     onCancel,
 }) {
+    const maxNickname = 10;
+    const maxBio = 100;
+
+    const nicknameLen = nickname ? nickname.length : 0;
+    const bioLen = bio ? bio.length : 0;
+
     const handleNicknameChange = (e) => {
         setNickname(e.target.value);
     };
@@ -24,47 +30,59 @@ export default function ProfileForm({
 
     return (
         <div className="ProfileFormContainer">
-            <div className="FormGroup">
+            <div className="ProfileFormGroup">
                 <label>닉네임</label>
-                <div className="NicknameRow">
-                    <input
-                        type="text"
-                        value={nickname}
-                        onChange={handleNicknameChange}
-                        className={`NicknameInput ${
-                            isAvailable === true ? 'Success' : isAvailable === false ? 'Error' : ''
-                        }`}
-                    />
-                    <button type="button" className="CheckBtn" onClick={checkDuplicateHandler}>
+                <div className="ProfileNicknameRow">
+                    <div className="ProfileInputWithCounter">
+                        <input
+                            type="text"
+                            value={nickname}
+                            onChange={handleNicknameChange}
+                            className={`ProfileNicknameInput ${
+                                isAvailable === true ? 'Success' : isAvailable === false ? 'Error' : ''
+                            }`}
+                            maxLength={maxNickname}
+                        />
+                        <span className="ProfileInputCounter">
+                            {nicknameLen} / {maxNickname}
+                        </span>
+                    </div>
+                    <button type="button" className="ProfileCheckBtn" onClick={checkDuplicateHandler}>
                         중복 확인
                     </button>
                 </div>
-                {message && (
-                    <p className={isAvailable === false ? 'ErrorText' : 'SuccessText'}>{message}</p>
+                {message ? (
+                    <p className={isAvailable === false ? 'ProfileErrorText' : 'ProfileSuccessText'}>{message}</p>
+                ) : (
+                    <p className="ProfileHelperText">닉네임은 10자 이내로 설정해주세요</p>
                 )}
             </div>
 
-            <div className="FormGroup">
+            <div className="ProfileFormGroup">
                 <label>이메일</label>
                 <input type="text" value={email} disabled />
             </div>
 
-            <div className="FormGroup">
+            <div className="ProfileFormGroup">
                 <label>소개</label>
-                <textarea
-                    value={bio}
-                    onChange={handleBioChange}
-                    placeholder="100자 이내로 작성해주세요"
-                    maxLength={100}
-                />
-                {console.log('소개', bio)}
+                <div className="ProfileInputWithCounter">
+                    <textarea
+                        value={bio}
+                        onChange={handleBioChange}
+                        placeholder="100자 이내로 작성해주세요"
+                        maxLength={maxBio}
+                    />
+                    <span className="ProfileInputCounter">
+                        {bioLen} / {maxBio}
+                    </span>
+                </div>
             </div>
 
-            <div className="ButtonRow">
-                <button className="CancelBtn" onClick={onCancel}>
+            <div className="ProfileButtonRow">
+                <button className="ProfileCancelBtn" onClick={onCancel}>
                     취소
                 </button>
-                <button className="SaveBtn" onClick={onSubmit}>
+                <button className="ProfileSaveBtn" onClick={onSubmit}>
                     저장
                 </button>
             </div>
