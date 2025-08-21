@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/LinkSettingsModal.css';
 
-const LinkSettingsModal = ({ isOpen, link, onClose, onSave, onDelete, onCopyLink }) => {
+const LinkSettingsModal = ({ isOpen, link, onClose, onSave, onDelete, onCopyLink, onMove, isOwner = true }) => {
     const [linkName, setLinkName] = useState('');
 
     // link가 변경될 때마다 linkName 초기화
@@ -56,6 +56,7 @@ const LinkSettingsModal = ({ isOpen, link, onClose, onSave, onDelete, onCopyLink
                                 onChange={(e) => setLinkName(e.target.value)}
                                 placeholder={link.linkName}
                                 className="LinkNameInput"
+                                disabled={!isOwner}
                             />
                             {linkName && (
                                 <button className="ClearInputBtn" onClick={clearInput}>
@@ -71,10 +72,18 @@ const LinkSettingsModal = ({ isOpen, link, onClose, onSave, onDelete, onCopyLink
                                 <span>링크 복사하기</span>
                             </button>
 
-                            <button className="LinkSettingsMenuItem DeleteItem" onClick={handleDelete}>
-                                <img src="/delete.png" alt="삭제" className="LinkSettingsIcon" />
-                                <span>삭제하기</span>
-                            </button>
+                            {isOwner && (
+                                <>
+                                    <button className="LinkSettingsMenuItem" onClick={() => onMove && onMove(link)}>
+                                        <img src="/edit_folder.png" alt="이동" className="LinkSettingsIcon" />
+                                        <span>링크 이동하기</span>
+                                    </button>
+                                    <button className="LinkSettingsMenuItem DeleteItem" onClick={handleDelete}>
+                                        <img src="/delete.png" alt="삭제" className="LinkSettingsIcon" />
+                                        <span>삭제하기</span>
+                                    </button>
+                                </>
+                            )}
                         </div>
                     </div>
 
@@ -82,9 +91,11 @@ const LinkSettingsModal = ({ isOpen, link, onClose, onSave, onDelete, onCopyLink
                         <button className="LinkSettingsBtn CancelBtn" onClick={onClose}>
                             취소
                         </button>
-                        <button className="LinkSettingsBtn ConfirmBtn" onClick={handleSave}>
-                            확인
-                        </button>
+                        {isOwner && (
+                            <button className="LinkSettingsBtn ConfirmBtn" onClick={handleSave}>
+                                확인
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>

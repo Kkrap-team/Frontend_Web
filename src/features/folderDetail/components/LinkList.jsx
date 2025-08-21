@@ -1,6 +1,7 @@
 import React from 'react';
 import LinkCard from './LinkCard';
 import LinkSettingsModal from './LinkSettingsModal';
+import MoveLinkModal from './MoveLinkModal';
 import useLinkSettings from '../hooks/useLinkSettings';
 import '../styles/LinkList.css';
 import SharedUsersPanel from './SharedUsersPanel';
@@ -14,8 +15,26 @@ const LinkList = ({
     sharingLoading = false,
     onOpenPermission,
 }) => {
-    const { showModal, selectedLink, openModal, closeModal, handleSave, handleDelete, handleCopyLink } =
-        useLinkSettings(userId, refetch);
+    const searchParams = new URLSearchParams(window.location.search);
+    const targetUserIdParam = searchParams.get('targetUserId');
+    const isOwner = !targetUserIdParam || Number(targetUserIdParam) === Number(userId);
+
+    const {
+        showModal,
+        selectedLink,
+        openModal,
+        closeModal,
+        handleSave,
+        handleDelete,
+        handleCopyLink,
+        // move
+        showMoveModal,
+        openMove,
+        closeMove,
+        ownFolders,
+        moving,
+        handleMove,
+    } = useLinkSettings(userId, refetch, isOwner);
 
     return (
         <div className="LinkListContainer">
@@ -52,6 +71,18 @@ const LinkList = ({
                 onSave={handleSave}
                 onDelete={handleDelete}
                 onCopyLink={handleCopyLink}
+                onMove={openMove}
+                isOwner={isOwner}
+            />
+
+            {/* 링크 이동 모달 */}
+            <MoveLinkModal
+                isOpen={showMoveModal}
+                onClose={closeMove}
+                folders={ownFolders}
+                sourceFolderId={folderInfo?.folderId}
+                onSubmit={handleMove}
+                submitting={moving}
             />
         </div>
     );

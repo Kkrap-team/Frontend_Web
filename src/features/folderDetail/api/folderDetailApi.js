@@ -23,11 +23,22 @@ export const updateLinkTitle = async (linkId, linkName) => {
 export const deleteLink = async (linkId, folderId) => {
     const res = await api.delete(`${url}/links/users/links`, {
         data: {
-            
             foldersId: folderId,
             linkId: [linkId],
         },
     });
     console.log('링크 삭제:', res.data);
+    return res.data;
+};
+
+// 링크 이동
+export const moveLink = async ({ linkId, sourceFolderId, targetFolderId }) => {
+    console.log('링크 이동:', linkId, sourceFolderId, targetFolderId);
+    const res = await api.patch(`${url}/links/users/links/move`, {
+        linkId,
+        sourceFolderId,
+        targetFolderId,
+    });
+    console.log('링크 이동:', res.data);
     return res.data;
 };
