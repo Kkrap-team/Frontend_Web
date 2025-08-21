@@ -14,16 +14,7 @@ const LinkSettingsModal = ({ isOpen, link, onClose, onSave, onDelete, onCopyLink
     if (!isOpen || !link) return null;
 
     const handleSave = () => {
-        // 링크 이름이 변경되었는지 확인
-        const hasChanged = linkName !== link.linkName;
-
-        if (hasChanged) {
-            // 변경사항이 있으면 수정 확인 모달 표시
-            onSave(link, linkName); // Hook에서 확인 모달 표시 후 처리
-        } else {
-            // 변경사항이 없으면 바로 닫기
-            onClose();
-        }
+        onSave(link, linkName);
     };
 
     const handleCopyLink = () => {
@@ -37,6 +28,9 @@ const LinkSettingsModal = ({ isOpen, link, onClose, onSave, onDelete, onCopyLink
     const clearInput = () => {
         setLinkName('');
     };
+
+    const titleLen = linkName ? linkName.length : 0;
+    const MAX_TITLE = 30;
 
     return (
         <>
@@ -57,12 +51,16 @@ const LinkSettingsModal = ({ isOpen, link, onClose, onSave, onDelete, onCopyLink
                                 placeholder={link.linkName}
                                 className="LinkNameInput"
                                 disabled={!isOwner}
+                                maxLength={MAX_TITLE}
                             />
                             {linkName && (
                                 <button className="ClearInputBtn" onClick={clearInput}>
                                     ✕
                                 </button>
                             )}
+                            <span className="LinkNameCounter">
+                                {titleLen} / {MAX_TITLE}
+                            </span>
                         </div>
 
                         {/* 메뉴 옵션들 */}

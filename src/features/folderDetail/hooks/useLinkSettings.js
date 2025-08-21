@@ -51,6 +51,21 @@ export default function useLinkSettings(userId, refetch, isOwner) {
     };
 
     const handleSave = (link, newName) => {
+        const trimmed = (newName || '').trim();
+        if (isOwner && trimmed.length === 0) {
+            showConfirm({
+                title: '알림',
+                message: '링크 제목을 입력해주세요.',
+                confirmText: '확인',
+                confirmType: 'save',
+            });
+            return;
+        }
+        // 변경사항이 없으면 닫기
+        if (trimmed === (link.linkName || '')) {
+            closeModal();
+            return;
+        }
         showConfirm({
             title: '확인',
             message: '링크 이름을 수정하시겠습니까?',
@@ -59,12 +74,17 @@ export default function useLinkSettings(userId, refetch, isOwner) {
             confirmType: 'save',
             onConfirm: async () => {
                 try {
-                    await updateLinkTitle(link.linkId, newName);
+                    await updateLinkTitle(link.linkId, trimmed);
                     refetch();
                     closeModal();
                 } catch (error) {
                     console.error('링크 수정 실패:', error);
-                    alert('링크 수정에 실패했습니다.');
+                    showConfirm({
+                        title: '오류',
+                        message: '링크 수정에 실패했습니다.',
+                        confirmText: '확인',
+                        confirmType: 'delete',
+                    });
                 }
             },
         });
