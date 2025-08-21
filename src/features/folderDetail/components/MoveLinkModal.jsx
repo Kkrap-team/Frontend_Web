@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import '../styles/LinkSettingsModal.css';
+import '../styles/MoveLinkModal.css';
 
 export default function MoveLinkModal({ isOpen, onClose, folders = [], sourceFolderId, onSubmit, submitting }) {
     const ownFolders = useMemo(() => (Array.isArray(folders) ? folders : []), [folders]);
@@ -8,14 +8,18 @@ export default function MoveLinkModal({ isOpen, onClose, folders = [], sourceFol
     if (!isOpen) return null;
 
     return (
-        <div className="LinkSettingsModalOverlay" onClick={onClose}>
-            <div className="LinkSettingsModal" onClick={(e) => e.stopPropagation()}>
-                <div className="LinkSettingsModalHeader">
+        <div className="MoveLinkModalOverlay" onClick={onClose}>
+            <div className="MoveLinkModal" onClick={(e) => e.stopPropagation()}>
+                <div className="MoveLinkModalHeader">
                     <h2>링크 이동</h2>
                 </div>
-                <div className="LinkSettingsModalContent">
-                    <div className="LinkNameInputWrapper">
-                        <select className="LinkNameInput" value={target} onChange={(e) => setTarget(e.target.value)}>
+                <div className="MoveLinkModalContent">
+                    <div className="MoveLinkModalSelectWrapper">
+                        <select
+                            className="MoveLinkModalSelect"
+                            value={target}
+                            onChange={(e) => setTarget(e.target.value)}
+                        >
                             <option value="" disabled>
                                 이동할 폴더를 선택하세요
                             </option>
@@ -31,12 +35,12 @@ export default function MoveLinkModal({ isOpen, onClose, folders = [], sourceFol
                         </select>
                     </div>
                 </div>
-                <div className="LinkSettingsModalFooter">
-                    <button className="LinkSettingsBtn CancelBtn" onClick={onClose}>
+                <div className="MoveLinkModalFooter">
+                    <button className="MoveLinkModalBtn MoveLinkModalCancelBtn" onClick={onClose}>
                         취소
                     </button>
                     <button
-                        className="LinkSettingsBtn ConfirmBtn"
+                        className="MoveLinkModalBtn MoveLinkModalConfirmBtn"
                         onClick={() => onSubmit && onSubmit(Number(target))}
                         disabled={!target || Number(target) === Number(sourceFolderId) || submitting}
                     >
