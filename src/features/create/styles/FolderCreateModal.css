@@ -63,10 +63,22 @@
     color: #757575;
 }
 
+.CreateInputWithCounter {
+    position: relative;
+}
+
+.CreateInputCounter {
+    position: absolute;
+    right: 0;
+    bottom: -16px;
+    font-size: 11px;
+    color: #999;
+}
+
 .FolderCreateModalButtons {
     display: flex;
     gap: 8px;
-    margin-top: 8px;
+    margin-top: 24px;
 }
 
 .FolderCreateModalCancelBtn {

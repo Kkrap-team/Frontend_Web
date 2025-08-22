@@ -21,6 +21,8 @@ export default function CreateDropdown({ showFolderCreate = true, onSuccess }) {
         closeFolderModal,
         closeLinkModal,
         folders,
+        creatingFolder,
+        creatingLink,
     } = useCreate(undefined, userId, onSuccess);
 
     return (
@@ -52,10 +54,19 @@ export default function CreateDropdown({ showFolderCreate = true, onSuccess }) {
             )}
 
             {/* 폴더 생성 모달 */}
-            {showFolderModal && <FolderCreateModal onClose={closeFolderModal} onSubmit={addFolder} />}
+            {showFolderModal && (
+                <FolderCreateModal onClose={closeFolderModal} onSubmit={addFolder} folderSubmitting={creatingFolder} />
+            )}
 
             {/* 링크 추가 모달 */}
-            {showLinkModal && <LinkAddModal onClose={closeLinkModal} onSubmit={addLink} folders={folders} />}
+            {showLinkModal && (
+                <LinkAddModal
+                    onClose={closeLinkModal}
+                    onSubmit={addLink}
+                    folders={folders}
+                    linkSubmitting={creatingLink}
+                />
+            )}
         </>
     );
 }

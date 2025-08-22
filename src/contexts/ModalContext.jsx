@@ -55,7 +55,10 @@ export const ModalProvider = ({ children }) => {
                         confirmModal.onConfirm?.();
                         hideConfirm();
                     }}
-                    onCancel={hideConfirm}
+                    onCancel={() => {
+                        confirmModal.onCancel?.();
+                        hideConfirm();
+                    }}
                 />
             )}
         </ModalContext.Provider>

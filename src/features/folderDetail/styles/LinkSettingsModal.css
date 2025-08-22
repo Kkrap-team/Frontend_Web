@@ -79,6 +79,14 @@
     background: #999;
 }
 
+.LinkNameCounter {
+    position: absolute;
+    right: 12px;
+    bottom: -18px;
+    font-size: 11px;
+    color: #999;
+}
+
 /* 메뉴 옵션들 */
 .LinkSettingsMenu {
     display: flex;

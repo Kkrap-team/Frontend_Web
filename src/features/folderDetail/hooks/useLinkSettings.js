@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import { getRouteApi } from '@tanstack/react-router';
 import { useModal } from '@/contexts/ModalContext';
-import { updateLinkTitle, deleteLink } from '@/features/folderDetail/api/folderDetailApi';
+import { updateLinkTitle, deleteLink, moveLink } from '@/features/folderDetail/api/folderDetailApi';
+import { getMyFolders } from '@/features/storage/api/myFolderApi';
 
-export default function useLinkSettings(userId, refetch) {
+export default function useLinkSettings(userId, refetch, isOwner) {
     const { showConfirm } = useModal();
     const [selectedLink, setSelectedLink] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [showMoveModal, setShowMoveModal] = useState(false);
+    const [ownFolders, setOwnFolders] = useState([]);
+    const [loadingFolders, setLoadingFolders] = useState(false);
+    const [moving, setMoving] = useState(false);
     const routeApi = getRouteApi('/folder/$folderId');
     const { folderId } = routeApi.useParams();
 
@@ -20,7 +25,47 @@ export default function useLinkSettings(userId, refetch) {
         setSelectedLink(null);
     };
 
+    const ensureOwnFolders = async () => {
+        if (!isOwner || !userId) return;
+        if (ownFolders.length > 0 || loadingFolders) return;
+        setLoadingFolders(true);
+        try {
+            const data = await getMyFolders(userId);
+            const own = (data?.ownFolders || []).map((f) => ({ folderId: f.folderId, folderName: f.folderName }));
+            setOwnFolders(own);
+        } catch (e) {
+            console.error('내 폴더 목록 로딩 실패:', e);
+        } finally {
+            setLoadingFolders(false);
+        }
+    };
+
+    const openMove = async () => {
+        if (!isOwner) return;
+        await ensureOwnFolders();
+        setShowMoveModal(true);
+    };
+
+    const closeMove = () => {
+        setShowMoveModal(false);
+    };
+
     const handleSave = (link, newName) => {
+        const trimmed = (newName || '').trim();
+        if (isOwner && trimmed.length === 0) {
+            showConfirm({
+                title: '알림',
+                message: '링크 제목을 입력해주세요.',
+                confirmText: '확인',
+                confirmType: 'save',
+            });
+            return;
+        }
+        // 변경사항이 없으면 닫기
+        if (trimmed === (link.linkName || '')) {
+            closeModal();
+            return;
+        }
         showConfirm({
             title: '확인',
             message: '링크 이름을 수정하시겠습니까?',
@@ -29,13 +74,17 @@ export default function useLinkSettings(userId, refetch) {
             confirmType: 'save',
             onConfirm: async () => {
                 try {
-                    await updateLinkTitle(link.linkId, newName);
-                    // Hook에서 상태 관리
-                    refetch(); // 링크 목록 새로고침
+                    await updateLinkTitle(link.linkId, trimmed);
+                    refetch();
                     closeModal();
                 } catch (error) {
                     console.error('링크 수정 실패:', error);
-                    alert('링크 수정에 실패했습니다.');
+                    showConfirm({
+                        title: '오류',
+                        message: '링크 수정에 실패했습니다.',
+                        confirmText: '확인',
+                        confirmType: 'delete',
+                    });
                 }
             },
         });
@@ -52,8 +101,7 @@ export default function useLinkSettings(userId, refetch) {
                 try {
                     const currentFolderId = Number(folderId || link.folderId);
                     await deleteLink(link.linkId, currentFolderId);
-                    // Hook에서 상태 관리
-                    refetch(); // 링크 목록 새로고침
+                    refetch();
                     closeModal();
                 } catch (error) {
                     console.error('링크 삭제 실패:', error);
@@ -63,7 +111,6 @@ export default function useLinkSettings(userId, refetch) {
         });
     };
 
-    // 링크 복사 함수
     const handleCopyLink = (link) => {
         navigator.clipboard.writeText(link.linkUrl);
         showConfirm({
@@ -76,6 +123,39 @@ export default function useLinkSettings(userId, refetch) {
         closeModal();
     };
 
+    const handleMove = (targetFolderId) => {
+        if (!selectedLink) return;
+        const srcId = Number(folderId || selectedLink.folderId);
+        const dstId = Number(targetFolderId);
+        if (srcId === dstId) return;
+
+        const sourceName = ownFolders.find((f) => Number(f.folderId) === srcId)?.folderName || '현재 폴더';
+        const targetName = ownFolders.find((f) => Number(f.folderId) === dstId)?.folderName || '선택한 폴더';
+
+        showConfirm({
+            title: '확인',
+            message: `‘${sourceName}’\n폴더에서\n‘${targetName}’\n폴더로 링크를 이동하시겠습니까?`,
+            confirmText: '이동',
+            cancelText: '취소',
+            confirmType: 'save',
+            onConfirm: async () => {
+                if (moving) return;
+                setMoving(true);
+                try {
+                    await moveLink({ linkId: selectedLink.linkId, sourceFolderId: srcId, targetFolderId: dstId });
+                    setShowMoveModal(false);
+                    setShowModal(false);
+                    refetch();
+                } catch (error) {
+                    console.error('링크 이동 실패:', error);
+                    alert('링크 이동에 실패했습니다.');
+                } finally {
+                    setMoving(false);
+                }
+            },
+        });
+    };
+
     return {
         selectedLink,
         showModal,
@@ -84,5 +164,14 @@ export default function useLinkSettings(userId, refetch) {
         handleSave,
         handleDelete,
         handleCopyLink,
+        // move
+        isOwner,
+        showMoveModal,
+        openMove,
+        closeMove,
+        ownFolders,
+        loadingFolders,
+        moving,
+        handleMove,
     };
 }

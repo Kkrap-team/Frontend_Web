@@ -2,11 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import '@/features/storage/styles/MyFolderCard.css';
 
+const MyFolderCard = ({
+    folder,
+    onDelete,
+    onEdit,
+    onPermission,
+    allFolders,
+    showMenu = true,
+    showLockIcon = false,
+}) => {
+    const { folderId, folderName, folderDescription, links, scrapCount, viewCount, visible, share } = folder;
 
-const MyFolderCard = ({ folder, onDelete, onEdit, onPermission, allFolders, showMenu = true, showLockIcon = false }) => {
-
-    const { folderId, folderName, folderDescription, links, defaultFolder, scrapCount, viewCount, visible, share } = folder;
-    console.log("째2 : ", links)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
     const cardRef = useRef(null);
