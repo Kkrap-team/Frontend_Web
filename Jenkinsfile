@@ -16,25 +16,50 @@ pipeline {
   stages {
     stage('Checkout') { steps { checkout scm } }
 
+
     stage('Build & Push Image (Vite→Nginx)') {
-      when { expression { env.BRANCH_NAME ==~ /release\/.*/ } }  // release/* 만
-      steps {
-        withCredentials([usernamePassword(
-          credentialsId: 'dockerhub-frontend',  // ← 프론트용 Docker Hub 크리덴셜
-          usernameVariable: 'USER',
-          passwordVariable: 'PASS'
-        )]) {
-          sh """
-            docker build -t ${REGISTRY}/${IMAGE}:${VERSION} .
-            docker tag  ${REGISTRY}/${IMAGE}:${VERSION} ${REGISTRY}/${IMAGE}:${TRACK}
-            echo $PASS | docker login -u $USER --password-stdin
-            docker push ${REGISTRY}/${IMAGE}:${VERSION}
-            docker push ${REGISTRY}/${IMAGE}:${TRACK}
-            docker logout ${REGISTRY} || true
-          """
+        when { expression { env.BRANCH_NAME ==~ /release\/.*/ } }
+        steps {
+            withCredentials([usernamePassword(
+            credentialsId: 'dockerhub-frontend',
+            usernameVariable: 'USER',
+            passwordVariable: 'PASS'
+            ),
+            string(credentialsId: 'frontend-env-production', variable: 'ENV_PROD')]) {
+
+            // .env.production 파일 생성 (워크스페이스에 씀)
+            sh 'printf "%s" "$ENV_PROD" > .env.production'
+
+            sh """
+                docker build -t ${REGISTRY}/${IMAGE}:${VERSION} .
+                docker tag  ${REGISTRY}/${IMAGE}:${VERSION} ${REGISTRY}/${IMAGE}:${TRACK}
+                echo $PASS | docker login -u $USER --password-stdin
+                docker push ${REGISTRY}/${IMAGE}:${VERSION}
+                docker push ${REGISTRY}/${IMAGE}:${TRACK}
+                docker logout ${REGISTRY} || true
+            """
+            }
         }
-      }
     }
+    // stage('Build & Push Image (Vite→Nginx)') {
+    //   when { expression { env.BRANCH_NAME ==~ /release\/.*/ } }  // release/* 만
+    //   steps {
+    //     withCredentials([usernamePassword(
+    //       credentialsId: 'dockerhub-frontend',  // ← 프론트용 Docker Hub 크리덴셜
+    //       usernameVariable: 'USER',
+    //       passwordVariable: 'PASS'
+    //     )]) {
+    //       sh """
+    //         docker build -t ${REGISTRY}/${IMAGE}:${VERSION} .
+    //         docker tag  ${REGISTRY}/${IMAGE}:${VERSION} ${REGISTRY}/${IMAGE}:${TRACK}
+    //         echo $PASS | docker login -u $USER --password-stdin
+    //         docker push ${REGISTRY}/${IMAGE}:${VERSION}
+    //         docker push ${REGISTRY}/${IMAGE}:${TRACK}
+    //         docker logout ${REGISTRY} || true
+    //       """
+    //     }
+    //   }
+    // }
 
     stage('Deploy to EC2') {
       when { expression { env.BRANCH_NAME ==~ /release\/.*/ } }
