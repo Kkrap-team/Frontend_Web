@@ -25,7 +25,7 @@ pipeline {
             usernameVariable: 'USER',
             passwordVariable: 'PASS'
             ),
-            file(credentialsId: 'frontend-env-production-file', variable: 'ENV_FILE')]) {
+            file(credentialsId: 'frontend-env-production', variable: 'ENV_FILE')]) {
 
       // Secret file (.env.production) 복사
             sh '''
