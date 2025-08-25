@@ -72,8 +72,11 @@ const LinkSettingsModal = ({ isOpen, link, onClose, onSave, onDelete, onCopyLink
 
                             {isOwner && (
                                 <>
-                                    <button className="LinkSettingsMenuItem" onClick={() => onMove && onMove(link)}>
-                                        <img src="/edit_folder.png" alt="이동" className="LinkSettingsIcon" />
+                                    <button
+                                        className="LinkSettingsMenuItem LinkMoveItem"
+                                        onClick={() => onMove && onMove(link)}
+                                    >
+                                        <img src="/folder_move_icon.png" alt="이동" className="LinkSettingsIcon" />
                                         <span>링크 이동하기</span>
                                     </button>
                                     <button className="LinkSettingsMenuItem DeleteItem" onClick={handleDelete}>

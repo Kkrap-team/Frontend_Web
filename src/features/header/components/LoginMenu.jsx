@@ -31,7 +31,6 @@ export default function LoginMenu() {
                     카카오 로그인
                 </button>
             )}
-            <button className="MoreButton">⋮</button>
         </div>
     );
 }
