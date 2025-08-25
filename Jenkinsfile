@@ -41,8 +41,8 @@ pipeline {
       steps {
         sshagent(credentials: ['ec2-ssh']) {
             sh """
-                ssh -o StrictHostKeyChecking=no ${SSH_HOST} \
-                'cd ${REMOTE_DIR} && ./deploy.sh \$(grep ^WEB_IMAGE_TAG .env | cut -d= -f2) ${TRACK}'
+                ssh -o StrictHostKeyChecking=no ${SSH_HOST} \\
+                'cd ${REMOTE_DIR} && APP=\$(grep ^IMAGE_TAG .env | cut -d= -f2); ./deploy.sh "\$APP" "${TRACK}"'
             """
         }
       }
