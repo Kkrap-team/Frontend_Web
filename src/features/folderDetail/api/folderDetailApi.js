@@ -1,4 +1,5 @@
 import api from '@/utils/axiosConfig';
+import axios from 'axios';
 
 const url = import.meta.env.VITE_URL;
 
@@ -44,7 +45,7 @@ export const moveLink = async ({ linkId, sourceFolderId, targetFolderId }) => {
 };
 
 export const noAuthGetFolderDetail = async (folderId, targetUserId) => {
-    const res = await api.get(`${url}/folders/users/noauth/${folderId}/links/${targetUserId}`);
+    const res = await axios.get(`${url}/folders/users/noauth/${folderId}/links/${targetUserId}`);
     console.log('비회원 폴더 상세 정보 및 링크 목록:', res.data);
     return res.data;
 };

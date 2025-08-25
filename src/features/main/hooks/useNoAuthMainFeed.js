@@ -1,18 +1,19 @@
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { fetchNoAuthMainFolders } from '@/features/main/api/recommendApi';
 
-export default function useNoAuthMainFeed() {
+export default function useNoAuthMainFeed(enabled = true) {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const hasLoadedRef = useRef(false);
 
     const loadFolders = useCallback(async () => {
+        if (!enabled) return;
         if (loading || hasLoadedRef.current) return;
 
         setLoading(true);
         setError(null);
-        
+
         try {
             const data = await fetchNoAuthMainFolders();
             const folders = Array.isArray(data) ? data : data?.folders || [];
@@ -24,14 +25,15 @@ export default function useNoAuthMainFeed() {
         } finally {
             setLoading(false);
         }
-    }, [loading]);
+    }, [enabled, loading]);
 
     // 최초 로드 시 폴더 조회 (한 번만)
     useEffect(() => {
+        if (!enabled) return;
         if (!hasLoadedRef.current) {
             loadFolders();
         }
-    }, [loadFolders]);
+    }, [enabled, loadFolders]);
 
     return {
         items,
