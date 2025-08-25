@@ -1,0 +1,6 @@
+.searchResultSection {
+    display: flex;
+    min-height: 400px;
+    background: white;
+    flex: 1;
+}

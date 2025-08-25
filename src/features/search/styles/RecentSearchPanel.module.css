@@ -1,0 +1,68 @@
+.recentSearchPanel {
+    padding: 24px;
+    background: white;
+    border-right: 1px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef; /* 아래쪽 스트로크 추가 */
+    width: 300px;
+    flex-shrink: 0;
+}
+
+.recentSearchTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 16px;
+}
+
+.recentSearchList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.recentSearchItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 0.9rem;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.recentSearchItem:hover {
+    color: #2d3748;
+}
+
+.recentSearchText {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.recentSearchIcon {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.recentSearchTerm {
+    flex: 1;
+}
+
+.recentSearchRemove {
+    font-size: 0.8rem;
+    color: #999;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+}
+
+.recentSearchRemove:hover {
+    color: #dc3545;
+    background: #fef2f2;
+}

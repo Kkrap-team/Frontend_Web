@@ -1,0 +1,91 @@
+.MoveLinkModalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.MoveLinkModal {
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.MoveLinkModalHeader {
+    padding: 24px 24px 20px 24px;
+    text-align: center;
+}
+
+.MoveLinkModalHeader h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #212120;
+}
+
+.MoveLinkModalContent {
+    padding: 24px;
+}
+
+/* 셀렉트 박스 */
+.MoveLinkModalSelectWrapper {
+    margin-bottom: 12px;
+}
+
+.MoveLinkModalSelect {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.MoveLinkModalSelect:focus {
+    border-color: #5a9cf8;
+}
+
+/* 하단 버튼들 */
+.MoveLinkModalFooter {
+    padding: 0 24px 24px 24px;
+    display: flex;
+    gap: 16px;
+}
+
+.MoveLinkModalBtn {
+    flex: 1;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 16px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.MoveLinkModalCancelBtn {
+    background: #f8f9fa;
+    color: #666;
+}
+
+.MoveLinkModalCancelBtn:hover {
+    background: #e9ecef;
+}
+
+.MoveLinkModalConfirmBtn {
+    background: #5ab7fc;
+    color: white;
+}
+
+.MoveLinkModalConfirmBtn:hover {
+    background: #4a8ce8;
+}

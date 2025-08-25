@@ -1,0 +1,617 @@
+/* 검색 오버레이 
+.searchOverlay {
+    position: fixed;
+    top: 60px; /* Navbar 높이만큼 아래에서 시작 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999; /* Navbar보다 낮은 z-index 
+    background: white;
+    transform: translateY(-100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.searchOverlay.visible {
+    transform: translateY(0);
+}
+
+.searchOverlayBackdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+}
+
+.searchOverlayContent {
+    position: relative;
+    background: white;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* 스크롤 가능하도록 변경 
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 검색 헤더 
+.searchHeader {
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid #f1f5f9;
+    background: white;
+    color: #333;
+    flex-shrink: 0;
+}
+
+.searchInputContainer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 12px 16px;
+    border: 1px solid #e9ecef;
+    margin: 0 120px;
+}
+
+.searchIcon {
+    width: 20px;
+    height: 20px;
+    opacity: 0.8;
+}
+
+.searchInput {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.searchInput::placeholder {
+    color: #666;
+}
+
+.closeButton {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    color: #666;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    margin-right: 120px;
+}
+
+.closeButton:hover {
+    background: #e9ecef;
+    transform: scale(1.1);
+}
+
+/* 검색 컨텐츠 
+.searchContent {
+    padding: 24px 120px;
+    max-height: calc(100vh - 60px - 60px); /* 전체 높이 - Navbar - 검색 헤더 
+    overflow-y: auto;
+    flex: 1;
+}
+
+.sectionTitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #2c2c2c;
+}
+
+/* 최근 검색 
+.searchHistory {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.searchItem {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.searchItem:hover {
+    background: #e9ecef;
+    transform: translateX(4px);
+}
+
+.clockIcon {
+    margin-right: 12px;
+    font-size: 16px;
+}
+
+.searchTerm {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.removeBtn {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.2s;
+}
+
+.removeBtn:hover {
+    color: #dc3545;
+}
+
+/* 검색 결과 
+.loadingSuggestions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.suggestionSkeleton {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.skeletonAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+.skeletonContent {
+    flex: 1;
+}
+
+.skeletonTitle {
+    height: 16px;
+    width: 60%;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 2px;
+    margin-bottom: 8px;
+}
+
+.skeletonDescription {
+    height: 12px;
+    width: 80%;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 2px;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.suggestionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.suggestionItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.suggestionItem:hover {
+    background: #e9ecef;
+    transform: translateX(4px);
+}
+
+.suggestionItem:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+.suggestionAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.suggestionAvatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.suggestionContent {
+    flex: 1;
+    min-width: 0;
+}
+
+.suggestionTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.suggestionDescription {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 6px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.suggestionMeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: #888;
+}
+
+.suggestionAuthor {
+    color: #667eea;
+    font-weight: 500;
+}
+
+.suggestionStats {
+    font-size: 10px;
+}
+
+.noResults {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+.noResults p {
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+/* 반응형 디자인 
+@media (max-width: 768px) {
+    .searchOverlay {
+        top: 60px;
+    }
+    
+    .searchHeader {
+        padding: 12px 16px;
+    }
+    
+    .searchContent {
+        padding: 16px;
+    }
+
+    .searchOverlayContent {
+        max-width: 100%;
+    }
+}
+*/
+
+
+/* =========================
+   SearchOverlay.module.css
+   ========================= 
+*/
+ /* 검색 오버레이 (기본: 데스크톱) */ 
+.searchOverlay {
+  position: fixed;
+  top: 60px;           /* 데스크톱: 상단 헤더(60px) 아래에서 시작 */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;        /* 데스크톱: 헤더(1000)보다 살짝 낮게 */
+  background: white;
+  transform: translateY(-100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.searchOverlay.visible {
+  transform: translateY(0);
+}
+
+.searchOverlayBackdrop {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
+.searchOverlayContent {
+  position: relative;
+  background: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;  /* 내부 스크롤 */
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-30px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* -------------------------
+   검색 헤더(오버레이 상단)
+   ------------------------- */
+.searchHeader {
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #f1f5f9;
+  background: white;
+  color: #333;
+  flex-shrink: 0;
+}
+
+.searchInputContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 12px 16px;
+  border: 1px solid #e9ecef;
+
+  /* 데스크톱 중앙 정렬을 위한 좌우 여백 */
+  margin: 0 120px;
+}
+
+.searchIcon {
+  width: 20px;
+  height: 20px;
+  opacity: 0.8;
+}
+
+.searchInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.searchInput::placeholder { color: #666; }
+
+.closeButton {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  color: #666;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+
+  /* 데스크톱 우측 여백 */
+  margin-right: 120px;
+}
+
+.closeButton:hover {
+  background: #e9ecef;
+  transform: scale(1.1);
+}
+
+/* -------------------------
+   검색 컨텐츠
+   ------------------------- */
+.searchContent {
+  padding: 24px 120px;
+  /* 전체 높이 - (상단 헤더 60) - (오버레이 내부 헤더 대략 60) */
+  max-height: calc(100vh - 60px - 60px);
+  overflow-y: auto;
+  flex: 1;
+}
+
+.sectionTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #2c2c2c;
+}
+
+/* 최근 검색 */
+.searchHistory { display: flex; flex-direction: column; gap: 8px; }
+
+.searchItem {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.searchItem:hover { background: #e9ecef; transform: translateX(4px); }
+
+.clockIcon { margin-right: 12px; font-size: 16px; }
+
+.searchTerm {
+  flex: 1;
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+.removeBtn:hover { color: #dc3545; }
+
+/* 검색 결과 */
+.loadingSuggestions { display: flex; flex-direction: column; gap: 16px; }
+.suggestionSkeleton {
+  display: flex; align-items: center; gap: 12px; padding: 16px;
+  background: #f8f9fa; border-radius: 8px;
+}
+.skeletonAvatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%; animation: loading 1.5s infinite;
+}
+.skeletonContent { flex: 1; }
+.skeletonTitle, .skeletonDescription {
+  height: 16px; border-radius: 2px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%; animation: loading 1.5s infinite;
+}
+.skeletonTitle { width: 60%; margin-bottom: 8px; }
+.skeletonDescription { width: 80%; height: 12px; }
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.suggestionsList { display: flex; flex-direction: column; gap: 12px; }
+.suggestionItem {
+  display: flex; align-items: center; gap: 12px; padding: 16px;
+  background: #f8f9fa; border-radius: 8px; cursor: pointer; transition: all 0.2s;
+}
+.suggestionItem:hover { background: #e9ecef; transform: translateX(4px); }
+.suggestionItem:focus { outline: 2px solid #667eea; outline-offset: 2px; }
+
+.suggestionAvatar { width: 40px; height: 40px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+.suggestionAvatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.suggestionContent { flex: 1; min-width: 0; }
+.suggestionTitle {
+  font-size: 14px; font-weight: 600; color: #2d3748; margin-bottom: 4px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.suggestionDescription {
+  font-size: 12px; color: #666; margin-bottom: 6px; line-height: 1.4;
+  display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;
+}
+.suggestionMeta { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #888; }
+.suggestionAuthor { color: #667eea; font-weight: 500; }
+.suggestionStats { font-size: 10px; }
+
+.noResults { text-align: center; padding: 40px 20px; color: #666; }
+.noResults p { margin: 8px 0; font-size: 14px; }
+
+/* =========================
+   모바일(≤768px) 오버라이드
+   - 헤더가 하단바로 내려간 환경에서도
+     오버레이가 화면 최상단에서 전부 덮도록
+   ========================= */
+@media (max-width: 768px) {
+  .searchOverlay {
+    top: 0;                 /* ✅ 최상단부터 */
+    bottom: 0;
+    z-index: 1200;          /* ✅ 하단바(Header: 1000) 위에 표시 */
+  }
+
+   /* 모바일에선 좌우 120px 여백 제거 */
+  .searchHeader { padding: 12px 16px; }
+  .searchInputContainer { margin: 0; }
+  .closeButton { margin-right: 0; }
+
+   /* 내부 컨텐츠 패딩 축소 + 전체 스크롤 */
+  .searchContent {
+    padding: 16px;
+    max-height: none;        /* ✅ 전체 높이 사용 */
+  }
+
+  .searchOverlayContent {
+    height: 100%;
+    max-width: 100%;
+    overflow-y: auto;
+  }
+
+   /* 하단바(60px)가 화면을 차지하는 경우,
+     오버레이가 하단바 위까지만 보이길 원하면 아래 주석을 해제 */
+     .searchOverlay { bottom: 60px; } 
+}

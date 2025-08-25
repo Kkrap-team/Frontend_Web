@@ -1,0 +1,83 @@
+.container {
+  height: calc(100vh - 50px);
+  width: 100%;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.main {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 280px;
+  min-width: 280px;
+  border-right: 1px solid #e0e0e0;
+  overflow-y: auto;
+  background: #fff;
+  position: fixed;
+  left: 0;
+  top: 50px;
+  height: calc(100vh - 50px);
+  z-index: 10;
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.contentWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: #ffffff;
+  border-left: 1px solid #e0e0e0;
+  margin-left: 280px;
+}
+
+.contentHeader {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.searchTrigger {
+  background: #757575;
+  border: none;
+  font-size: 0.9rem;
+  margin-right: 120px;
+  cursor: pointer;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.searchTrigger:hover {
+  background: #757575;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(36, 36, 36, 0.3);
+}
+
+.contentArea {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  background: #ffffff;
+}
+
+/* 반응형 예시 */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+    margin-left: 0;
+  }
+  
+  .contentWrapper {
+    margin-left: 200px;
+  }
+}

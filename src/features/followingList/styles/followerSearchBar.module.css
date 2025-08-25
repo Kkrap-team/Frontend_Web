@@ -1,0 +1,22 @@
+.searchBarWrapper {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #CFCECE;
+  border-radius: 20px;      /* 검색창 전체를 둥글게 */
+  padding: 8px 12px;        /* 좌우 살짝 좁게 */
+}
+
+.searchInput {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;  /* wrapper 배경을 그대로 쓰도록 */
+  padding: 6px 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.searchInput::placeholder {
+  color: #757575;
+}

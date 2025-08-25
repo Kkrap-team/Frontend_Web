@@ -1,0 +1,38 @@
+/* src/features/folderDetail/styles/SharedUsersPanel.css */
+.SharedUsersPanel {
+    display: flex;
+    align-items: center;
+}
+.SharedUsersLeft {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+.SharedUsersStack {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+.SharedUserAvatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    margin-left: -8px;
+}
+.SharedUserAvatar:first-child {
+    margin-left: 0;
+}
+.SharedUsersMore {
+    font-size: 13px;
+    color: #666;
+}
+.SharedUserSkeleton {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #eee;
+    margin-left: -8px;
+}

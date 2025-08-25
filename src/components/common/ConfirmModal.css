@@ -1,0 +1,102 @@
+.ConfirmModalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+}
+
+.ConfirmModal {
+    background: white;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 360px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.ConfirmModalHeader {
+    padding: 24px 24px 16px 24px;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.ConfirmModalHeader h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #212120;
+}
+
+.ConfirmModalContent {
+    padding: 24px;
+    text-align: center;
+}
+
+.ConfirmModalContent p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.4;
+}
+
+.ConfirmModalFooter {
+    padding: 16px 24px 24px 24px;
+    display: flex;
+    gap: 12px;
+}
+
+.ConfirmModalCancelBtn {
+    flex: 1;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 16px;
+    font-size: 14px;
+    cursor: pointer;
+    background: #f8f9fa;
+    color: #666;
+    transition: background-color 0.2s;
+}
+
+.ConfirmModalCancelBtn:hover {
+    background: #e9ecef;
+}
+
+.ConfirmModalConfirmBtn {
+    flex: 1;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+/* 취소 버튼이 없을 때 확인 버튼이 전체 너비를 차지 */
+.ConfirmModalConfirmBtn--full {
+    flex: 1;
+    width: 100%;
+}
+
+.ConfirmModalConfirmBtn--save {
+    background: #5ab7fc;
+    color: white;
+}
+
+.ConfirmModalConfirmBtn--save:hover {
+    background: #4a8ce8;
+}
+
+.ConfirmModalConfirmBtn--delete {
+    background: #ff4444;
+    color: white;
+}
+
+.ConfirmModalConfirmBtn--delete:hover {
+    background: #e63939;
+}

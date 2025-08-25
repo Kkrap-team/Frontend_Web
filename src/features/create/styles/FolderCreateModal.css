@@ -1,0 +1,121 @@
+.FolderCreateModalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.FolderCreateModal {
+    background: white;
+    padding: 24px;
+    border-radius: 8px;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.FolderCreateModalTitle {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+    margin: 8px 0 8px 0;
+}
+
+.FolderCreateModalLabel {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+    margin-top: 12px;
+}
+
+.required {
+    color: #ff4444;
+}
+
+.FolderCreateModalInput,
+.FolderCreateModalSelect {
+    padding: 8px 0;
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.FolderCreateModalSelect {
+    width: 30%;
+    text-align: center;
+}
+
+.FolderCreateModalInput:focus,
+.FolderCreateModalSelect:focus {
+    border-bottom-color: #5a9cf8;
+}
+
+.FolderCreateModalInput::placeholder {
+    color: #757575;
+}
+
+.CreateInputWithCounter {
+    position: relative;
+}
+
+.CreateInputCounter {
+    position: absolute;
+    right: 0;
+    bottom: -16px;
+    font-size: 11px;
+    color: #999;
+}
+
+.FolderCreateModalButtons {
+    display: flex;
+    gap: 8px;
+    margin-top: 24px;
+}
+
+.FolderCreateModalCancelBtn {
+    flex: 1;
+    padding: 10px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    background: white;
+    color: #000;
+    transition: background-color 0.2s;
+}
+
+.FolderCreateModalCancelBtn:hover {
+    background: #f8f9fa;
+}
+
+.FolderCreateModalConfirmBtn {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #5a9cf8;
+    color: white;
+    transition: background-color 0.2s;
+}
+
+.FolderCreateModalConfirmBtn:hover {
+    background: #4a8ce8;
+}
+
+.FolderCreateModalConfirmBtn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}

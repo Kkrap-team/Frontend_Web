@@ -1,0 +1,306 @@
+/* 헤더 */
+.ExploreHeaderRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+/* 그리드 */
+/* .ExploreGrid {
+    display: grid;
+    gap: 40px 24px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    margin-top: 24px;
+} */
+ .ExploreGrid {
+    display: grid;
+    gap: 40px 32px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    margin-top: 24px;
+
+    max-width: calc(4 * 320px + 3 * 24px); /* 카드 4개 + 간격 3개 */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 카드 */
+.ExploreCard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 320px;
+}
+
+.ExploreUser {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.ExploreAvatar {
+    width: 20px;
+    height: 20px;
+    opacity: 0.8;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.ExploreUserName {
+    font-size: 12px;
+    color: #666;
+}
+.ExploreMore {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #777;
+    cursor: pointer;
+}
+
+/* 로딩/스피너 */
+.ExploreLoading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 0;
+    color: #666;
+    font-size: 14px;
+}
+.ExploreSpinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(0, 0, 0, 0.15);
+    border-top-color: #6c5ce7;
+    border-radius: 50%;
+    animation: explore-spin 0.8s linear infinite;
+}
+@keyframes explore-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+.ExploreLoadingText {
+    user-select: none;
+}
+
+/* 끝 메시지 */
+.ExploreEnd {
+    text-align: center;
+    color: #888;
+    font-size: 13px;
+    padding: 12px 0;
+}
+
+.ExploreTitle{
+    font-size: 24px;
+    font-weight: 600;
+}
+
+
+/* 반응형 */
+
+@media (max-width: 1024px) {
+
+}
+
+/* 768px 이하: 가로형 카드 */
+@media (max-width: 768px) {
+  /* 그리드 자체는 한 줄에 1개씩 넉넉히 */
+  .ExploreGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    justify-items: stretch;
+  }
+
+  .ExploreHeaderRow {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 4px !important;
+    }
+
+  /* 카드 컨테이너 */
+  .ExploreCard {
+    max-width: none;        /* 행 너비 꽉 차게 */
+    gap: 4px !important;
+  }
+  
+    .ExploreTitle{
+        font-size: 24px;
+        font-weight: 600;
+        margin: 4px !important;
+    }
+
+  /* ── 카드 본체를 가로 배치로 전환 ── */
+  .ExploreCard .MyFolderCard {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    width: 94% !important;
+    height: 96px !important;         /* 전체 높이(필요시 88~110px에서 조절) */
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: 0 1px 6px rgba(0,0,0,.15);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* 왼쪽 썸네일(정사각) */
+  .ExploreCard .MyFolderImageContainer {
+    flex: 0 0 96px !important;       /* 정사각 한 변 */
+    width: 96px !important;
+    height: 96px !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+  }
+
+  .ExploreCard .MyFolderImage {
+    width: 90% !important;
+    height: 90% !important;
+    object-fit: cover;               /* 꽉 채우기 */
+    border-radius: 5px 5px 5px 5px  !important;  /* 아래쪽만 둥글게 */
+  }
+
+  /* 오른쪽 정보영역 */
+  .ExploreCard .MyFolderInfo {
+    flex: 1 1 auto !important;
+    height: auto !important;
+    padding: 8px 12px !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+  }
+  
+  .ExploreCard .MyFolderTitle {
+    font-size: 14px !important;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0px !important;
+    
+    line-height: 1.1 !important;     /* 줄 높이도 살짝 줄이기 */
+    display: inline-block;
+    max-width: 15ch;          /* 글자 10자 정도 */
+    white-space: nowrap;      /* 줄바꿈 금지 */
+    overflow: hidden;         /* 넘치는 건 숨김 */
+    text-overflow: ellipsis;  /* ... 으로 처리 */
+  }
+
+  .ExploreCard .MyFolderDesc {
+    font-size: 12px !important;
+    color: #777;
+    line-height: 1.2;
+    margin: 0 !important;
+
+    margin-top: 0px !important;        /* 설명 위쪽 간격 없애기 */
+    margin-bottom: 5px !important;
+    line-height: 1.0 !important;     /* 줄 높이도 맞춰주기 */
+    
+    display: inline-block;
+    max-width: 20ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* 하단 메타(아이콘/숫자) 한 줄 */
+  .ExploreCard .MyFolderStats {
+    display: flex !important;
+    gap: 12px;
+    margin-top: 6px;
+    font-size: 11px;
+    color: #555;
+    margin-top: 10px !important;
+  }
+
+  /* 필요 없으면 잠금 아이콘 숨김 */
+  .ExploreCard .MyFolderLock { 
+    display: none; 
+    }
+
+  /* 헤더(유저/시간) 여백만 살짝 줄이기 */
+  .UserFolderCardHeader { padding: 0 4px 6px 4px !important;}
+  .UserFolderCardAvatar { width: 28px; height: 28px; }
+  .UserFolderCardName   { font-size: 12px; }
+  .UserFolderCardCreateTime { font-size: 11px; }
+}
+
+
+/* 모바일(~768, iPhone SE 포함) */
+/*
+@media (max-width: 768px) {
+    .ExploreTitle{
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .ExploreGrid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, max-content));
+        gap: 48px 40px; /* <--- 행(row), 열(column) 간격 
+        justify-content: center;
+        align-items: start;
+    }
+
+    .ExploreCard {
+        width: 300px;
+        max-width: 300px;
+        gap: 6px;
+    }
+
+    .ExploreCard .MyFolderImageContainer {
+        width: 100%;          /* 카드 폭 100% 채우기 
+        height: auto;         /* 세로 비율은 auto 
+        aspect-ratio: 4/3;    /* 비율 유지하고 싶으면 추가 
+        height: 140px;
+    }
+    .ExploreCard .MyFolderImage {
+        width: 65%;          /* 카드 폭 꽉 차게 
+        height: 100%;         /* 부모 높이 따라감 
+        object-fit: cover;    /* 잘려도 꽉 채우고 싶으면 cover, 모두 보이게 하려면 contain 
+        border-radius: 10px 10px 0 0;
+    }
+
+    .ExploreCard .MyFolderInfo {
+        padding: 8px 10px !important;    /* 텍스트 영역 여백 ↓ 
+        height: auto !important;         /* 고정 높이면 깨질 수 있어 auto 권장 
+    }
+    .ExploreCard .MyFolderTitle {
+        font-size: 14px !important;      /* 제목 ↓ 
+        line-height: 1;
+    }
+    .ExploreCard .MyFolderDesc {
+        font-size: 12px !important;      /* 설명 ↓ 
+    }
+
+
+
+    /* === UserFolderCardHeader 조정 === 
+    .ExploreCard .UserFolderCardHeader {
+        padding: 0 10px;   /* 좌우 여백 줄이기 
+    }
+
+    .ExploreCard .UserFolderCardAvatar {
+        width: 40px;       /* 아바타 크기 ↓ 
+        height: 40px;
+    }
+
+    .ExploreCard .UserFolderCardName {
+        font-size: 15px;   /* 이름 글씨 크기 ↓ 
+        max-width: 100px;  /* 폭 좁히기 
+    }
+
+    .ExploreCard .UserFolderCardCreateTime {
+        font-size: 13px;   /* 생성일 글씨 ↓ 
+    }
+
+    .ExploreCard .UserFolderCardMore {
+        font-size: 16px;   /* 점점점 버튼 ↓ 
+        width: 20px;
+    }
+    
+}
+*/
+
+
+/* 아주 작은 기기(~360) */
+@media (max-width: 360px) {
+
+}
