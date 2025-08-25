@@ -90,7 +90,7 @@
     }
     
     /* 모바일에서 가로형 카드로 변경 */
-    .folderCardWrapper .MyFolderCard {
+    .folderCardWrapper :global(.MyFolderCard) {
         display: flex !important;
         flex-direction: row !important;
         align-items: center;
@@ -104,7 +104,7 @@
     }
     
     /* 왼쪽 썸네일(정사각) */
-    .folderCardWrapper .MyFolderImageContainer {
+    .folderCardWrapper :global(.MyFolderImageContainer) {
         flex: 0 0 96px !important;
         width: 96px !important;
         height: 96px !important;
@@ -112,7 +112,7 @@
         overflow: hidden;
     }
     
-    .folderCardWrapper .MyFolderImage {
+    .folderCardWrapper :global(.MyFolderImage) {
         width: 90% !important;
         height: 90% !important;
         object-fit: cover;
@@ -120,7 +120,7 @@
     }
     
     /* 오른쪽 정보영역 */
-    .folderCardWrapper .MyFolderInfo {
+    .folderCardWrapper :global(.MyFolderInfo) {
         flex: 1 1 auto !important;
         height: auto !important;
         padding: 8px 12px !important;
@@ -128,7 +128,7 @@
         border-radius: 0 !important;
     }
     
-    .folderCardWrapper .MyFolderTitle {
+    .folderCardWrapper :global(.MyFolderTitle) {
         font-size: 14px !important;
         font-weight: 700;
         line-height: 1.1 !important;
@@ -140,7 +140,7 @@
         text-overflow: ellipsis;
     }
     
-    .folderCardWrapper .MyFolderDesc {
+    .folderCardWrapper :global(.MyFolderDesc) {
         font-size: 12px !important;
         color: #777;
         line-height: 1.0 !important;
@@ -155,7 +155,7 @@
     }
     
     /* 하단 메타(아이콘/숫자) 한 줄 */
-    .folderCardWrapper .MyFolderStats {
+    .folderCardWrapper :global(.MyFolderStats) {
         display: flex !important;
         gap: 12px;
         margin-top: 10px !important;
@@ -164,25 +164,25 @@
     }
     
     /* 필요 없으면 잠금 아이콘 숨김 */
-    .folderCardWrapper .MyFolderLock { 
+    .folderCardWrapper :global(.MyFolderLock) { 
         display: none; 
     }
     
     /* 헤더(유저/시간) 여백만 살짝 줄이기 */
-    .folderCardWrapper .UserFolderCardHeader { 
+    .folderCardWrapper :global(.UserFolderCardHeader) { 
         padding: 0 4px 6px 4px !important;
     }
     
-    .folderCardWrapper .UserFolderCardAvatar { 
+    .folderCardWrapper :global(.UserFolderCardAvatar) { 
         width: 28px; 
         height: 28px; 
     }
     
-    .folderCardWrapper .UserFolderCardName { 
+    .folderCardWrapper :global(.UserFolderCardName) { 
         font-size: 12px; 
     }
     
-    .folderCardWrapper .UserFolderCardCreateTime { 
+    .folderCardWrapper :global(.UserFolderCardCreateTime) { 
         font-size: 11px; 
     }
 }
