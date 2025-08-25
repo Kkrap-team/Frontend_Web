@@ -3,60 +3,67 @@ import { useState, useEffect } from 'react';
 import './Layout.css'; // 새 CSS 파일 추가
 
 export default function Layout({ children, isLoginUI = false }) {
-  const location = useLocation();
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const location = useLocation();
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  const isFollowerPage = location.pathname === '/follower';
-  const isLoginPage = isLoginUI;
+    const isFollowerPage = location.pathname === '/follower';
+    const isLoginPage = isLoginUI;
 
-  // 검색 오버레이 상태 감지
-  useEffect(() => {
-    const handleSearchToggle = (event) => {
-      if (event.detail && typeof event.detail.isOpen === 'boolean') {
-        setIsSearchOpen(event.detail.isOpen);
-      }
-    };
+    // 검색 오버레이 상태 감지
+    useEffect(() => {
+        const handleSearchToggle = (event) => {
+            if (event.detail && typeof event.detail.isOpen === 'boolean') {
+                setIsSearchOpen(event.detail.isOpen);
+            }
+        };
 
-    document.addEventListener('searchToggle', handleSearchToggle);
-    return () => document.removeEventListener('searchToggle', handleSearchToggle);
-  }, []);
+        document.addEventListener('searchToggle', handleSearchToggle);
+        return () => document.removeEventListener('searchToggle', handleSearchToggle);
+    }, []);
 
-  // 라우터 위치 변경 시 검색 오버레이 상태 초기화
-  useEffect(() => {
-    if (isSearchOpen) {
-      setIsSearchOpen(false);
-    }
-  }, [location.pathname, location.search]);
+    // 라우터 위치 변경 시 검색 오버레이 상태 초기화
+    useEffect(() => {
+        if (isSearchOpen) {
+            setIsSearchOpen(false);
+        }
+    }, [location.pathname, location.search]);
 
-  // 검색 오버레이 열렸을 때 body 스크롤 막기
-  useEffect(() => {
-    if (isSearchOpen) {
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.overflow = 'hidden';
+    // 검색 오버레이 열렸을 때 body 스크롤 막기
+    useEffect(() => {
+        if (isSearchOpen) {
+            const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+            document.body.style.overflow = 'hidden';
 
-      const header = document.querySelector('.Header');
-      if (header) header.style.paddingRight = `${scrollbarWidth}px`;
-    } else {
-      document.body.style.overflow = 'unset';
-      const header = document.querySelector('.Header');
-      if (header) header.style.paddingRight = '0px';
-    }
+            const header = document.querySelector('.Header');
+            if (header) {
+                if (scrollbarWidth > 0) {
+                    const computedRight = parseFloat(window.getComputedStyle(header).paddingRight) || 0;
+                    header.style.paddingRight = `${computedRight + scrollbarWidth}px`;
+                } else {
+                    header.style.removeProperty('padding-right');
+                }
+            }
+        } else {
+            document.body.style.overflow = 'unset';
+            const header = document.querySelector('.Header');
+            if (header) header.style.removeProperty('padding-right');
+        }
 
-    return () => {
-      document.body.style.overflow = 'unset';
-      const header = document.querySelector('.Header');
-      if (header) header.style.paddingRight = '0px';
-    };
-  }, [isSearchOpen]);
+        return () => {
+            document.body.style.overflow = 'unset';
+            const header = document.querySelector('.Header');
+            if (header) header.style.removeProperty('padding-right');
+        };
+    }, [isSearchOpen]);
 
-  // 클래스 이름 조합
-  const classNames = [
-    'AppLayout',
-    isLoginPage ? 'login' : isFollowerPage ? 'follower' : 'default',
-    isSearchOpen ? 'search-open' : 'search-closed',
-  ].join(' ');
+    // 클래스 이름 조합
+    const classNames = [
+        'AppLayout',
+        isLoginPage ? 'login' : isFollowerPage ? 'follower' : 'default',
+        isSearchOpen ? 'search-open' : 'search-closed',
+    ].join(' ');
 
-  return <div className={classNames}>{children}</div>;
+    return <div className={classNames}>{children}</div>;
 }
 
 // import { useLocation } from '@tanstack/react-router';

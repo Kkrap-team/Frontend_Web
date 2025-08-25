@@ -82,9 +82,10 @@
 .LinkNameCounter {
     position: absolute;
     right: 12px;
-    bottom: -18px;
+    bottom: -24px;
     font-size: 11px;
     color: #999;
+    padding-bottom: 4px;
 }
 
 /* 메뉴 옵션들 */
@@ -110,6 +111,10 @@
 
 .LinkSettingsMenuItem:hover {
     background: #f8f9fa;
+}
+
+.LinkSettingsMenuItem.LinkMoveItem {
+    border-top: 1px solid #f0f0f0;
 }
 
 .LinkSettingsMenuItem.DeleteItem {

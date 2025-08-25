@@ -30,7 +30,9 @@
     background-color: #f7f7f7;
     margin: 20px 0;
     width: 100vw;
-    margin-left: calc(49.66% - 50vw);
+    position: relative;
+    left: 50%;
+    transform: translateX(-50.4vw);
 }
 
 .MainPageHeader {
