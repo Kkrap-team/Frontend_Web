@@ -212,3 +212,17 @@
 .FolderMenu button:hover {
     background: #d9d9d9;
 }
+
+@media (max-width: 1024px) {
+
+}
+
+/* 모바일(~768, iPhone SE 포함) */
+@media (max-width: 768px) {
+
+}
+
+/* 아주 작은 기기(~360) */
+@media (max-width: 360px) {
+
+}

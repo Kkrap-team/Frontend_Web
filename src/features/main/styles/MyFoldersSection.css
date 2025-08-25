@@ -149,21 +149,37 @@
 /* 섹션 헤더 스타일 */
 .SectionHeader {
     display: flex;
+    justify-content: space-between;  /* 왼쪽 텍스트, 오른쪽 화살표 */
+    align-items: center;       
+    /* display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 10px; */
 }
 
 .SectionTitle {
     font-size: 24px;
     font-weight: 600;
+    line-height: 1;      /* 화살표랑 동일하게 */
+    display: flex;
+    align-items: center;
+    /* font-size: 24px;
+    font-weight: 600; */
 }
 
 .SectionArrow {
-    font-size: 24px;
+      margin-left: auto;   /* 왼쪽 영역을 밀어내서 끝으로 */
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #757575;
+  line-height: 1;      /* 텍스트 높이 맞추기 */
+  display: flex;       /* flex로 세로 중앙 정렬 */
+  align-items: center;
+    /* font-size: 24px;
     font-weight: 600;
     margin: 0;
     cursor: pointer;
-    color: #757575;
+    color: #757575; */
 }
 
 /* 섹션 구분선 */
@@ -171,4 +187,45 @@
     height: 20px;
     background-color: #f7f7f7;
     margin: 20px 0;
+}
+
+/* 반응형 */
+
+@media (max-width: 1024px) {
+
+}
+
+/* 모바일(~768, iPhone SE 포함) */
+@media (max-width: 768px) {
+
+    /* 각 폴더 사이즈 */
+    .MyFoldersSection .MyFolderCard,
+    .SharedFoldersSection .MyFolderCard {
+        width: 120px !important;
+        height: 150px !important;
+    }
+
+    .MyFoldersSection .MyFolderImageContainer,
+    .SharedFoldersSection .MyFolderImageContainer {
+        height: 90px !important;
+    }
+
+    .MyFoldersSection .MyFolderTitle,
+    .SharedFoldersSection .MyFolderTitle {
+        font-size: 12px !important;
+    }
+
+    /* {사용자}님의 폴더 */
+    .SectionTitle {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+
+    
+}
+
+/* 아주 작은 기기(~360) */
+@media (max-width: 360px) {
+
 }

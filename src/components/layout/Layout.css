@@ -1,0 +1,53 @@
+.AppLayout {
+  margin-top: 60px;
+  padding: 0 120px;
+  min-height: calc(100vh - 60px);
+  overflow: visible;
+  opacity: 1;
+  transition: none;
+  pointer-events: auto;
+  visibility: visible;
+  box-sizing: border-box;
+}
+
+/* 로그인 페이지 */
+.AppLayout.login {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 팔로워 페이지 */
+.AppLayout.follower {
+  margin-top: 60px;
+  padding: 0;
+  min-height: calc(100vh - 110px);
+}
+
+/* 검색 오버레이 상태 */
+.AppLayout.search-open {
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  visibility: hidden;
+}
+.AppLayout.search-closed {
+  opacity: 1;
+  transition: none;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+  .AppLayout.default {
+    padding: 0 20px;
+  }
+}
+@media (max-width: 768px) {
+  .AppLayout.default {
+    margin-top: 1px;
+    padding: 0 16px;
+  }
+}
