@@ -28,6 +28,14 @@ pipeline {
             string(credentialsId: 'frontend-env-production', variable: 'ENV_PROD')]) {
 
             // .env.production 파일 생성 (워크스페이스에 씀)
+            sh '''
+                echo "[DEBUG] .env.production 생성됨"
+                ls -l .env.production
+
+                echo "[DEBUG] .env.production 내용 (값은 마스킹)"
+                cat .env.production | sed "s/=.*/=****/g"
+            '''
+            
             sh 'printf "%s" "$ENV_PROD" > .env.production'
 
             sh """
