@@ -25,18 +25,14 @@ pipeline {
             usernameVariable: 'USER',
             passwordVariable: 'PASS'
             ),
-            string(credentialsId: 'frontend-env-production', variable: 'ENV_PROD')]) {
+            file(credentialsId: 'frontend-env-production-file', variable: 'ENV_FILE')]) {
 
-            // .env.production 파일 생성 (워크스페이스에 씀)
+      // Secret file (.env.production) 복사
             sh '''
-                echo "[DEBUG] .env.production 생성됨"
-                ls -l .env.production
-
-                echo "[DEBUG] .env.production 내용 (값은 마스킹)"
-                cat .env.production | sed "s/=.*/=****/g"
+                cp "$ENV_FILE" .env.production
+                echo "[DEBUG] Copied .env.production, size:"
+                wc -c .env.production
             '''
-            
-            sh 'printf "%s" "$ENV_PROD" > .env.production'
 
             sh """
                 docker build -t ${REGISTRY}/${IMAGE}:${VERSION} .
