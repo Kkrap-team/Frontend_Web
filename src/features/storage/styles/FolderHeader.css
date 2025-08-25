@@ -1,14 +1,11 @@
 .FolderHeader {
     position: relative;
-    width: 100vw !important;
     height: 40vh;
     min-height: 350px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 40px;
-    margin-left: calc(49.55% - 50vw);
-    margin-right: calc(49.55% - 50vw);
     padding-top: 20px;
 }
 .FollowBtnContainer {
@@ -43,12 +40,11 @@
 }
 .FolderCoverBlur {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
     bottom: 0;
-    width: 100%;
+    width: 100vw;
+    width: 100dvw;
     height: 100%;
+
     background:
         linear-gradient(
             to bottom,
@@ -68,6 +64,35 @@
     width: 100%;
 }
 
+.FolderTopBar {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* 모바일 전용 설정 버튼 */
+.FolderSettingsBtn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    padding: 0;
+    display: none;
+}
+
+.UserSettingsIcon {
+    width: 32px;
+    height: 32px;
+}
+
+@media (max-width: 768px) {
+    .FolderSettingsBtn {
+        display: block;
+        cursor: pointer;
+    }
+}
+
 .FolderProfileImage {
     width: 120px;
     height: 120px;
@@ -76,6 +101,7 @@
     margin-bottom: 16px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
 }
+
 .FolderNickname {
     font-size: 28px;
     font-weight: 700;

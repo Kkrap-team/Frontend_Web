@@ -25,7 +25,6 @@
 
 import React from 'react';
 import MyFoldersSection from '../../features/main/components/MyFoldersSection';
-import '../../features/main/styles/MainPage.css';
 import './MainPage.css';
 import ExploreSharedSection from '@/features/main/components/ExploreSharedSection';
 

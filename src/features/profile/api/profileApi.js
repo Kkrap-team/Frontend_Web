@@ -1,4 +1,3 @@
-
 import api from '@/utils/axiosConfig';
 
 const url = import.meta.env.VITE_URL;
@@ -14,18 +13,14 @@ export async function nicknameCheckApi(userId, nickname) {
     console.log('닉넴확인', userId, nickname);
     const res = await api.get(`${url}/users/check-nickname`, {
         params: { nickname },
-    }
-);
+    });
     return res.data;
 }
 
 // 닉네임, 소개 변경
 export async function profileFormUpdateApi(userId, nickname, bio) {
     console.log('닉변', userId, nickname, bio);
-    const res = await api.patch(
-        `/users/profile`,
-        { nickname, bio }
-    );
+    const res = await api.patch(`/users/profile`, { nickname, bio });
     return res.data;
 }
 
@@ -37,3 +32,9 @@ export async function profileFormUpdateApi(userId, nickname, bio) {
 //     });
 //     return res.data;
 // }
+
+// 현재 사용자 계정 삭제(회원탈퇴) 추후 추가해야함
+export async function deleteCurrentUserApi() {
+    const res = await api.delete(`${url}/`);
+    return res.data;
+}
