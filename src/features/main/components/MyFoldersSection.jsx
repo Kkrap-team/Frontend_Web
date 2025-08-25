@@ -62,18 +62,20 @@ const MyFoldersSection = () => {
                 <div className={`FoldersGrid${!user ? ' FoldersGridEmpty' : ''}`}>{renderGridContent(ownFolders)}</div>
             </div>
 
-            {/* 공유된 폴더 섹션 */}
-            <div className="SharedFoldersSection">
-                <div className="SectionHeader">
-                    <h2 className="SectionTitle">{user ? `${user.nickname}님과 공유된 폴더` : '공유된 폴더'}</h2>
-                    <span className="SectionArrow" onClick={() => navigate({ to: `/storage/${userId}` })}>
-                        &gt;
-                    </span>
+            {/* 공유된 폴더 섹션 - 회원일 때만 표시 */}
+            {user && (
+                <div className="SharedFoldersSection">
+                    <div className="SectionHeader">
+                        <h2 className="SectionTitle">{`${user.nickname}님과 공유된 폴더`}</h2>
+                        <span className="SectionArrow" onClick={() => navigate({ to: `/storage/${userId}` })}>
+                            &gt;
+                        </span>
+                    </div>
+                    <div className="FoldersGrid">
+                        {renderGridContent(sharedFolders)}
+                    </div>
                 </div>
-                <div className={`FoldersGrid${!user ? ' FoldersGridEmpty' : ''}`}>
-                    {renderGridContent(sharedFolders)}
-                </div>
-            </div>
+            )}
         </>
     );
 };
