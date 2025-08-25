@@ -40,10 +40,10 @@ pipeline {
       when { expression { env.BRANCH_NAME ==~ /release\/.*/ } }
       steps {
         sshagent(credentials: ['ec2-ssh']) {
-          sh """
-            ssh -o StrictHostKeyChecking=no ${SSH_HOST} \
-              'cd ${REMOTE_DIR} && ./deploy.sh $(grep ^IMAGE_TAG .env | cut -d= -f2) ${TRACK}'
-          """
+            sh """
+                ssh -o StrictHostKeyChecking=no ${SSH_HOST} \
+                'cd ${REMOTE_DIR} && ./deploy.sh \$(grep ^WEB_IMAGE_TAG .env | cut -d= -f2) ${TRACK}'
+            """
         }
       }
     }
