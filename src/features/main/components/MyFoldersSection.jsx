@@ -44,6 +44,7 @@ const MyFoldersSection = () => {
                 folder={folder}
                 allFolders={allFolders}
                 showMenu={false}
+                showLockIcon={true}
             />
         ));
     };
