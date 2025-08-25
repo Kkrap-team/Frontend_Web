@@ -6,7 +6,7 @@ import { useModal } from '@/contexts/ModalContext';
 import useMyFolder from '@/features/storage/hooks/useMyFolder';
 import FolderHeader from '@/features/storage/components/FolderHeader';
 import FolderList from '@/features/storage/components/MyFolderList';
-import CreateDropdown from '@/features/create/components/CreateDropdown';
+import CreateModal from '@/features/create/components/CreateModal';
 import FolderCreateModal from '@/features/create/components/FolderCreateModal';
 import PermissionModal from '@/features/storage/components/PermissionModal';
 import usePermissionUsers from '@/features/storage/hooks/usePermissionUsers';
@@ -99,7 +99,7 @@ export default function StoragePage() {
             <FolderHeader data={myFolderProfile} />
             <div className="StorageHeader">
                 <h2 className="StorageTitle">{isOwnStorage ? `${user.nickname}님의 폴더` : `사용자의 폴더`}</h2>
-                {isOwnStorage && <CreateDropdown showFolderCreate onSuccess={fetchFolders} />}
+                {isOwnStorage && <CreateModal showFolderCreate onSuccess={fetchFolders} />}
             </div>
             <FolderList
                 folders={ownFolders}

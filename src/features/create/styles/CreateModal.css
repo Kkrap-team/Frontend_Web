@@ -1,0 +1,116 @@
+.CreateButton {
+    width: 100px;
+    height: 100px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    position: fixed;
+    right: 8%;
+    bottom: 8%;
+    z-index: 10;
+}
+
+.CreateButtonImg {
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+    .CreateButton {
+        display: none;
+    }
+}
+
+.NavItem.Create .CreateButton {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    position: static;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+.NavItem.Create .CreateButtonImg {
+    width: 100%;
+    height: 100%;
+}
+
+.CreateModalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+.CreateModal {
+    width: 92vw;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+    padding: 16px 16px 20px 16px;
+}
+.CreateModalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 12px;
+}
+.CreateModalTitle {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+.CreateModalClose {
+    position: absolute;
+    right: 8px;
+    top: 0;
+    background: none;
+    border: none;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    width: 40px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.CreateOptions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 8px 12px 0 12px;
+}
+.CreateOption {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
+    gap: 10px;
+    cursor: pointer;
+}
+.CreateOptionIcon {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    background: #5ab7fc;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.CreateOptionIcon img {
+    width: 36px;
+    height: 36px;
+}
+.CreateOptionLabel {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #555;
+    font-weight: 600;
+}

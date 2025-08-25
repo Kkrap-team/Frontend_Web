@@ -1,0 +1,58 @@
+.AccountSettingsOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.AccountSettingsModal {
+    width: min(90vw, 360px);
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 16px 0;
+}
+
+.AccountSettingsTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.AccountSettingsList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 8px;
+}
+
+.AccountSettingsList button {
+    width: 100%;
+    height: 44px;
+    border-radius: 8px;
+    background: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.LogoutItem {
+    border-top: 1px solid #f0f0f0;
+}
+
+.AccountSettingsList button:hover {
+    background: #f0f0f0;
+}
+
+.AccountSettingsList button.danger {
+    color: #e53935;
+    border-top: 1px solid #f0f0f0;
+}
+
+.AccountSettingsList button.danger:hover {
+    background: #ffeaea;
+}

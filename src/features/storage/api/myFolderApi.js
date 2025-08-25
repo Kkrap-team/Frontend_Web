@@ -4,7 +4,7 @@ const url = import.meta.env.VITE_URL;
 
 //폴더 조회(내 폴더, 공유 폴더)
 export const getMyFolders = async (targetUserId) => {
-    const res = await api.get(`${url}/folders/users/folders/thumbnails/${targetUserId}`);
+    const res = await api.get(`${url}/folders/users/thumbnails/${targetUserId}`);
     console.log('폴더 조회 데이터', res.data);
     return res.data;
 };

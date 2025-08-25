@@ -4,7 +4,7 @@ import { useAuthStore } from '@/stores/authStore';
 import useFolderDetail from '@/features/folderDetail/hooks/useFolderDetail';
 import FolderDetailHeader from '@/features/folderDetail/components/FolderDetailHeader';
 import LinkList from '@/features/folderDetail/components/LinkList';
-import CreateDropdown from '@/features/create/components/CreateDropdown';
+import CreateModal from '@/features/create/components/CreateModal';
 import { getFolderPermissionList } from '@/features/storage/api/folderPermissionApi';
 import PermissionModal from '@/features/storage/components/PermissionModal';
 import usePermissionUsers from '@/features/storage/hooks/usePermissionUsers';
@@ -131,11 +131,13 @@ export default function StorageFolderDetail() {
                 onOpenPermission={() => openPermissionModal({ folderId, folderName: folderInfo?.folderName })}
             />
 
+]
             {/* Create 버튼 (링크 추가만) - 회원일 때만 표시 */}
             {user && <CreateDropdown showFolderCreate={false} onSuccess={refetch} />}
             
             {/* 권한 모달 - 회원일 때만 표시 */}
             {user && showPermissionModal && (
+
                 <PermissionModal
                     isOpen={showPermissionModal}
                     users={permUsers}
