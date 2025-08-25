@@ -17,7 +17,7 @@ export default function usePermissionUsers(userId, onFoldersUpdate) {
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [targetFolder, setTargetFolder] = useState(null);
 
-    // 팔로잉 목록 조회 (폴더가 선택되었을 때만)
+    // 팔로잉 목록 조회 (폴더가 선택되었을 때만) - 비회원일 때는 호출하지 않음
     useEffect(() => {
         if (!userId || !targetFolder) return;
 

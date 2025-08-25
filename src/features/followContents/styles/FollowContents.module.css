@@ -1,20 +1,20 @@
 .followContentsContainer {
     padding: 5px;
-    max-width: 1800px;
+    max-width: calc(4 * 320px + 3 * 32px); /* 카드 4개 + 간격 3개 */
     margin: 0 auto;
 }
 
 .followContentsGrid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 16px;
+    gap: 40px 32px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     margin-top: 10px;
 }
 
 /* MyFolderCard 스타일을 4열 그리드에 맞게 조정 */
 .followContentsGrid .MyFolderCard {
     width: 100%;
-    height: auto;
+    height: 100%;
 }
 
 .folderCardWrapper {
@@ -22,10 +22,9 @@
     flex-direction: column;
     gap: 8px;
     width: 100%;
-    min-width: 0; 
+    min-width: 0;
+    max-width: 320px;
 }
-
-
 
 .loadingContainer {
     display: flex;
@@ -50,44 +49,150 @@
     text-align: center;
 }
 
-
-
-/* 반응형 디자인 */
-@media (max-width: 1800px) {
-    .followContentsGrid {
-        grid-template-columns: repeat(5, 1fr);
-        gap: 10px;
-    }
-}
-
+/* 반응형 디자인 - 메인페이지와 유사하게 */
 @media (max-width: 1400px) {
+    .followContentsContainer {
+        max-width: calc(3 * 320px + 2 * 32px);
+    }
+    
     .followContentsGrid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 32px 24px;
     }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
+    .followContentsContainer {
+        max-width: calc(2 * 320px + 1 * 32px);
+    }
+    
     .followContentsGrid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 6px;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 24px 20px;
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+    .followContentsContainer {
+        max-width: none;
+        padding: 16px;
+    }
+    
     .followContentsGrid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
+        gap: 24px;
+        justify-items: stretch;
+    }
+    
+    .folderCardWrapper {
+        max-width: none;
         gap: 4px;
     }
     
-    .followContentsContainer {
-        padding: 8px;
+    /* 모바일에서 가로형 카드로 변경 */
+    .folderCardWrapper :global(.MyFolderCard) {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center;
+        width: 94% !important;
+        height: 96px !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        box-shadow: 0 1px 6px rgba(0,0,0,.15);
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* 왼쪽 썸네일(정사각) */
+    .folderCardWrapper :global(.MyFolderImageContainer) {
+        flex: 0 0 96px !important;
+        width: 96px !important;
+        height: 96px !important;
+        border-radius: 12px !important;
+        overflow: hidden;
+    }
+    
+    .folderCardWrapper :global(.MyFolderImage) {
+        width: 90% !important;
+        height: 90% !important;
+        object-fit: cover;
+        border-radius: 5px !important;
+    }
+    
+    /* 오른쪽 정보영역 */
+    .folderCardWrapper :global(.MyFolderInfo) {
+        flex: 1 1 auto !important;
+        height: auto !important;
+        padding: 8px 12px !important;
+        background: transparent !important;
+        border-radius: 0 !important;
+    }
+    
+    .folderCardWrapper :global(.MyFolderTitle) {
+        font-size: 14px !important;
+        font-weight: 700;
+        line-height: 1.1 !important;
+        margin-bottom: 0px !important;
+        display: inline-block;
+        max-width: 15ch;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .folderCardWrapper :global(.MyFolderDesc) {
+        font-size: 12px !important;
+        color: #777;
+        line-height: 1.0 !important;
+        margin: 0 !important;
+        margin-top: 0px !important;
+        margin-bottom: 5px !important;
+        display: inline-block;
+        max-width: 20ch;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    /* 하단 메타(아이콘/숫자) 한 줄 */
+    .folderCardWrapper :global(.MyFolderStats) {
+        display: flex !important;
+        gap: 12px;
+        margin-top: 10px !important;
+        font-size: 11px;
+        color: #555;
+    }
+    
+    /* 필요 없으면 잠금 아이콘 숨김 */
+    .folderCardWrapper :global(.MyFolderLock) { 
+        display: none; 
+    }
+    
+    /* 헤더(유저/시간) 여백만 살짝 줄이기 */
+    .folderCardWrapper :global(.UserFolderCardHeader) { 
+        padding: 0 4px 6px 4px !important;
+    }
+    
+    .folderCardWrapper :global(.UserFolderCardAvatar) { 
+        width: 28px; 
+        height: 28px; 
+    }
+    
+    .folderCardWrapper :global(.UserFolderCardName) { 
+        font-size: 12px; 
+    }
+    
+    .folderCardWrapper :global(.UserFolderCardCreateTime) { 
+        font-size: 11px; 
     }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 480px) {
+    .followContentsContainer {
+        padding: 12px;
+    }
+    
     .followContentsGrid {
-        grid-template-columns: 1fr;
-        gap: 8px;
+        gap: 20px;
     }
 }

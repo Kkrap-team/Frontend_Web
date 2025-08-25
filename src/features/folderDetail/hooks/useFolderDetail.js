@@ -1,11 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getFolderDetail } from '../api/folderDetailApi';
+import { getFolderDetail, noAuthGetFolderDetail } from '../api/folderDetailApi';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function useFolderDetail(folderId, targetUserId) {
     const [folderInfo, setFolderInfo] = useState(null);
     const [links, setLinks] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    
+    const { user } = useAuthStore();
+    const isLoggedIn = !!user;
 
     // 폴더 상세 정보 및 링크 목록 조회
     const fetchFolderDetail = useCallback(async () => {
@@ -15,9 +19,16 @@ export default function useFolderDetail(folderId, targetUserId) {
         setError(null);
 
         try {
-            // 하나의 API로 폴더 정보와 링크 목록을 모두 가져옴
-
-            const data = await getFolderDetail(folderId, targetUserId);
+            let data;
+            
+            // 로그인 상태에 따라 다른 API 호출
+            if (isLoggedIn) {
+                // 회원용 API
+                data = await getFolderDetail(folderId, targetUserId);
+            } else {
+                // 비회원용 API
+                data = await noAuthGetFolderDetail(folderId, targetUserId);
+            }
 
             // 폴더 정보 분리
             const { links: linksList, ...folderData } = data;
@@ -30,7 +41,7 @@ export default function useFolderDetail(folderId, targetUserId) {
         } finally {
             setLoading(false);
         }
-    }, [folderId, targetUserId]);
+    }, [folderId, targetUserId, isLoggedIn]);
 
     useEffect(() => {
         fetchFolderDetail();
