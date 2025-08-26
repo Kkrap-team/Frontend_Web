@@ -131,9 +131,8 @@ export default function StorageFolderDetail() {
                 onOpenPermission={() => openPermissionModal({ folderId, folderName: folderInfo?.folderName })}
             />
 
-]
             {/* Create 버튼 (링크 추가만) - 회원일 때만 표시 */}
-            {user && <CreateDropdown showFolderCreate={false} onSuccess={refetch} />}
+            {user && <CreateModal showFolderCreate={false} onSuccess={refetch} />}
             
             {/* 권한 모달 - 회원일 때만 표시 */}
             {user && showPermissionModal && (
