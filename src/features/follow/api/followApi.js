@@ -37,3 +37,14 @@ export const unfollowUser = async (followingId) => {
     throw error;
   }
 };
+
+// 팔로우 상태 확인 (mutual)
+export const checkFollowStatus = async (targetUserId) => {
+    try {
+        const response = await api.get(`/follows/mutual?targetUserId=${targetUserId}`);
+        return response.data;
+    } catch (error) {
+        console.error('팔로우 상태 확인 실패:', error);
+        throw error;
+    }
+};
