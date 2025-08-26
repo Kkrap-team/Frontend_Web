@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '@/features/storage/styles/FolderHeader.css';
-import { useFollow } from '@/features/follow/hooks/useFollow';
 import { useAuthStore } from '@/stores/authStore';
 import { useModal } from '@/contexts/ModalContext';
+import { checkFollowStatus, followUser, unfollowUser } from '@/features/follow/api/followApi';
 
 const url = import.meta.env.VITE_URL;
 
@@ -10,22 +10,72 @@ export default function FolderHeader({ data }) {
     const targetUserId = data?.userId;
     const { user } = useAuthStore();
     const myUserId = user?.userId;
-    const { following, isLoading, toggleFollow, performUnfollow } = useFollow(targetUserId, data?.isFollowing);
-    // 초기 팔로우 상태가 확정되기 전까지 로딩 처리
-    const isReady = Boolean(targetUserId) && (typeof following === 'boolean' || typeof data?.isFollowing === 'boolean');
-    const displayedFollowing = typeof following === 'boolean' ? following : Boolean(data?.isFollowing);
+    
+    // 팔로우 상태 관리
+    const [isFollowing, setIsFollowing] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isReady, setIsReady] = useState(false);
+    
     const { showConfirm, showModal } = useModal();
+
+    // 팔로우 상태 확인 API 호출
+    useEffect(() => {
+        const checkFollowStatusAsync = async () => {
+            if (!targetUserId || !myUserId || targetUserId === myUserId) {
+                setIsReady(true);
+                return;
+            }
+
+            try {
+                setIsLoading(true);
+                const response = await checkFollowStatus(targetUserId);
+                setIsFollowing(response.mutual);
+            } catch (error) {
+                console.error('팔로우 상태 확인 오류:', error);
+                setIsFollowing(false);
+            } finally {
+                setIsLoading(false);
+                setIsReady(true);
+            }
+        };
+
+        checkFollowStatusAsync();
+    }, [targetUserId, myUserId]);
+
+    // 팔로우/언팔로우 처리
+    const handleFollowToggle = async () => {
+        if (!targetUserId || isLoading) return;
+
+        try {
+            setIsLoading(true);
+            
+            if (isFollowing) {
+                // 언팔로우
+                await unfollowUser(targetUserId);
+                setIsFollowing(false);
+            } else {
+                // 팔로우
+                await followUser(targetUserId);
+                setIsFollowing(true);
+            }
+        } catch (error) {
+            console.error('팔로우 처리 오류:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const handleFollowClick = () => {
         if (!targetUserId || isLoading || !isReady) return;
-        if (following) {
+        
+        if (isFollowing) {
             showConfirm({
                 title: '언팔로우',
                 message: '해당 사용자를 언팔로우 하시겠습니까?',
                 confirmText: '언팔로우',
                 cancelText: '취소',
                 confirmType: 'delete',
-                onConfirm: performUnfollow,
+                onConfirm: handleFollowToggle,
             });
         } else {
             showConfirm({
@@ -34,7 +84,7 @@ export default function FolderHeader({ data }) {
                 confirmText: '팔로우',
                 cancelText: '취소',
                 confirmType: 'save',
-                onConfirm: toggleFollow,
+                onConfirm: handleFollowToggle,
             });
         }
     };
@@ -82,7 +132,7 @@ export default function FolderHeader({ data }) {
                 <div className="FollowBtnContainer">
                     {targetUserId && targetUserId !== myUserId && (
                         <button className="FollowBtn" onClick={handleFollowClick} disabled={isLoading || !isReady}>
-                            {!isReady || isLoading ? '로딩중...' : displayedFollowing ? '팔로우취소' : '팔로우'}
+                            {!isReady || isLoading ? '로딩중...' : isFollowing ? '팔로우취소' : '팔로우'}
                         </button>
                     )}
                 </div>
