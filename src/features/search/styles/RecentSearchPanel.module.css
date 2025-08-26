@@ -2,16 +2,38 @@
     padding: 24px;
     background: white;
     border-right: 1px solid #e9ecef;
-    border-bottom: 1px solid #e9ecef; /* 아래쪽 스트로크 추가 */
     width: 300px;
     flex-shrink: 0;
+}
+
+.recentSearchHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
 }
 
 .recentSearchTitle {
     font-size: 1rem;
     font-weight: 700;
     color: #2d3748;
-    margin-bottom: 16px;
+    margin: 0;
+}
+
+.clearAllButton {
+    font-size: 0.8rem;
+    color: #6c757d;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.clearAllButton:hover {
+    color: #dc3545;
+    background: #fef2f2;
 }
 
 .recentSearchList {
@@ -65,4 +87,22 @@
 .recentSearchRemove:hover {
     color: #dc3545;
     background: #fef2f2;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6c757d;
+}
+
+.emptyStateText {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0 0 8px 0;
+}
+
+.emptyStateSubtext {
+    font-size: 0.8rem;
+    margin: 0;
+    line-height: 1.4;
 }

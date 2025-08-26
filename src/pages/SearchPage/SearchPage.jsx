@@ -6,6 +6,7 @@ import './SearchPage.css';
 const SearchPage = () => {
     const { results, loading, error, searchTerm, refetchResults } = useSearchPage();
 
+
     if (!searchTerm) {
         return (
             <div className="search-page">
@@ -58,27 +59,35 @@ const SearchPage = () => {
 
                 {!loading && !error && results.length > 0 && (
                     <div className="search-results-grid">
-                        {results.map((result, index) => (
-                            <div key={result.folderId || result.id || index} className="search-result-card">
-                                <MyFolderCard
-                                    folder={{
-                                        folderId: result.folderId || result.id || `search-${index}`,
-                                        folderName: result.folderName || result.title || `폴더 ${index + 1}`,
-                                        folderDescription: result.folderDescription || result.description || '설명이 없습니다.',
-                                        links: result.imageUrl ? [{ thumbnailUrl: result.imageUrl }] : 
-                                               result.thumbnailUrl ? [{ thumbnailUrl: result.thumbnailUrl }] :
-                                               result.faviconUrl ? [{ faviconUrl: result.faviconUrl }] : [],
-                                        scrapCount: result.scrapCount || 0,
-                                        viewCount: result.viewCount || 0,
-                                        visible: true
-                                    }}
-                                    onDelete={() => {}}
-                                    onEdit={() => {}}
-                                    onPermission={() => {}}
-                                    showMenu={false}
-                                />
-                            </div>
-                        ))}
+                        {results.map((result, index) => {
+                            const folderData = {
+                                folderId: result.folderId || result.id || `search-${index}`,
+                                folderName: result.folderName || result.title || `폴더 ${index + 1}`,
+                                folderDescription: result.folderDescription || result.description || '설명이 없습니다.',
+                                links: result.imageUrl ? [{ thumbnailUrl: result.imageUrl }] : 
+                                       result.thumbnailUrl ? [{ thumbnailUrl: result.thumbnailUrl }] :
+                                       result.faviconUrl ? [{ faviconUrl: result.faviconUrl }] : [],
+                                scrapCount: result.scrapCount || 0,
+                                viewCount: result.viewCount || 0,
+                                visible: true,
+                                userId: result.userId || result.ownerUserId,
+                                ownerUserId: result.ownerUserId || result.userId
+                            };
+                            
+                            console.log(`폴더 ${index} 데이터:`, folderData);
+                            
+                            return (
+                                <div key={result.folderId || result.id || index} className="search-result-card">
+                                    <MyFolderCard
+                                        folder={folderData}
+                                        onDelete={() => {}}
+                                        onEdit={() => {}}
+                                        onPermission={() => {}}
+                                        showMenu={false}
+                                    />
+                                </div>
+                            );
+                        })}
                     </div>
                 )}
 
