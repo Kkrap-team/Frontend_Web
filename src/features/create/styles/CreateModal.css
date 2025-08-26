@@ -85,6 +85,13 @@
     grid-template-columns: repeat(2, 1fr);
     padding: 8px 12px 0 12px;
 }
+
+/* 옵션이 하나일 때 중앙 정렬 */
+.CreateOptions.CreateOptionsSingle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .CreateOption {
     display: flex;
     flex-direction: column;

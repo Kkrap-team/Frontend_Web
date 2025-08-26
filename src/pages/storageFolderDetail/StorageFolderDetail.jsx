@@ -28,7 +28,7 @@ export default function StorageFolderDetail() {
     // 폴더 상세 정보 및 링크 목록 조회
     const { folderInfo, links, loading, error, refetch } = useFolderDetail(folderId, targetUserId);
 
-    // 링크 추가는 CreateDropdown 내부에서 독립적으로 처리
+    // 링크 추가는 CreateModal 내부에서 독립적으로 처리
 
     // 권한 데이터: 페이지 진입 시 1회 로드 → 아이콘/모달에서 공통 사용
     const [permData, setPermData] = React.useState(null);
@@ -69,22 +69,8 @@ export default function StorageFolderDetail() {
             .finally(() => setPermLoading(false));
     }, [folderId, folderInfo, user]);
 
-    // 비회원일 때는 권한 관련 훅을 호출하지 않음
-    const permissionHook = user ? usePermissionUsers(userId, refreshPermData) : {
-        users: [],
-        invitedUsers: [],
-        notInvitedUsers: [],
-        owner: null,
-        loading: false,
-        error: null,
-        showPermissionModal: false,
-        selectedUsers: [],
-        openPermissionModal: () => {},
-        closePermissionModal: () => {},
-        handleUserSelect: () => {},
-        handlePermissionConfirm: () => {},
-        handlePermissionRevoke: () => {},
-    };
+    // 훅은 항상 호출하고 enabled로 내부 동작만 제어
+    const permissionHook = usePermissionUsers(userId, refreshPermData, !!user);
 
     const {
         users: permUsers,
@@ -131,12 +117,13 @@ export default function StorageFolderDetail() {
                 onOpenPermission={() => openPermissionModal({ folderId, folderName: folderInfo?.folderName })}
             />
 
+
             {/* Create 버튼 (링크 추가만) - 회원일 때만 표시 */}
             {user && <CreateModal showFolderCreate={false} onSuccess={refetch} />}
             
+
             {/* 권한 모달 - 회원일 때만 표시 */}
             {user && showPermissionModal && (
-
                 <PermissionModal
                     isOpen={showPermissionModal}
                     users={permUsers}

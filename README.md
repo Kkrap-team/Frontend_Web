@@ -1,70 +1,133 @@
-# Getting Started with Create React App
+# 🔥 Kkrap Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Kkrap의 웹 프론트엔드 레포지토리입니다. 링크를 저장·분류·공유하고 다른 사용자와 폴더를 중심으로 소통하는 경험을 제공합니다.
 
-## Available Scripts
+## 🌈 프로젝트 소개
 
-In the project directory, you can run:
+-   링크를 손쉽게 저장하고 폴더로 관리합니다.
+-   폴더를 공개/비공개로 설정하고, 공유를 통해 다른 사용자와 협업합니다.
+-   추천/탐색(Explore) 피드에서 다른 사용자의 공개 폴더를 둘러볼 수 있습니다.
+-   팔로우/보관함/검색 등 핵심 사용자 흐름을 제공합니다.
 
-### `npm start`
+## 🧩 기술 스택
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+-   Framework: React 18, Vite
+-   Router: @tanstack/react-router
+-   State: Zustand
+-   HTTP: Axios
+-   Styling: CSS Modules + 일반 CSS 혼용
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🗂 프로젝트 구조(요약)
 
-### `npm test`
+```
+src/
+  app/ App.jsx
+  components/ 공통 컴포넌트, 레이아웃, 모달
+  features/
+    auth/ 로그인/로그아웃, 카카오 로그인
+    header/ 헤더 UI 및 검색 토글
+    main/ 메인 페이지(나의 폴더, Explore)
+    storage/ 보관함, 폴더 상세
+    search/ 검색 페이지 및 오버레이
+    follow/ 팔로우
+    profile/ 프로필 편집
+  pages/ 라우트 단위 페이지
+  routes/ Router.jsx (보호 라우트/가드 포함)
+  stores/ Zustand 전역 스토어
+  utils/ axios 설정 등
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🚦 실행 방법
 
-### `npm run build`
+사전 요구사항: Node 18+
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. 설치
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. 개발 서버
 
-### `npm run eject`
+```
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+-   기본 포트: Vite (기본 5173). 브라우저가 자동 열리지 않으면 `http://localhost:5173` 접속
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. 프로덕션 빌드
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+npm run build
+npm run serve   # 빌드 결과 미리보기
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🔐 환경 변수
 
-## Learn More
+`.env` 파일에 다음 키를 설정하세요.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+VITE_URL=백엔드_API_베이스_URL
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+-   예: `VITE_URL=https://api.example.com`
 
-### Code Splitting
+## 🔎 주요 화면/흐름
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+-   메인: 나의 폴더(가로 스크롤), 공유된 폴더, Explore(공개 폴더 둘러보기)
+-   보관함: 폴더 목록/권한/공유 사용자 관리
+-   폴더 상세: 링크 목록, 링크 추가/이동/설정
+-   검색: 최근 검색, 미리보기, 결과 정렬
+-   팔로우: 팔로우/언팔로우 및 목록
+-   프로필: 프로필 정보/이미지 수정, 계정 설정(로그아웃/탈퇴)
 
-### Analyzing the Bundle Size
+## 🧭 라우팅 및 보호 정책
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+-   Router: `@tanstack/react-router`
+-   보호 라우트: 보관함/팔로우 등은 미로그인 시 확인 모달 후 로그인 페이지로 유도합니다.
+-   로그아웃 직후에는 가드가 즉시 메인(`/`)으로 이동하도록 처리하여 중복 모달을 방지합니다.
 
-### Making a Progressive Web App
+## ♿ 접근성/반응형
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+-   모바일 레이아웃 최적화: 하단 탭형 네비게이션, 상단 미니바
+-   공통 중앙 래퍼(ExploreInner/섹션 래퍼)로 상단/하단 섹션 좌우 라인 통일
+-   아이콘 버튼은 의미가 필요한 경우 접근성 라벨 고려(필요 시 유지)
 
-### Advanced Configuration
+-   기본 CRA 테스트 도구(@testing-library) 의존성 포함(필요 시 확장)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+-   코드 스타일: 2-space, 명확한 네이밍, 함수 단일 책임
+-   공통 상수/유틸 분리, 하드코딩 최소화
+-   PR 전 린트 경고 제거, 메인 브랜치 배포 가능 상태 유지
 
-### Deployment
+## 📦 커밋 컨벤션
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+-   feat: 새로운 기능
+-   fix: 버그 수정
+-   docs: 문서 변경(README 등)
+-   style: 포맷/세미콜론 등 비즈니스 로직 무관 변경
+-   refactor: 리팩토링(기능 동일)
+-   perf: 성능 개선
+-   test: 테스트 추가/수정
+-   chore: 빌드/환경/의존성 등 잡무
+-   ci: CI/CD 설정
+-   build: 빌드 시스템 변경
+-   revert: 커밋 되돌리기
+-   temp: 임시 변경
 
-### `npm run build` fails to minify
+## 🧑‍🤝‍🧑 팀
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+-   PM: 정재윤
+-   Backend: 정재윤, 김강민
+-   Frontend: 이호진, 김상우
+
+## 📅 버전 이력(Frontend)
+
+| 버전  | 날짜       | 주요 내용                                      | 비고 |
+| ----- | ---------- | ---------------------------------------------- | ---- |
+| 1.0.0 | 2025-08-25 | 초기 기능 구현, 메인/보관함/검색/팔로우/프로필 | 완료 |
+| 1.0.1 | 2025-08-26 | 팔로우, 메인 페이지 반응형 적용 및 비회원 로그인 API 추가, UI 정리                  | 완료 |
+<!-- | 1.0.2 | 예정       | 베타 테스트 릴리즈                             | 예정 | -->
+
+---
+
+문서/구성은 계속 업데이트됩니다. 질문이나 제안은 이슈로 남겨주세요.
