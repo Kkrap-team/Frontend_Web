@@ -7,22 +7,30 @@ const SearchResultSection = ({
     recentSearches, 
     searchResults, 
     searchLoading, 
+    isSearching,
     onSearchClick, 
     onRemoveSearch, 
+    onClearAll,
     onPreviewItemClick 
 }) => {
     return (
         <div className={styles.searchResultSection}>
-            <RecentSearchPanel 
-                recentSearches={recentSearches}
-                onSearchClick={onSearchClick}
-                onRemoveSearch={onRemoveSearch}
-            />
-            <SearchPreviewList 
-                results={searchResults}
-                loading={searchLoading}
-                onItemClick={onPreviewItemClick}
-            />
+            {!isSearching ? (
+                // 초기 상태: 최근 검색만 표시
+                <RecentSearchPanel 
+                    recentSearches={recentSearches}
+                    onSearchClick={onSearchClick}
+                    onRemoveSearch={onRemoveSearch}
+                    onClearAll={onClearAll}
+                />
+            ) : (
+                // 검색 중: 검색 결과 프리뷰 표시
+                <SearchPreviewList 
+                    results={searchResults}
+                    loading={searchLoading}
+                    onItemClick={onPreviewItemClick}
+                />
+            )}
         </div>
     );
 };

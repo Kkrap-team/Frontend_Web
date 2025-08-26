@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useSearchSuggestions } from '../hooks/useSearchSuggestions';
+import { useRecentSearches } from '../hooks/useRecentSearches';
 import { getRankings } from '../api/searchApi';
 import SearchHeader from './SearchHeader';
 import SearchResultSection from './SearchResultSection';
@@ -12,14 +13,10 @@ const SearchOverlay = ({ isVisible, onClose }) => {
     const [isSearching, setIsSearching] = useState(false);
     const [rankings, setRankings] = useState(null);
     const [rankingsLoading, setRankingsLoading] = useState(false);
-    const [recentSearches, setRecentSearches] = useState([
-        '부산여행',
-        '부산 가볼만한 맛집',
-        '제주도 가고싶다.'
-    ]);
     
     const navigate = useNavigate();
     const { suggestions, loading, error, fetchSuggestions } = useSearchSuggestions();
+    const { recentSearches, addSearchTerm, removeSearchTerm, clearAllSearches } = useRecentSearches();
 
     useEffect(() => {
         if (isVisible) {
@@ -36,13 +33,10 @@ const SearchOverlay = ({ isVisible, onClose }) => {
 
         if (isVisible) {
             document.addEventListener('keydown', handleKeyDown);
-            // 전체 페이지 스크롤을 막지 않도록 주석 처리
-            // document.body.style.overflow = 'hidden';
         }
 
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
-            // document.body.style.overflow = 'unset';
         };
     }, [isVisible]);
 
@@ -78,9 +72,7 @@ const SearchOverlay = ({ isVisible, onClose }) => {
     const handleSearch = (searchTerm = query) => {
         if (searchTerm.trim()) {
             // 최근 검색어에 추가
-            if (!recentSearches.includes(searchTerm)) {
-                setRecentSearches(prev => [searchTerm, ...prev.slice(0, 2)]);
-            }
+            addSearchTerm(searchTerm);
             // 먼저 검색 오버레이를 닫고 페이지 이동
             handleClose();
             // 약간의 지연 후 페이지 이동하여 상태 업데이트가 완료되도록 함
@@ -101,12 +93,29 @@ const SearchOverlay = ({ isVisible, onClose }) => {
     };
 
     const handleRemoveSearch = (searchToRemove) => {
-        setRecentSearches(prev => prev.filter(item => item !== searchToRemove));
+        removeSearchTerm(searchToRemove);
     };
 
     const handlePreviewItemClick = (item) => {
-        // 해당 검색어 폴더 페이지로 이동
-        console.log('폴더 클릭:', item);
+        // 해당 폴더의 상세페이지로 이동
+        if (item && item.folderId) {
+            const targetUserIdParam = item.userId
+                ? `&targetUserId=${item.userId}`
+                : item.ownerUserId
+                  ? `&targetUserId=${item.ownerUserId}`
+                  : '';
+            
+            const url = `/folder/${item.folderId}?${targetUserIdParam}`;
+            console.log('폴더 상세페이지로 이동:', url);
+            
+            // 검색 오버레이 닫기
+            handleClose();
+            
+            // 페이지 이동
+            setTimeout(() => {
+                navigate({ to: url });
+            }, 100);
+        }
     };
 
     return (
@@ -119,14 +128,18 @@ const SearchOverlay = ({ isVisible, onClose }) => {
                     onSearch={handleSearch}
                 />
 
-                {!isSearching && (
+                {/* 검색 상태에 따른 조건부 렌더링 */}
+                {!isSearching ? (
+                    // 초기 상태: 최근 검색 + 랭킹
                     <>
                         <SearchResultSection 
                             recentSearches={recentSearches}
                             searchResults={[]}
                             searchLoading={false}
+                            isSearching={isSearching}
                             onSearchClick={handleSearchClick}
                             onRemoveSearch={handleRemoveSearch}
+                            onClearAll={clearAllSearches}
                             onPreviewItemClick={handlePreviewItemClick}
                         />
                         <SortedRankingSection 
@@ -134,15 +147,16 @@ const SearchOverlay = ({ isVisible, onClose }) => {
                             loading={rankingsLoading}
                         />
                     </>
-                )}
-
-                {isSearching && (
+                ) : (
+                    // 검색 중: 검색 결과만 표시
                     <SearchResultSection 
                         recentSearches={recentSearches}
                         searchResults={suggestions}
                         searchLoading={loading}
+                        isSearching={isSearching}
                         onSearchClick={handleSearchClick}
                         onRemoveSearch={handleRemoveSearch}
+                        onClearAll={clearAllSearches}
                         onPreviewItemClick={handlePreviewItemClick}
                     />
                 )}
@@ -151,4 +165,4 @@ const SearchOverlay = ({ isVisible, onClose }) => {
     );
 };
 
-export default SearchOverlay; 
+export default SearchOverlay;
