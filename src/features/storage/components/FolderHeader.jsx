@@ -14,7 +14,7 @@ export default function FolderHeader({ data }) {
     // 초기 팔로우 상태가 확정되기 전까지 로딩 처리
     const isReady = Boolean(targetUserId) && (typeof following === 'boolean' || typeof data?.isFollowing === 'boolean');
     const displayedFollowing = typeof following === 'boolean' ? following : Boolean(data?.isFollowing);
-    const { showConfirm } = useModal();
+    const { showConfirm, showModal } = useModal();
 
     const handleFollowClick = () => {
         if (!targetUserId || isLoading || !isReady) return;
@@ -42,7 +42,17 @@ export default function FolderHeader({ data }) {
     return (
         <div className="FolderHeader">
             <div className="FolderCoverBlur" />
+
             <div className="FolderProfileSection">
+                <div className="FolderTopBar">
+                    <button
+                        className="FolderSettingsBtn"
+                        type="button"
+                        onClick={() => showModal('accountSettings', { from: 'folderHeader' })}
+                    >
+                        <img className="UserSettingsIcon" src="/setting_icon.png" alt="settings" />
+                    </button>
+                </div>
                 <img
                     className="FolderProfileImage"
                     src={

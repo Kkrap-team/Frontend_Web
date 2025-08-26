@@ -5,8 +5,8 @@ import Header from '@/features/header/components/Header';
 import Layout from '@/components/layout/Layout';
 import { useAuthStore } from '@/stores/authStore';
 
-import MainPage from '@/pages/mainPage/MainPage';
-import LoginPage from '@/pages/loginPage/LoginPage';
+import MainPage from '@/pages/MainPage/MainPage';
+import LoginPage from '@/pages/LoginPage/LoginPage';
 import FollowerPage from '@/pages/FollowerPage/FollowerPage';
 import EditProfilePage from '@/pages/userPage/EditProfilePage';
 import StoragePage from '@/pages/storagePage/StoragePage';
@@ -35,11 +35,26 @@ function RootPage() {
 function useLoginGuardRedirect(message) {
     const { user } = useAuthStore();
     const navigate = useNavigate();
-    const { showConfirm } = useModal();
+    const { showConfirm, hideConfirm } = useModal();
     const promptedRef = useRef(false);
+    const prevUserIdRef = useRef(user?.userId);
 
     useEffect(() => {
-        if (!user?.userId && !promptedRef.current) {
+        const prevUserId = prevUserIdRef.current;
+        const currentUserId = user?.userId;
+
+        // 방금 로그아웃한 경우: 경고 모달 없이 메인으로 보냄
+        if (!currentUserId && prevUserId) {
+            promptedRef.current = true;
+            hideConfirm?.();
+            navigate({ to: '/', replace: true });
+            prevUserIdRef.current = currentUserId;
+            return;
+        }
+
+        prevUserIdRef.current = currentUserId;
+
+        if (!currentUserId && !promptedRef.current) {
             promptedRef.current = true;
             showConfirm({
                 title: '로그인 필요',
@@ -52,7 +67,7 @@ function useLoginGuardRedirect(message) {
                 onCancel: () => navigate({ to: '/', replace: true }),
             });
         }
-    }, [user, navigate, showConfirm, message]);
+    }, [user, navigate, showConfirm, hideConfirm, message]);
 
     return Boolean(user?.userId);
 }

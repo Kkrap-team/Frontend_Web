@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { fetchRecommendedScroll, initRecommendedScroll, scrapFolder } from '@/features/main/api/recommendApi';
 
-export default function useRecommendedFeed() {
+export default function useRecommendedFeed(enabled = true) {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
@@ -21,6 +21,7 @@ export default function useRecommendedFeed() {
     }, [hasMore]);
 
     const loadMore = useCallback(async () => {
+        if (!enabled) return;
         if (loadingRef.current || inFlightRef.current || !hasMoreRef.current) return;
 
         setLoading(true);
@@ -62,7 +63,7 @@ export default function useRecommendedFeed() {
             setLoading(false);
             loadingRef.current = false;
         }
-    }, []);
+    }, [enabled]);
 
     // 폴더 스크랩 처리
     const handleScrapFolder = useCallback(
@@ -97,6 +98,7 @@ export default function useRecommendedFeed() {
 
     // 최초 로드 시 초기화
     useEffect(() => {
+        if (!enabled) return;
         const initializeFeed = async () => {
             setItems([]);
             setHasMore(true);
@@ -104,12 +106,11 @@ export default function useRecommendedFeed() {
             setLoading(false);
             loadingRef.current = false;
             isInitTriedRef.current = false;
-            // 초기 1회만 호출
             await loadMore();
         };
 
         initializeFeed();
-    }, [loadMore]);
+    }, [enabled, loadMore]);
 
     return {
         items,

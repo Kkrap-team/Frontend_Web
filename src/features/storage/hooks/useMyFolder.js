@@ -8,7 +8,7 @@ export default function useMyFolders(userId) {
     const [sharedFolders, setSharedFolders] = useState([]);
     const [myFolderProfile, setMyFolderProfile] = useState([]);
 
-    //폴더 헤더 조회
+    //폴더 헤더 조회 - 비회원일 때는 호출하지 않음
     useEffect(() => {
         if (!userId) return;
         const fetchProfile = async () => {
@@ -22,7 +22,7 @@ export default function useMyFolders(userId) {
         fetchProfile();
     }, [userId]);
 
-    //폴더 조회(내 폴더, 공유 폴더)
+    //폴더 조회(내 폴더, 공유 폴더) - 비회원일 때는 호출하지 않음
     const fetchFolders = useCallback(async () => {
         if (!userId) return;
         try {
@@ -86,8 +86,10 @@ export default function useMyFolders(userId) {
     };
 
     useEffect(() => {
+        // 비회원일 때는 API 호출하지 않음
+        if (!userId) return;
         fetchFolders();
-    }, [fetchFolders]);
+    }, [fetchFolders, userId]);
 
     return { ownFolders, sharedFolders, removeFolder, fetchFolders, myFolderProfile, editFolder };
 }

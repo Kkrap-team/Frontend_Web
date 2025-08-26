@@ -4,7 +4,7 @@ import { useAuthStore } from '@/stores/authStore';
 import useFolderDetail from '@/features/folderDetail/hooks/useFolderDetail';
 import FolderDetailHeader from '@/features/folderDetail/components/FolderDetailHeader';
 import LinkList from '@/features/folderDetail/components/LinkList';
-import CreateDropdown from '@/features/create/components/CreateDropdown';
+import CreateModal from '@/features/create/components/CreateModal';
 import { getFolderPermissionList } from '@/features/storage/api/folderPermissionApi';
 import PermissionModal from '@/features/storage/components/PermissionModal';
 import usePermissionUsers from '@/features/storage/hooks/usePermissionUsers';
@@ -36,8 +36,8 @@ export default function StorageFolderDetail() {
     // 모달 동작은 훅에서 관리
 
     React.useEffect(() => {
-        if (!folderId || !folderInfo || folderInfo.share === false) {
-            // 공유되지 않은 폴더면 요청 스킵 및 상태 초기화
+        // 비회원이거나 공유되지 않은 폴더면 요청 스킵
+        if (!folderId || !folderInfo || folderInfo.share === false || !user) {
             setPermData(null);
             setPermLoading(false);
             return;
@@ -54,19 +54,37 @@ export default function StorageFolderDetail() {
         return () => {
             ignore = true;
         };
-    }, [folderId, folderInfo]);
+    }, [folderId, folderInfo, user]);
 
     // 아이콘 표시에 사용할 원본 invited 목록만 전달 (가공은 컴포넌트가 담당)
     const invitedUsers = Array.isArray(permData?.invited) ? permData.invited : [];
 
     // 훅: 모달 동작(선택/부여/삭제) 담당. 성공 후 페이지 권한 데이터 새로고침
     const refreshPermData = React.useCallback(() => {
-        if (!folderId || !folderInfo || folderInfo.share === false) return;
+        // 비회원이거나 공유되지 않은 폴더면 요청 스킵
+        if (!folderId || !folderInfo || folderInfo.share === false || !user) return;
         setPermLoading(true);
         getFolderPermissionList(folderId)
             .then((data) => setPermData(data))
             .finally(() => setPermLoading(false));
-    }, [folderId, folderInfo]);
+    }, [folderId, folderInfo, user]);
+
+    // 비회원일 때는 권한 관련 훅을 호출하지 않음
+    const permissionHook = user ? usePermissionUsers(userId, refreshPermData) : {
+        users: [],
+        invitedUsers: [],
+        notInvitedUsers: [],
+        owner: null,
+        loading: false,
+        error: null,
+        showPermissionModal: false,
+        selectedUsers: [],
+        openPermissionModal: () => {},
+        closePermissionModal: () => {},
+        handleUserSelect: () => {},
+        handlePermissionConfirm: () => {},
+        handlePermissionRevoke: () => {},
+    };
 
     const {
         users: permUsers,
@@ -82,7 +100,7 @@ export default function StorageFolderDetail() {
         handleUserSelect,
         handlePermissionConfirm,
         handlePermissionRevoke,
-    } = usePermissionUsers(userId, refreshPermData);
+    } = permissionHook;
 
     if (loading) {
         return (
@@ -113,9 +131,13 @@ export default function StorageFolderDetail() {
                 onOpenPermission={() => openPermissionModal({ folderId, folderName: folderInfo?.folderName })}
             />
 
-            {/* Create 버튼 (링크 추가만) */}
-            <CreateDropdown showFolderCreate={false} onSuccess={refetch} />
-            {showPermissionModal && (
+]
+            {/* Create 버튼 (링크 추가만) - 회원일 때만 표시 */}
+            {user && <CreateDropdown showFolderCreate={false} onSuccess={refetch} />}
+            
+            {/* 권한 모달 - 회원일 때만 표시 */}
+            {user && showPermissionModal && (
+
                 <PermissionModal
                     isOpen={showPermissionModal}
                     users={permUsers}
