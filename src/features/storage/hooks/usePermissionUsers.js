@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useModal } from '@/contexts/ModalContext';
 import { getFolderPermissionList, grantFolderPermission, revokeFolderPermission } from '../api/folderPermissionApi';
 
-export default function usePermissionUsers(userId, onFoldersUpdate) {
+export default function usePermissionUsers(userId, onFoldersUpdate, enabled = true) {
     const { showConfirm } = useModal();
     // 팔로잉 목록 상태
     const [users, setUsers] = useState([]);
@@ -19,7 +19,7 @@ export default function usePermissionUsers(userId, onFoldersUpdate) {
 
     // 팔로잉 목록 조회 (폴더가 선택되었을 때만) - 비회원일 때는 호출하지 않음
     useEffect(() => {
-        if (!userId || !targetFolder) return;
+        if (!enabled || !userId || !targetFolder) return;
 
         setLoading(true);
         setError(null);
@@ -41,10 +41,11 @@ export default function usePermissionUsers(userId, onFoldersUpdate) {
                 setOwner(null);
             })
             .finally(() => setLoading(false));
-    }, [userId, targetFolder]);
+    }, [enabled, userId, targetFolder]);
 
     // 권한 모달 열기
     const openPermissionModal = (folder) => {
+        if (!enabled) return;
         setTargetFolder(folder);
         setSelectedUsers([]);
         setShowPermissionModal(true);
@@ -71,6 +72,7 @@ export default function usePermissionUsers(userId, onFoldersUpdate) {
 
     // 권한 부여 확인
     const handlePermissionConfirm = async () => {
+        if (!enabled) return;
         if (selectedUsers.length === 0) {
             showConfirm({
                 title: '선택 필요',
@@ -133,6 +135,7 @@ export default function usePermissionUsers(userId, onFoldersUpdate) {
 
     // 권한 삭제 함수
     const handlePermissionRevoke = async (invitedUserId) => {
+        if (!enabled) return;
         if (!targetFolder) return;
 
         // 삭제할 사용자 정보 찾기
