@@ -8,7 +8,7 @@ import { useAuthStore } from '@/stores/authStore';
 import MainPage from '@/pages/MainPage/MainPage';
 import LoginPage from '@/pages/LoginPage/LoginPage';
 import FollowerPage from '@/pages/FollowerPage/FollowerPage';
-import EditProfilePage from '@/pages/userPage/EditProfilePage';
+import EditProfilePage from '@/pages/UserPage/EditProfilePage';
 import StoragePage from '@/pages/storagePage/StoragePage';
 import StorageFolderDetail from '@/pages/storageFolderDetail/StorageFolderDetail';
 import SearchPage from '@/pages/SearchPage/SearchPage';
