@@ -149,17 +149,23 @@
 /* 섹션 헤더 스타일 */
 .SectionHeader {
     display: flex;
-    justify-content: space-between;  /* 왼쪽 텍스트, 오른쪽 화살표 */
-    align-items: center;       
+    justify-content: space-between; /* 왼쪽 텍스트, 오른쪽 화살표 */
+    align-items: center;
     /* display: flex;
     align-items: center;
     gap: 10px; */
 }
 
+/* Explore 섹션과 동일한 중앙 래퍼 적용 */
+.ExploreInner {
+    width: min(100%, calc(4 * 320px + 3 * 24px));
+    margin: 0 auto;
+}
+
 .SectionTitle {
     font-size: 24px;
     font-weight: 600;
-    line-height: 1;      /* 화살표랑 동일하게 */
+    line-height: 1; /* 화살표랑 동일하게 */
     display: flex;
     align-items: center;
     /* font-size: 24px;
@@ -167,14 +173,14 @@
 }
 
 .SectionArrow {
-      margin-left: auto;   /* 왼쪽 영역을 밀어내서 끝으로 */
-  font-size: 24px;
-  font-weight: 600;
-  cursor: pointer;
-  color: #757575;
-  line-height: 1;      /* 텍스트 높이 맞추기 */
-  display: flex;       /* flex로 세로 중앙 정렬 */
-  align-items: center;
+    margin-left: auto; /* 왼쪽 영역을 밀어내서 끝으로 */
+    font-size: 24px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #757575;
+    line-height: 1; /* 텍스트 높이 맞추기 */
+    display: flex; /* flex로 세로 중앙 정렬 */
+    align-items: center;
     /* font-size: 24px;
     font-weight: 600;
     margin: 0;
@@ -192,12 +198,10 @@
 /* 반응형 */
 
 @media (max-width: 1024px) {
-
 }
 
 /* 모바일(~768, iPhone SE 포함) */
 @media (max-width: 768px) {
-
     /* 각 폴더 사이즈 */
     .MyFoldersSection .MyFolderCard,
     .SharedFoldersSection .MyFolderCard {
@@ -220,12 +224,8 @@
         font-size: 18px;
         font-weight: 600;
     }
-
-
-    
 }
 
 /* 아주 작은 기기(~360) */
 @media (max-width: 360px) {
-
 }

@@ -5,8 +5,8 @@ import Header from '@/features/header/components/Header';
 import Layout from '@/components/layout/Layout';
 import { useAuthStore } from '@/stores/authStore';
 
-import MainPage from '@/pages/mainPage/MainPage';
-import LoginPage from '@/pages/loginPage/LoginPage';
+import MainPage from '@/pages/MainPage/MainPage';
+import LoginPage from '@/pages/LoginPage/LoginPage';
 import FollowerPage from '@/pages/FollowerPage/FollowerPage';
 import EditProfilePage from '@/pages/userPage/EditProfilePage';
 import StoragePage from '@/pages/storagePage/StoragePage';
