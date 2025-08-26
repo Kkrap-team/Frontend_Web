@@ -47,7 +47,7 @@ export default function CreateModal({ showFolderCreate = true, onSuccess }) {
                             </button>
                             <h3 className="CreateModalTitle">새 콘텐츠 추가</h3>
                         </div>
-                        <div className="CreateOptions">
+                        <div className={`CreateOptions ${!showFolderCreate ? 'CreateOptionsSingle' : ''}`}>
                             {showFolderCreate && (
                                 <button
                                     className="CreateOption"
