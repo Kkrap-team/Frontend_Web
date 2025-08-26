@@ -50,7 +50,6 @@ const LinkSettingsModal = ({ isOpen, link, onClose, onSave, onDelete, onCopyLink
                                 onChange={(e) => setLinkName(e.target.value)}
                                 placeholder={link.linkName}
                                 className="LinkNameInput"
-                                disabled={!isOwner}
                                 maxLength={MAX_TITLE}
                             />
                             {linkName && (
@@ -79,12 +78,12 @@ const LinkSettingsModal = ({ isOpen, link, onClose, onSave, onDelete, onCopyLink
                                         <img src="/folder_move_icon.png" alt="이동" className="LinkSettingsIcon" />
                                         <span>링크 이동하기</span>
                                     </button>
-                                    <button className="LinkSettingsMenuItem DeleteItem" onClick={handleDelete}>
-                                        <img src="/delete.png" alt="삭제" className="LinkSettingsIcon" />
-                                        <span>삭제하기</span>
-                                    </button>
                                 </>
                             )}
+                            <button className="LinkSettingsMenuItem DeleteItem" onClick={handleDelete}>
+                                <img src="/delete.png" alt="삭제" className="LinkSettingsIcon" />
+                                <span>삭제하기</span>
+                            </button>
                         </div>
                     </div>
 
@@ -92,11 +91,10 @@ const LinkSettingsModal = ({ isOpen, link, onClose, onSave, onDelete, onCopyLink
                         <button className="LinkSettingsBtn CancelBtn" onClick={onClose}>
                             취소
                         </button>
-                        {isOwner && (
-                            <button className="LinkSettingsBtn ConfirmBtn" onClick={handleSave}>
-                                확인
-                            </button>
-                        )}
+
+                        <button className="LinkSettingsBtn ConfirmBtn" onClick={handleSave}>
+                            확인
+                        </button>
                     </div>
                 </div>
             </div>

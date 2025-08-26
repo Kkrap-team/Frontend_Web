@@ -16,6 +16,7 @@
   border-bottom: 1px solid #e9ecef; /* 타이틀 아래 스트로크 추가 */
   border-top: 1px solid #e9ecef; /* 타이틀 위에 스트로크 추가 */
   padding-top: 20px; /* 위쪽 스트로크와 타이틀 사이 여백 */
+  line-height: 1.2; /* 일관된 줄 높이 */
 }
 
 /* 첫 번째 섹션(조회순)의 타이틀은 위쪽 스트로크 제거하고 패딩 조정 */
@@ -24,11 +25,13 @@
   padding-top: 8px; /* 첫 번째 섹션은 위쪽 패딩 조정 */
 }
 
-/* 스크랩순 타이틀의 크기를 조회순과 비슷하게 맞춤 */
+/* 스크랩순 타이틀의 크기를 조회순과 완전히 동일하게 맞춤 */
 .sortedSection:last-child .sortedTitle {
   font-size: 24px; /* 조회순과 동일한 폰트 크기 */
   font-weight: 700; /* 조회순과 동일한 폰트 굵기 */
   padding-top: 8px; /* 위쪽 패딩을 8px로 조정 */
+  line-height: 1.2; /* 조회순과 동일한 줄 높이 */
+  margin: 0 0 20px 0; /* 조회순과 동일한 마진 */
 }
 
 .sortedSection {
@@ -235,60 +238,217 @@
   }
 }
 
-@media (max-width: 768px) {
+/* 태블릿 반응형 스타일 */
+@media (max-width: 1024px) {
   .cardGridContainer {
-    max-width: 842px; /* 정확히 4개 카드가 보이도록 계산: (200px × 4) + (14px × 3) = 842px */
-    gap: 8px;
-  }
-
-  .scrollButton {
-    width: 35px;
-    height: 35px;
-    font-size: 18px;
+    max-width: 900px;
+    padding: 0 50px;
   }
 
   .cardGrid {
-    gap: 14px;
-    max-width: 842px;
-    padding: 0;
+    gap: 15px;
+    max-width: 800px;
   }
   
   .RankingCardGridItem {
-    width: 200px;
-    padding: 6px 0;
+    width: 220px;
   }
   
   .RankingCardGridItem :global(.MyFolderCard) {
-    max-width: 200px;
-    min-height: 250px;
+    max-width: 220px;
+    min-height: 280px;
   }
 }
 
-@media (max-width: 480px) {
-  .cardGridContainer {
-    max-width: 676px; /* 정확히 4개 카드가 보이도록 계산: (160px × 4) + (12px × 3) = 676px */
-    gap: 6px;
+/* 모바일 반응형 스타일 */
+@media (max-width: 768px) {
+  .sortedResultsSection {
+    padding: 0 16px 16px 16px;
   }
-
+  
+  .sortedTitle {
+    font-size: 20px;
+    margin: 0 0 16px 0;
+    padding: 16px 0 8px 0;
+    line-height: 1.2; /* 모바일에서도 일관된 줄 높이 */
+  }
+  
+  /* 모바일에서도 첫 번째와 마지막 섹션의 타이틀 크기 동일하게 */
+  .sortedSection:first-child .sortedTitle {
+    padding-top: 8px;
+    font-size: 20px;
+    line-height: 1.2;
+  }
+  
+  .sortedSection:last-child .sortedTitle {
+    padding-top: 8px;
+    font-size: 20px;
+    line-height: 1.2;
+    margin: 0 0 16px 0;
+  }
+  
+  .sortedSection {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+  }
+  
+  /* 모바일에서 슬라이드 버튼 숨김 */
   .scrollButton {
-    width: 30px;
-    height: 30px;
-    font-size: 16px;
+    display: none !important;
+  }
+  
+  /* 모바일에서 컨테이너 최적화 */
+  .cardGridContainer {
+    margin: 0;
+    max-width: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+  
+  /* 모바일에서 카드 그리드 조정 - 가로 스크롤 유지 */
+  .cardGrid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 12px !important;
+    padding: 8px 0 !important; /* 위아래 패딩 추가로 카드 잘림 방지 */
+    overflow-x: auto !important; /* 가로 스크롤 유지 */
+    scroll-behavior: smooth !important;
+    width: 100% !important;
+    max-width: none !important;
+    justify-content: flex-start !important; /* 왼쪽 정렬로 변경 */
+  }
+  
+  /* 모바일에서 카드 크기 조정 - 3개가 보이도록 */
+  .RankingCardGridItem {
+    flex-shrink: 0 !important; /* 카드가 줄어들지 않도록 */
+    min-width: calc((100vw - 32px - 24px) / 3) !important; /* 화면 너비 - 패딩 - 간격 */
+    max-width: calc((100vw - 32px - 24px) / 3) !important;
+    width: calc((100vw - 32px - 24px) / 3) !important;
+    padding: 4px 0 !important; /* 위아래 패딩 추가 */
+  }
+  
+  /* 모바일에서 MyFolderCard 스타일 조정 */
+  .RankingCardGridItem :global(.MyFolderCard) {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 120px !important; /* 높이를 늘려서 썸네일이 더 크게 보이도록 */
+    max-height: 140px !important;
+  }
+  
+  /* 모바일에서 썸네일 컨테이너를 더 크게 */
+  .RankingCardGridItem :global(.MyFolderImageContainer) {
+    width: 100% !important;
+    height: 70px !important; /* 썸네일 영역을 더 크게 */
+    min-width: 100% !important;
+    flex: 1 !important; /* 남은 공간을 모두 차지하도록 */
+  }
+  
+  /* 모바일에서 썸네일 이미지를 더 크게 */
+  .RankingCardGridItem :global(.MyFolderImage) {
+    width: 90% !important; /* 썸네일 너비를 더 크게 */
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  
+  /* 모바일에서 멀티 썸네일 그리드도 더 크게 */
+  .RankingCardGridItem :global(.MultiThumbnailGrid) {
+    width: 90% !important;
+    height: 100% !important;
+  }
+  
+  .RankingCardGridItem :global(.MyFolderInfo) {
+    padding: 8px !important;
+    flex: 0 0 auto !important; /* 정보 영역은 고정 크기 */
+  }
+  
+  .RankingCardGridItem :global(.MyFolderTitle) {
+    font-size: 13px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 4px !important;
+  }
+  
+  /* 모바일에서 폴더 설명(소개) 숨김 */
+  .RankingCardGridItem :global(.MyFolderDesc) {
+    display: none !important;
+  }
+  
+  .RankingCardGridItem :global(.MyFolderStats) {
+    font-size: 10px !important;
+    gap: 6px !important;
+  }
+}
+
+/* 작은 모바일 반응형 스타일 */
+@media (max-width: 480px) {
+  .sortedTitle {
+    font-size: 18px; /* 작은 모바일에서 타이틀 크기 조정 */
+    line-height: 1.2;
+  }
+  
+  /* 작은 모바일에서도 첫 번째와 마지막 섹션의 타이틀 크기 동일하게 */
+  .sortedSection:first-child .sortedTitle {
+    padding-top: 8px;
+    font-size: 18px;
+    line-height: 1.2;
+  }
+  
+  .sortedSection:last-child .sortedTitle {
+    padding-top: 8px;
+    font-size: 18px;
+    line-height: 1.2;
+    margin: 0 0 16px 0;
+  }
+  
+  .cardGridContainer {
+    max-width: none !important;
+    padding: 0 !important;
+    width: 100% !important;
   }
 
   .cardGrid {
-    gap: 12px;
-    max-width: 676px;
-    padding: 0;
+    gap: 8px !important;
+    padding: 0 !important;
   }
   
   .RankingCardGridItem {
-    width: 160px;
-    padding: 5px 0;
+    min-width: calc((100vw - 32px - 16px) / 3) !important; /* 간격 줄임 */
+    max-width: calc((100vw - 32px - 16px) / 3) !important;
+    width: calc((100vw - 32px - 16px) / 3) !important;
   }
   
   .RankingCardGridItem :global(.MyFolderCard) {
-    max-width: 160px;
-    min-height: 200px;
+    min-height: 110px !important; /* 작은 모바일에서도 썸네일이 크게 보이도록 */
+    max-height: 130px !important;
+  }
+  
+  .RankingCardGridItem :global(.MyFolderImageContainer) {
+    width: 100% !important;
+    height: 65px !important; /* 작은 모바일에서도 썸네일 영역 유지 */
+    min-width: 100% !important;
+    flex: 1 !important;
+  }
+  
+  .RankingCardGridItem :global(.MyFolderImage) {
+    width: 90% !important;
+    height: 100% !important;
+  }
+  
+  .RankingCardGridItem :global(.MultiThumbnailGrid) {
+    width: 90% !important;
+    height: 100% !important;
+  }
+  
+  .RankingCardGridItem :global(.MyFolderTitle) {
+    font-size: 12px !important;
+  }
+  
+  /* 작은 모바일에서도 폴더 설명(소개) 숨김 */
+  .RankingCardGridItem :global(.MyFolderDesc) {
+    display: none !important;
+  }
+  
+  .RankingCardGridItem :global(.MyFolderStats) {
+    font-size: 9px !important;
+    gap: 4px !important;
   }
 }
