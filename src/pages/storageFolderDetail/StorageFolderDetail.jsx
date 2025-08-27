@@ -88,6 +88,19 @@ export default function StorageFolderDetail() {
         handlePermissionRevoke,
     } = permissionHook;
 
+    // 모바일 하단 네비의 CreateModal에서 링크 생성 시 목록 갱신 이벤트 수신
+    React.useEffect(() => {
+        const handler = (e) => {
+            const detail = e?.detail;
+            const eventFolderId = detail?.folderId;
+            if (!eventFolderId) return;
+            if (String(eventFolderId) !== String(folderId)) return;
+            refetch();
+        };
+        window.addEventListener('links:refresh', handler);
+        return () => window.removeEventListener('links:refresh', handler);
+    }, [folderId, refetch]);
+
     if (loading) {
         return (
             <div style={{ textAlign: 'center' }}>
@@ -117,10 +130,15 @@ export default function StorageFolderDetail() {
                 onOpenPermission={() => openPermissionModal({ folderId, folderName: folderInfo?.folderName })}
             />
 
-
             {/* Create 버튼 (링크 추가만) - 회원일 때만 표시 */}
-            {user && <CreateModal showFolderCreate={false} onSuccess={refetch} />}
-            
+            {user && (
+                <CreateModal
+                    showFolderCreate={false}
+                    onSuccess={(createdLink) => {
+                        refetch();
+                    }}
+                />
+            )}
 
             {/* 권한 모달 - 회원일 때만 표시 */}
             {user && showPermissionModal && (

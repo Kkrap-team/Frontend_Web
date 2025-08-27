@@ -43,7 +43,26 @@ export default function NavMenu({ toggleSearch, showSearchInput }) {
             {/* 모바일에서만 중앙 Create 버튼 */}
             {isMobile && (
                 <div className="NavItem Create">
-                    <CreateModal showFolderCreate onSuccess={undefined} />
+                    <CreateModal
+                        showFolderCreate
+                        onSuccess={(created) => {
+                            try {
+                                if (created && typeof created === 'object') {
+                                    if ('foldersId' in created) {
+                                        window.dispatchEvent(
+                                            new CustomEvent('links:refresh', {
+                                                detail: { folderId: created.foldersId, createdLink: created },
+                                            })
+                                        );
+                                    } else if ('folderId' in created) {
+                                        window.dispatchEvent(
+                                            new CustomEvent('folders:refresh', { detail: { createdFolder: created } })
+                                        );
+                                    }
+                                }
+                            } catch (_) {}
+                        }}
+                    />
                 </div>
             )}
 

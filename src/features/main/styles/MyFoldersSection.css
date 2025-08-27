@@ -149,11 +149,7 @@
 /* 섹션 헤더 스타일 */
 .SectionHeader {
     display: flex;
-    justify-content: space-between; /* 왼쪽 텍스트, 오른쪽 화살표 */
     align-items: center;
-    /* display: flex;
-    align-items: center;
-    gap: 10px; */
 }
 
 /* Explore 섹션과 동일한 중앙 래퍼 적용 */
@@ -173,7 +169,7 @@
 }
 
 .SectionArrow {
-    margin-left: auto; /* 왼쪽 영역을 밀어내서 끝으로 */
+    margin-left: 1rem;
     font-size: 24px;
     font-weight: 600;
     cursor: pointer;

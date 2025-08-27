@@ -10,6 +10,7 @@ import CreateModal from '@/features/create/components/CreateModal';
 import FolderCreateModal from '@/features/create/components/FolderCreateModal';
 import PermissionModal from '@/features/storage/components/PermissionModal';
 import usePermissionUsers from '@/features/storage/hooks/usePermissionUsers';
+import { useEffect } from 'react';
 
 const routeApi = getRouteApi('/storage/$userId');
 
@@ -31,7 +32,6 @@ export default function StoragePage() {
         myFolderProfile,
         editFolder,
     } = useMyFolder(targetUserId) || {};
-    console.log('째 : ', sharedFolders);
 
     // 모든 폴더를 하나의 배열로 합치기
     const allFolders = [
@@ -59,6 +59,15 @@ export default function StoragePage() {
 
     const [modalMode, setModalMode] = useState(null);
     const [editTargetFolder, setEditTargetFolder] = useState(null);
+
+    // 모바일 하단 Create에서 발생하는 생성 이벤트를 수신해 목록 갱신
+    useEffect(() => {
+        const handler = (e) => {
+            fetchFolders();
+        };
+        window.addEventListener('folders:refresh', handler);
+        return () => window.removeEventListener('folders:refresh', handler);
+    }, [fetchFolders]);
 
     // 폴더 수정 버튼 클릭 (MyFolderCard에서 호출)
     const handleEditClick = (folder) => {
@@ -94,12 +103,25 @@ export default function StoragePage() {
         await removeFolder(folder);
     };
 
+    // 제목에 사용할 표시 이름 결정
+    const displayOwnerName = isOwnStorage ? user?.nickname : myFolderProfile?.nickname;
+
     return (
         <div className="StorageContainer" style={{ paddingBottom: '120px' }}>
             <FolderHeader data={myFolderProfile} />
-            <div className="StorageHeader">
-                <h2 className="StorageTitle">{isOwnStorage ? `${user.nickname}님의 폴더` : `사용자의 폴더`}</h2>
-                {isOwnStorage && <CreateModal showFolderCreate onSuccess={fetchFolders} />}
+            <div className="ExploreInner">
+                <div className="StorageHeader">
+                    <h2 className="StorageTitle">{`${displayOwnerName || '사용자'}님의 폴더`}</h2>
+                    {isOwnStorage && (
+                        <CreateModal
+                            showFolderCreate
+                            onSuccess={(createdFolder) => {
+                                console.log('[StoragePage] onSuccess 수신 createdFolder:', createdFolder);
+                                fetchFolders();
+                            }}
+                        />
+                    )}
+                </div>
             </div>
             <FolderList
                 folders={ownFolders}
@@ -112,17 +134,19 @@ export default function StoragePage() {
             />
             {isOwnStorage && (
                 <>
-                    <div className="StorageHeader">
-                        <br />
-                        <h2 className="StorageTitle">{user.nickname}님과 공유된 폴더</h2>
-                        <FolderList
-                            folders={sharedFolders}
-                            onDelete={handleDelete}
-                            onEdit={handleEditClick}
-                            onPermission={openPermissionModal}
-                            allFolders={allFolders}
-                            showLockIcon={isOwnStorage}
-                        />
+                    <div className="ExploreInner">
+                        <div className="StorageHeader">
+                            <br />
+                            <h2 className="StorageTitle">{user.nickname}님과 공유된 폴더</h2>
+                            <FolderList
+                                folders={sharedFolders}
+                                onDelete={handleDelete}
+                                onEdit={handleEditClick}
+                                onPermission={openPermissionModal}
+                                allFolders={allFolders}
+                                showLockIcon={isOwnStorage}
+                            />
+                        </div>
                     </div>
                 </>
             )}

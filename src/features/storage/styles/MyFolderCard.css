@@ -214,15 +214,58 @@
 }
 
 @media (max-width: 1024px) {
-
 }
 
-/* 모바일(~768, iPhone SE 포함) */
+/* 모바일(~768px) */
 @media (max-width: 768px) {
+    .FolderMenu {
+        width: 90%;
 
+        max-width: 260px;
+        border-radius: 14px;
+    }
+    .FolderMenuItem {
+        font-size: 16px;
+        padding: 12px 14px;
+        gap: 8px;
+    }
+    .FolderMenuIcon {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+    }
+}
+
+@media (max-width: 425px) {
+    .FolderMenu {
+        width: 90%;
+
+        max-width: 260px;
+        border-radius: 14px;
+    }
+    .FolderMenuItem {
+        font-size: 12px;
+        padding: 12px 14px;
+        gap: 8px;
+    }
+    .FolderMenuIcon {
+        width: 22px;
+        height: 22px;
+        margin-right: 8px;
+    }
 }
 
 /* 아주 작은 기기(~360) */
 @media (max-width: 360px) {
-
+    .FolderMenu {
+        max-width: 240px;
+    }
+    .FolderMenuItem {
+        font-size: 10px;
+        padding: 10px 12px;
+    }
+    .FolderMenuIcon {
+        width: 20px;
+        height: 20px;
+    }
 }
