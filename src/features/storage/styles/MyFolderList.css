@@ -1,15 +1,16 @@
 .FolderList {
     display: grid;
+    gap: 40px 32px; /* 행/열 간격 */
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    width: 100%;
-    margin: 0 auto;
+    /* 4열 기준 컨테이너 폭 제한 → 크게 봐도 4개까지만 */
+    width: min(100%, calc(4 * 320px + 3 * 24px));
+    margin: 0 auto; /* 중앙 정렬 */
 }
 
 /* 반응형 조정 */
 @media (max-width: 768px) {
     .FolderList {
-        grid-template-columns: 1fr;
-        gap: 16px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
     }
 }

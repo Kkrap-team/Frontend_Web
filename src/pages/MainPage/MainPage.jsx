@@ -5,25 +5,11 @@ import ExploreSharedSection from '@/features/main/components/ExploreSharedSectio
 import { useAuthStore } from '@/stores/authStore';
 
 function MainPage() {
-    const surveyUrl = import.meta.env.VITE_SURVEY_URL;
     const { user } = useAuthStore();
     const isLoggedIn = !!user;
 
-    const handleSurveyClick = () => {
-        window.open(surveyUrl, '_blank');
-    };
-
     return (
         <div className="MainPage">
-            {/* 설문조사 버튼 - 로그인 상태에 따라 다르게 표시 */}
-            {isLoggedIn && (
-                <div className="MainPageHeader">
-                    <button className="MainPageHeaderButton" onClick={handleSurveyClick}>
-                        설문조사하고 커피 받기
-                    </button>
-                </div>
-            )}
-
             {/* 나의 폴더 섹션 - 회원만 표시 */}
             <MyFoldersSection />
 

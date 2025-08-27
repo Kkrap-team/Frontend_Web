@@ -89,6 +89,9 @@ export default function useMyFolders(userId) {
         // 비회원일 때는 API 호출하지 않음
         if (!userId) return;
         fetchFolders();
+        // 디버깅: 리스트 길이 확인
+        // eslint-disable-next-line no-console
+        console.log('[useMyFolder] ownFolders len', ownFolders.length, 'shared len', sharedFolders.length);
     }, [fetchFolders, userId]);
 
     return { ownFolders, sharedFolders, removeFolder, fetchFolders, myFolderProfile, editFolder };
