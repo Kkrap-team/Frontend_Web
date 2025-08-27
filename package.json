@@ -1,5 +1,5 @@
 {
-    "name": "kkrap_team",
+    "name": "kkrap",
     "version": "0.1.0",
     "private": true,
     "proxy": "http://172.20.10.12:8080",
