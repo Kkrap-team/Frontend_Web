@@ -45,6 +45,9 @@
     font-weight: 600;
     color: #212120;
     margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* 한 줄로 제한 */
 }
 
 .LinkCardKebab {
@@ -64,15 +67,6 @@
     background: #f0f0f0;
 }
 
-.LinkCardDescription {
-    font-size: 14px;
-    color: #757575;
-    margin: 0 0 12px 0;
-    line-height: 1.4;
-    overflow: hidden;
-    flex: 1;
-}
-
 .LinkCardUrl {
     font-size: 12px;
     color: #999;
@@ -85,4 +79,17 @@
     font-size: 12px;
     color: #999;
     margin-top: auto;
+}
+
+@media (max-width: 768px) {
+    .LinkCardTitle {
+        font-size: 14px;
+    }
+
+    .LinkCardUrl {
+        font-size: 10px;
+    }
+    .LinkCardDate {
+        font-size: 10px;
+    }
 }
