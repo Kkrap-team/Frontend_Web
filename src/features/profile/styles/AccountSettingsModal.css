@@ -56,3 +56,7 @@
 .AccountSettingsList button.danger:hover {
     background: #ffeaea;
 }
+
+.AccountSettingsList button.FolderDetailPermissionBtn {
+    border-top: 1px solid #f0f0f0;
+}

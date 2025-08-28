@@ -116,7 +116,6 @@ export default function StoragePage() {
                         <CreateModal
                             showFolderCreate
                             onSuccess={(createdFolder) => {
-                                console.log('[StoragePage] onSuccess 수신 createdFolder:', createdFolder);
                                 fetchFolders();
                             }}
                         />
@@ -132,23 +131,24 @@ export default function StoragePage() {
                 showMenu={isOwnStorage}
                 showLockIcon={isOwnStorage}
             />
-            {isOwnStorage && (
-                <>
-                    <div className="ExploreInner">
-                        <div className="StorageHeader">
-                            <br />
-                            <h2 className="StorageTitle">{user.nickname}님과 공유된 폴더</h2>
-                            <FolderList
-                                folders={sharedFolders}
-                                onDelete={handleDelete}
-                                onEdit={handleEditClick}
-                                onPermission={openPermissionModal}
-                                allFolders={allFolders}
-                                showLockIcon={isOwnStorage}
-                            />
-                        </div>
+
+            {/* 공유된 폴더 섹션: 내 페이지뿐 아니라 상대방 페이지에서도 표시 */}
+            {sharedFolders && sharedFolders.length > 0 && (
+                <div className="ExploreInner">
+                    <div className="StorageHeader">
+                        <br />
+                        <h2 className="StorageTitle">{`${displayOwnerName || '사용자'}님과 공유된 폴더`}</h2>
+                        <FolderList
+                            folders={sharedFolders}
+                            onDelete={isOwnStorage ? handleDelete : undefined}
+                            onEdit={isOwnStorage ? handleEditClick : undefined}
+                            onPermission={isOwnStorage ? openPermissionModal : undefined}
+                            showMenu={isOwnStorage}
+                            allFolders={allFolders}
+                            showLockIcon={isOwnStorage}
+                        />
                     </div>
-                </>
+                </div>
             )}
 
             {/* 폴더 수정 모달 */}

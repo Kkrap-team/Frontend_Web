@@ -6,11 +6,15 @@ import UserFolderCardHeader from './UserFolderCardHeader';
 import '../styles/ExploreSharedSection.css';
 import '../styles/UserFolderCardHeader.css';
 import { useAuthStore } from '@/stores/authStore';
+import { useModal } from '@/contexts/ModalContext';
+import { useNavigate } from '@tanstack/react-router';
 
 export default function ExploreSharedSection() {
     const { user } = useAuthStore();
     const userId = user?.userId;
     const isLoggedIn = !!user;
+    const { showConfirm } = useModal();
+    const navigate = useNavigate();
 
     // 훅은 항상 호출하고 내부 동작만 enabled로 제어
     const memberFeed = useRecommendedFeed(isLoggedIn);
@@ -42,6 +46,8 @@ export default function ExploreSharedSection() {
         }
     };
 
+    const leftBottomOnceRef = useRef(false);
+
     // loadMore 이후 상태 안전장치 (회원만 해당)
     const safeLoadMore = useCallback(() => {
         if (!isLoggedIn || !loadMore) return; // 비회원은 무한스크롤 없음
@@ -61,18 +67,37 @@ export default function ExploreSharedSection() {
     // 폴더 스크랩 처리 (회원만 가능)
     const handleScrapFolder = async (folderData) => {
         if (!isLoggedIn) {
-            alert('로그인이 필요한 서비스입니다.');
+            showConfirm({
+                title: '로그인 필요',
+                message: '폴더 스크랩은 로그인이 필요합니다. 로그인하시겠습니까?',
+                confirmText: '로그인',
+                cancelText: '취소',
+                onConfirm: () => navigate({ to: '/login' }),
+            });
             return;
         }
 
-        // UserFolderCardHeader에서 이미 자신의 폴더 체크를 수행하므로
-        // 여기서는 바로 스크랩 처리만 진행
-        const result = await scrapFolder(folderData);
-
-        if (result.success) {
-            alert('폴더가 성공적으로 스크랩되었습니다!');
-        } else {
-            alert('폴더 스크랩에 실패했습니다. 다시 시도해주세요.');
+        try {
+            const result = await scrapFolder(folderData);
+            if (result?.success) {
+                showConfirm({
+                    title: '스크랩 완료',
+                    message: '폴더가 내 보관함에 스크랩되었습니다.',
+                    confirmText: '확인',
+                });
+            } else {
+                showConfirm({
+                    title: '스크랩 실패',
+                    message: '스크랩 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.',
+                    confirmText: '확인',
+                });
+            }
+        } catch (e) {
+            showConfirm({
+                title: '스크랩 실패',
+                message: '스크랩 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.',
+                confirmText: '확인',
+            });
         }
     };
 
@@ -84,6 +109,16 @@ export default function ExploreSharedSection() {
         const io = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (!entry.isIntersecting) return;
+                // 바닥에 도달했으나 hasMore=false 상태에서 한번 위로 올랐다가 다시 내려오면 재시도 허용
+                if (!hasMore && !loading && !waitingRef.current) {
+                    if (leftBottomOnceRef.current) {
+                        leftBottomOnceRef.current = false;
+                        if (typeof currentFeed?.retryLoad === 'function') {
+                            currentFeed.retryLoad();
+                        }
+                    }
+                    return;
+                }
                 if (!hasMore || loading || waitingRef.current) return;
                 const now = Date.now();
                 const delta = now - lastLoadAtRef.current;
@@ -111,6 +146,31 @@ export default function ExploreSharedSection() {
             if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
         };
     }, [userId, isLoggedIn, hasMore, loading, safeLoadMore]);
+
+    // 사용자가 바닥에서 위로 올라갔다가 다시 내려오면 재시도 플래그 on
+    useEffect(() => {
+        const onScroll = () => {
+            if (!isLoggedIn) return;
+            const doc = document.documentElement;
+            const distanceToBottom = doc.scrollHeight - window.innerHeight - window.scrollY;
+
+            if (!hasMore && !loading && !waitingRef.current) {
+                // 충분히 위로 올라가면 재시도 허용 플래그 on
+                if (distanceToBottom > 200) {
+                    leftBottomOnceRef.current = true;
+                }
+                // 다시 바닥에 가까워지면 한 번 재시도
+                if (leftBottomOnceRef.current && distanceToBottom < 120) {
+                    leftBottomOnceRef.current = false;
+                    if (typeof currentFeed?.retryLoad === 'function') {
+                        currentFeed.retryLoad();
+                    }
+                }
+            }
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, [isLoggedIn, hasMore, loading, currentFeed]);
 
     // 비회원일 때는 간단한 폴더 목록만 표시
     if (!isLoggedIn) {
@@ -203,13 +263,19 @@ export default function ExploreSharedSection() {
                 {hasMore && <div ref={sentinelRef} className="ExploreSentinel" style={{ height: 1 }} />}
 
                 {(loading || waiting) && (
-                    <div className="ExploreLoading" role="status" aria-live="polite">
-                        <span className="ExploreSpinner" aria-hidden="true" />
+                    <div className="ExploreLoading ExploreWaiting" role="status" aria-live="polite">
+                        <span className="ExploreSpinner" />
                         <span className="ExploreLoadingText">{waiting ? '잠시만요…' : '불러오는 중…'}</span>
                     </div>
                 )}
 
-                {!hasMore && items.length > 0 && <div className="ExploreEnd">더 이상 표시할 콘텐츠가 없어요</div>}
+                {!hasMore && items.length > 0 && (
+                    <div className="ExploreEnd ExploreFloating">표시할 컨텐츠가 없어요</div>
+                )}
+
+                {!loading && !waiting && items.length === 0 && (
+                    <div className="ExploreEnd ExploreFloating">표시할 컨텐츠가 없어요</div>
+                )}
             </div>
         </section>
     );
