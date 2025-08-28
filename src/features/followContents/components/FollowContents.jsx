@@ -22,7 +22,7 @@ const FollowContents = () => {
                 cancelText: null,
                 onConfirm: () => {
                     // 확인 후 아무것도 하지 않음
-                }
+                },
             });
             return;
         }
@@ -36,9 +36,7 @@ const FollowContents = () => {
     if (loading) {
         return (
             <div className={styles.followContentsContainer}>
-                <div className={styles.loadingContainer}>
-                    팔로우 컨텐츠를 불러오는 중...
-                </div>
+                <div className={styles.loadingContainer}>팔로우 컨텐츠를 불러오는 중...</div>
             </div>
         );
     }
@@ -47,9 +45,7 @@ const FollowContents = () => {
         return (
             <div className={styles.followContentsContainer}>
                 <div className={styles.errorContainer}>
-                    <div className={styles.errorMessage}>
-                        {error}
-                    </div>
+                    <div className={styles.errorMessage}>{error}</div>
                 </div>
             </div>
         );
@@ -60,7 +56,7 @@ const FollowContents = () => {
             <div className={styles.followContentsGrid}>
                 {contents.map((content, index) => {
                     console.log(`Content ${index}:`, content);
-                    
+
                     return (
                         <div key={content.folderId || content.id || index} className={styles.folderCardWrapper}>
                             {/* 폴더 카드 위에 사용자 헤더 추가 */}
@@ -72,15 +68,23 @@ const FollowContents = () => {
                                 onScrap={(folderData) => handleScrapFolder(folderData)}
                                 folderData={{
                                     ...content,
-                                    userId: content.userId
+                                    userId: content.userId,
                                 }}
                                 disabled={false}
                                 userFolderCreateTime={content.createdAt}
                             />
-                            
+
                             {/* 폴더 카드 */}
-                            <MyFolderCard 
-                                folder={content}
+                            <MyFolderCard
+                                folder={{
+                                    ...content,
+                                    links:
+                                        Array.isArray(content.links) && content.links.length > 0
+                                            ? content.links
+                                            : content.thumbnailUrl || content.faviconUrl
+                                              ? [{ thumbnailUrl: content.thumbnailUrl, faviconUrl: content.faviconUrl }]
+                                              : [],
+                                }}
                                 onDelete={() => console.log('삭제:', content.folderId)}
                                 onEdit={() => console.log('수정:', content.folderId)}
                                 onPermission={() => console.log('권한:', content.folderId)}
@@ -95,5 +99,3 @@ const FollowContents = () => {
 };
 
 export default FollowContents;
-
-
