@@ -23,7 +23,7 @@ export default function NavMenu({ toggleSearch, showSearchInput }) {
     const profileUrlBase = import.meta.env.VITE_URL;
     const profileSrc = user?.profile
         ? `${user.profile.startsWith('http') ? user.profile : `${profileUrlBase}${user.profile}`}`
-        : '/account_circle.png';
+        : '/user_logout_profile.png';
     const isMobile = useIsMobile();
 
     return (
@@ -43,7 +43,26 @@ export default function NavMenu({ toggleSearch, showSearchInput }) {
             {/* 모바일에서만 중앙 Create 버튼 */}
             {isMobile && (
                 <div className="NavItem Create">
-                    <CreateModal showFolderCreate onSuccess={undefined} />
+                    <CreateModal
+                        showFolderCreate
+                        onSuccess={(created) => {
+                            try {
+                                if (created && typeof created === 'object') {
+                                    if ('foldersId' in created) {
+                                        window.dispatchEvent(
+                                            new CustomEvent('links:refresh', {
+                                                detail: { folderId: created.foldersId, createdLink: created },
+                                            })
+                                        );
+                                    } else if ('folderId' in created) {
+                                        window.dispatchEvent(
+                                            new CustomEvent('folders:refresh', { detail: { createdFolder: created } })
+                                        );
+                                    }
+                                }
+                            } catch (_) {}
+                        }}
+                    />
                 </div>
             )}
 

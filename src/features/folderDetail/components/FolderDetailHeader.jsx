@@ -1,12 +1,24 @@
 import React from 'react';
 import '../styles/FolderDetailHeader.css';
 
-const FolderHeader = ({ folderInfo }) => {
+const FolderHeader = ({ folderInfo, isOwner = false, onSettingsClick }) => {
     if (!folderInfo) return null;
 
     return (
         <div className="FolderDetailHeader">
-            <h1 className="FolderDetailTitle">{folderInfo.folderName}</h1>
+            <h1 className="FolderDetailTitle" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                {folderInfo.folderName}
+                {isOwner && (
+                    <button
+                        onClick={() => onSettingsClick?.()}
+                        style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+                        aria-label="폴더 설정"
+                        title="폴더 설정"
+                    >
+                        <img src="/setting_icon.png" alt="" aria-hidden="true" style={{ width: 20, height: 20 }} />
+                    </button>
+                )}
+            </h1>
             <p className="FolderDetailDescription">{folderInfo.folderDescription}</p>
             <div className="FolderDetailStats">
                 <span className="FolderDetailStat">조회수: {folderInfo.viewCount}</span>

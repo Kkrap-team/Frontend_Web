@@ -1,172 +1,175 @@
 .container {
-  height: calc(100vh - 50px);
-  width: 100%;
-  overflow: hidden;
-  background: #ffffff;
+    height: calc(100vh - 50px);
+    width: 100%;
+    overflow: hidden;
+    background: #ffffff;
 }
 
 .main {
-  display: flex;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 
 .sidebar {
-  width: 280px;
-  min-width: 280px;
-  border-right: 1px solid #e0e0e0;
-  overflow-y: auto;
-  background: #fff;
-  position: fixed;
-  left: 0;
-  top: 50px;
-  height: calc(100vh - 50px);
-  z-index: 10;
-  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+    width: 280px;
+    min-width: 280px;
+    border-right: 1px solid #e0e0e0;
+    overflow-y: auto;
+    background: #fff;
+    position: fixed;
+    left: 0;
+    top: 50px;
+    height: calc(100vh - 50px);
+    z-index: 10;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
 .contentWrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  background: #ffffff;
-  border-left: 1px solid #e0e0e0;
-  margin-left: 280px;
-  transition: margin-left 0.3s ease;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: #ffffff;
+    border-left: 1px solid #e0e0e0;
+    margin-left: 280px;
+    transition: margin-left 0.3s ease;
 }
 
 .contentHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 16px;
-  border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    border-bottom: 1px solid #eee;
 }
 
 .followingListButton {
-  background: #757575;
-  border: none;
-  font-size: 0.9rem;
-  cursor: pointer;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 6px;
-  transition: all 0.2s;
-  font-weight: 500;
+    background: #757575;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    font-weight: 500;
 }
 
 .followingListButton:hover {
-  background: #666;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(36, 36, 36, 0.3);
+    background: #666;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(36, 36, 36, 0.3);
 }
 
 .searchTrigger {
-  background: #757575;
-  border: none;
-  font-size: 0.9rem;
-  cursor: pointer;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 6px;
-  transition: all 0.2s;
-  font-weight: 500;
+    background: #757575;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    font-weight: 500;
 }
 
 .searchTrigger:hover {
-  background: #666;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(36, 36, 36, 0.3);
+    background: #666;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(36, 36, 36, 0.3);
 }
 
 .contentArea {
-  flex: 1;
-  padding: 24px;
-  overflow-y: auto;
-  background: #ffffff;
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+    background: #ffffff;
 }
 
 /* 모바일 사이드바 오버레이 */
 .mobileSidebarOverlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 5;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 5;
 }
 
 /* 반응형 디자인 */
 @media (max-width: 1024px) {
-  .sidebar {
-    transform: translateX(-100%);
-  }
-  
-  .sidebar.open {
-    transform: translateX(0);
-  }
-  
-  .contentWrapper {
-    margin-left: 0;
-  }
-  
-  /* 1024px 이하에서는 오버레이 숨김 (768px 이하에서만 표시) */
-  .mobileSidebarOverlay {
-    display: none;
-  }
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .contentWrapper {
+        margin-left: 0;
+    }
+
+    /* 1024px 이하에서는 오버레이 숨김 (768px 이하에서만 표시) */
+    .mobileSidebarOverlay {
+        display: none;
+    }
 }
 
 /* 769px 이상에서 팔로잉 목록 버튼 숨김 */
 @media (min-width: 769px) {
-  .followingListButton {
-    display: none;
-  }
+    .followingListButton {
+        display: none;
+    }
 }
 
 @media (max-width: 768px) {
-  .sidebar {
-    transform: translateX(-100%);
-    width: 280px;
-    min-width: 280px;
-  }
-  
-  .sidebar.open {
-    transform: translateX(0);
-  }
-  
-  .contentWrapper {
-    margin-left: 0;
-  }
-  
-  /* 768px 이하에서만 오버레이 표시 */
-  .mobileSidebarOverlay {
-    display: block;
-  }
-  
-  .mobileSidebarOverlay.hidden {
-    display: none;
-  }
-  
-  .contentArea {
-    padding: 16px;
-  }
-  
-  .contentHeader {
-    padding: 8px 12px;
-  }
+    .sidebar {
+        transform: translateX(-100%);
+        width: 280px;
+        min-width: 280px;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .contentWrapper {
+        margin-left: 0;
+    }
+
+    /* 768px 이하에서만 오버레이 표시 */
+    .mobileSidebarOverlay {
+        display: block;
+    }
+
+    .mobileSidebarOverlay.hidden {
+        display: none;
+    }
+
+    .contentArea {
+        padding: 16px;
+    }
+
+    .contentHeader {
+        padding: 8px 12px;
+    }
+    .container {
+        margin-top: -52px;
+    }
 }
 
 @media (max-width: 480px) {
-  .contentArea {
-    padding: 12px;
-  }
-  
-  .contentHeader {
-    padding: 6px 8px;
-  }
+    .contentArea {
+        padding: 12px;
+    }
+
+    .contentHeader {
+        padding: 6px 8px;
+    }
 }

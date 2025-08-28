@@ -10,6 +10,12 @@ const MyFoldersSection = () => {
     const navigate = useNavigate();
     const userId = user?.userId;
     const { ownFolders = [], sharedFolders = [] } = useMyFolder(userId) || {};
+    const surveyUrl = import.meta.env.VITE_SURVEY_URL;
+    const isLoggedIn = !!user;
+
+    const handleSurveyClick = () => {
+        window.open(surveyUrl, '_blank');
+    };
 
     // 전체 폴더 배열 생성 (own + shared)
     const allFolders = [
@@ -53,11 +59,17 @@ const MyFoldersSection = () => {
             {/* 나의 폴더 섹션 */}
             <div className="MyFoldersSection">
                 <div className="ExploreInner">
-                    <div className="SectionHeader">
+                    {/* 설문조사 버튼 - 로그인 상태에 따라 다르게 표시 */}
+                    {isLoggedIn && (
+                        <div className="MainPageHeader">
+                            <button className="MainPageHeaderButton" onClick={handleSurveyClick}>
+                                설문조사하고 커피 받기
+                            </button>
+                        </div>
+                    )}
+                    <div className="SectionHeader" onClick={() => navigate({ to: `/storage/${userId}` })}>
                         <h2 className="SectionTitle">{user ? `${user.nickname}님의 폴더` : '나의 폴더'}</h2>
-                        <span className="SectionArrow" onClick={() => navigate({ to: `/storage/${userId}` })}>
-                            &gt;
-                        </span>
+                        <span className="SectionArrow">&gt;</span>
                     </div>
                     <div className={`FoldersGrid${!user ? ' FoldersGridEmpty' : ''}`}>
                         {renderGridContent(ownFolders)}
@@ -69,11 +81,9 @@ const MyFoldersSection = () => {
             {user && (
                 <div className="SharedFoldersSection">
                     <div className="ExploreInner">
-                        <div className="SectionHeader">
+                        <div className="SectionHeader" onClick={() => navigate({ to: `/storage/${userId}` })}>
                             <h2 className="SectionTitle">{`${user.nickname}님과 공유된 폴더`}</h2>
-                            <span className="SectionArrow" onClick={() => navigate({ to: `/storage/${userId}` })}>
-                                &gt;
-                            </span>
+                            <span className="SectionArrow">&gt;</span>
                         </div>
                         <div className="FoldersGrid">{renderGridContent(sharedFolders)}</div>
                     </div>

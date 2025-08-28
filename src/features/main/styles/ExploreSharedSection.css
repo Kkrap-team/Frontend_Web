@@ -1,29 +1,24 @@
 /* 헤더 */
 .ExploreHeaderRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
+    display: contents;
 }
 
 /* 중앙 래퍼: 상단 섹션과 같은 라인에 맞춘 컨텐츠 폭 */
-.ExploreInner {
-    width: min(100%, calc(4 * 320px + 3 * 24px));
+.ExploreSharedSection .ExploreInner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 320px));
+    gap: 40px 32px;
+    justify-content: center;
+    justify-items: center;
+    width: min(100%, calc(4 * 320px + 3 * 32px));
     margin: 0 auto;
+    position: relative; /* 섹션 내부 절대 배치 기준 */
+    padding-bottom: 80px; /* 하단 배지(절대 위치)와 겹침 방지용 공간 확보 */
 }
 
 /* 그리드 */
-/* .ExploreGrid {
-    display: grid;
-    gap: 40px 24px;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    margin-top: 24px;
-} */
 .ExploreGrid {
-    display: grid;
-    gap: 40px 32px;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    margin-top: 24px;
+    display: contents;
 }
 
 /* 카드 */
@@ -76,6 +71,19 @@
     border-radius: 50%;
     animation: explore-spin 0.8s linear infinite;
 }
+/* 하단 고정 대기 상태 */
+.ExploreWaiting {
+    position: absolute;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 999px;
+    padding: 8px 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
 @keyframes explore-spin {
     to {
         transform: rotate(360deg);
@@ -93,9 +101,26 @@
     padding: 12px 0;
 }
 
+/* 하단 고정 배지로 떠 있게 */
+.ExploreFloating {
+    position: absolute;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 999px;
+    padding: 8px 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
 .ExploreTitle {
     font-size: 24px;
     font-weight: 600;
+    grid-column: 1 / -1; /* 한 줄 전체를 차지 */
+    justify-self: start;
+    margin-bottom: 16px; /* 기존 헤더 여백 유지 */
 }
 
 /* 반응형 */
@@ -105,8 +130,8 @@
 
 /* 768px 이하: 가로형 카드 */
 @media (max-width: 768px) {
-    /* 그리드 자체는 한 줄에 1개씩 넉넉히 */
-    .ExploreGrid {
+    /* 상위 그리드를 1열로 전환해 모바일 레이아웃 유지 */
+    .ExploreSharedSection .ExploreInner {
         grid-template-columns: 1fr;
         gap: 24px;
         justify-items: stretch;
@@ -126,7 +151,7 @@
     }
 
     .ExploreTitle {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 600;
         margin: 4px !important;
     }

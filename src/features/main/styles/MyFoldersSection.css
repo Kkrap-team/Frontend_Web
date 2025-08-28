@@ -96,6 +96,8 @@
     gap: 16px !important;
     overflow-x: auto;
     padding: 10px 0;
+    justify-content: flex-start; /* 좌측 정렬 고정 */
+    align-content: flex-start;
 }
 
 .MyFoldersSection .FoldersGrid::-webkit-scrollbar,
@@ -149,43 +151,50 @@
 /* 섹션 헤더 스타일 */
 .SectionHeader {
     display: flex;
-    justify-content: space-between; /* 왼쪽 텍스트, 오른쪽 화살표 */
     align-items: center;
-    /* display: flex;
-    align-items: center;
-    gap: 10px; */
 }
 
 /* Explore 섹션과 동일한 중앙 래퍼 적용 */
 .ExploreInner {
-    width: min(100%, calc(4 * 320px + 3 * 24px));
+    width: min(100%, calc(4 * 320px + 3 * 32px));
     margin: 0 auto;
 }
 
-.SectionTitle {
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 1; /* 화살표랑 동일하게 */
-    display: flex;
-    align-items: center;
-    /* font-size: 24px;
-    font-weight: 600; */
+/* === 시작선 정렬: My/Shared를 Explore 트랙과 동일하게 === */
+.MyFoldersSection .ExploreInner,
+.SharedFoldersSection .ExploreInner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 320px));
+    gap: 8px 32px;
+    justify-content: center;
+    justify-items: center;
 }
 
-.SectionArrow {
-    margin-left: auto; /* 왼쪽 영역을 밀어내서 끝으로 */
-    font-size: 24px;
-    font-weight: 600;
-    cursor: pointer;
-    color: #757575;
-    line-height: 1; /* 텍스트 높이 맞추기 */
-    display: flex; /* flex로 세로 중앙 정렬 */
+.MyFoldersSection .SectionHeader,
+.SharedFoldersSection .SectionHeader {
+    display: flex; /* 제목과 화살표를 한 줄로 */
     align-items: center;
-    /* font-size: 24px;
-    font-weight: 600;
-    margin: 0;
+    gap: 8px;
+    grid-column: 1 / -1; /* 상위 그리드 폭을 차지 */
+    justify-self: start;
+}
+
+.MyFoldersSection .SectionTitle,
+.SharedFoldersSection .SectionTitle,
+.MyFoldersSection .MainPageHeader {
+    justify-self: start;
     cursor: pointer;
-    color: #757575; */
+}
+
+.MyFoldersSection .SectionArrow,
+.SharedFoldersSection .SectionArrow {
+    cursor: pointer;
+}
+
+.MyFoldersSection .FoldersGrid,
+.SharedFoldersSection .FoldersGrid {
+    grid-column: 1 / -1; /* 헤더와 동일 기준선에서 시작 */
+    justify-self: stretch; /* 상위 그리드 폭을 꽉 채움 */
 }
 
 /* 섹션 구분선 */
@@ -202,6 +211,14 @@
 
 /* 모바일(~768, iPhone SE 포함) */
 @media (max-width: 768px) {
+    /* 상위 그리드를 1열로 전환 */
+    .MyFoldersSection .ExploreInner,
+    .SharedFoldersSection .ExploreInner {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        justify-items: stretch;
+    }
+
     /* 각 폴더 사이즈 */
     .MyFoldersSection .MyFolderCard,
     .SharedFoldersSection .MyFolderCard {
@@ -219,7 +236,7 @@
         font-size: 12px !important;
     }
 
-    /* {사용자}님의 폴더 */
+    /* ~~~님의 폴더 */
     .SectionTitle {
         font-size: 18px;
         font-weight: 600;

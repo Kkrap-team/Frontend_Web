@@ -40,9 +40,9 @@ export default function useCreate(initialFolders = [], userId, onSuccess) {
         if (creatingFolder) return;
         setCreatingFolder(true);
         try {
-            await createMyFolder(data, userId);
+            const created = await createMyFolder(data, userId);
             setShowFolderModal(false);
-            if (onSuccess) onSuccess();
+            if (onSuccess) onSuccess(created);
         } catch (err) {
             console.error('폴더 create 안됨 :', err);
         } finally {
@@ -60,9 +60,10 @@ export default function useCreate(initialFolders = [], userId, onSuccess) {
                 linkUrl: link,
                 foldersId: Number(folderId),
             };
-            await createLink(linkData, userId);
+            const created = await createLink(linkData, userId);
             setShowLinkModal(false);
-            if (onSuccess) onSuccess();
+            console.log('[useCreate] onSuccess 전달할 createdLink:', created);
+            if (onSuccess) onSuccess(created);
         } catch (err) {
             console.error('링크 create 안됨 :', err);
         } finally {

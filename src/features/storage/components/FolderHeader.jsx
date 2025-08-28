@@ -10,12 +10,12 @@ export default function FolderHeader({ data }) {
     const targetUserId = data?.userId;
     const { user } = useAuthStore();
     const myUserId = user?.userId;
-    
+
     // 팔로우 상태 관리
     const [isFollowing, setIsFollowing] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [isReady, setIsReady] = useState(false);
-    
+
     const { showConfirm, showModal } = useModal();
 
     // 팔로우 상태 확인 API 호출
@@ -48,7 +48,7 @@ export default function FolderHeader({ data }) {
 
         try {
             setIsLoading(true);
-            
+
             if (isFollowing) {
                 // 언팔로우
                 await unfollowUser(targetUserId);
@@ -67,7 +67,7 @@ export default function FolderHeader({ data }) {
 
     const handleFollowClick = () => {
         if (!targetUserId || isLoading || !isReady) return;
-        
+
         if (isFollowing) {
             showConfirm({
                 title: '언팔로우',
@@ -117,22 +117,22 @@ export default function FolderHeader({ data }) {
 
                 <div className="FolderStats">
                     <div className="FolderStatItem">
-                        <span className="FolderStatNum">{data.totalViewCount}+</span>
+                        <span className="FolderStatNum">{data.totalViewCount}</span>
                         <span className="FolderStatLabel">Views</span>
                     </div>
                     <div className="FolderStatItem">
-                        <span className="FolderStatNum">{data.totalScrapCount}+</span>
+                        <span className="FolderStatNum">{data.totalScrapCount}</span>
                         <span className="FolderStatLabel">Scrap</span>
                     </div>
                     <div className="FolderStatItem">
-                        <span className="FolderStatNum">{data.followingCount}+</span>
+                        <span className="FolderStatNum">{data.followingCount}</span>
                         <span className="FolderStatLabel">follower</span>
                     </div>
                 </div>
                 <div className="FollowBtnContainer">
                     {targetUserId && targetUserId !== myUserId && (
                         <button className="FollowBtn" onClick={handleFollowClick} disabled={isLoading || !isReady}>
-                            {!isReady || isLoading ? '로딩중...' : isFollowing ? '팔로우취소' : '팔로우'}
+                            {!isReady || isLoading ? '로딩중...' : isFollowing ? '팔로우 취소' : '팔로우'}
                         </button>
                     )}
                 </div>

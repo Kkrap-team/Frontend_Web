@@ -14,11 +14,6 @@ export default function LinkAddModal({ onClose, onSubmit, folders = [], linkSubm
     const [link, setLink] = useState('');
     const [selectedFolder, setSelectedFolder] = useState(currentFolder?.folderId || folders[0]?.folderId || '');
 
-    console.log('folderId', folderId);
-    console.log('currentFolder', currentFolder);
-    console.log('folders@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', folders);
-    console.log('folders[0].folderId:', folders[0]?.folderId, typeof folders[0]?.folderId);
-
     const handlePaste = async () => {
         try {
             const text = await navigator.clipboard.readText();

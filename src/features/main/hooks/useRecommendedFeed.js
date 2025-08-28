@@ -65,6 +65,15 @@ export default function useRecommendedFeed(enabled = true) {
         }
     }, [enabled]);
 
+    // hasMore가 false여도 한 번 더 시도할 수 있게 강제 재시도 함수
+    const retryLoad = useCallback(async () => {
+        if (!enabled) return;
+        if (loadingRef.current || inFlightRef.current) return;
+        setHasMore(true);
+        hasMoreRef.current = true;
+        await loadMore();
+    }, [enabled, loadMore]);
+
     // 폴더 스크랩 처리
     const handleScrapFolder = useCallback(
         async (folderData) => {
@@ -115,6 +124,7 @@ export default function useRecommendedFeed(enabled = true) {
     return {
         items,
         loadMore,
+        retryLoad,
         loading,
         hasMore,
         error,

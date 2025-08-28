@@ -4,11 +4,15 @@ import LinkAddModal from './LinkAddModal';
 import '@/features/create/styles/CreateModal.css';
 import useCreate from '@/features/create/hooks/useCreate';
 import { useAuthStore } from '@/stores/authStore';
+import { useModal } from '@/contexts/ModalContext';
+import { useNavigate } from '@tanstack/react-router';
 
 export default function CreateModal({ showFolderCreate = true, onSuccess }) {
     const [showModal, setShowModal] = useState(false);
     const { user } = useAuthStore();
     const userId = user?.userId;
+    const { showConfirm } = useModal();
+    const navigate = useNavigate();
 
     const {
         addFolder,
@@ -34,7 +38,22 @@ export default function CreateModal({ showFolderCreate = true, onSuccess }) {
 
     return (
         <>
-            <button className="CreateButton" onClick={() => setShowModal(true)}>
+            <button
+                className="CreateButton"
+                onClick={() => {
+                    if (!user) {
+                        showConfirm({
+                            title: '로그인 필요',
+                            message: '폴더 및 링크 생성은 로그인이 필요합니다. \n 로그인하시겠습니까?',
+                            confirmText: '로그인',
+                            cancelText: '취소',
+                            onConfirm: () => navigate({ to: '/login' }),
+                        });
+                        return;
+                    }
+                    setShowModal(true);
+                }}
+            >
                 <img className="CreateButtonImg" src="/create_icon.png" alt="새 콘텐츠 추가" />
             </button>
 
@@ -52,6 +71,17 @@ export default function CreateModal({ showFolderCreate = true, onSuccess }) {
                                 <button
                                     className="CreateOption"
                                     onClick={() => {
+                                        if (!user) {
+                                            showConfirm({
+                                                title: '로그인 필요',
+                                                message:
+                                                    '폴더 및 링크 생성은 로그인이 필요합니다. \n 로그인하시겠습니까?',
+                                                confirmText: '로그인',
+                                                cancelText: '취소',
+                                                onConfirm: () => navigate({ to: '/login' }),
+                                            });
+                                            return;
+                                        }
                                         openFolderModal();
                                         setShowModal(false);
                                     }}
@@ -65,6 +95,16 @@ export default function CreateModal({ showFolderCreate = true, onSuccess }) {
                             <button
                                 className="CreateOption"
                                 onClick={() => {
+                                    if (!user) {
+                                        showConfirm({
+                                            title: '로그인 필요',
+                                            message: '폴더 및 링크 생성은 로그인이 필요합니다. \n 로그인하시겠습니까?',
+                                            confirmText: '로그인',
+                                            cancelText: '취소',
+                                            onConfirm: () => navigate({ to: '/login' }),
+                                        });
+                                        return;
+                                    }
                                     openLinkModal();
                                     setShowModal(false);
                                 }}
