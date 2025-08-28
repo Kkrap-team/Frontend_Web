@@ -23,7 +23,7 @@ export default function NavMenu({ toggleSearch, showSearchInput }) {
     const profileUrlBase = import.meta.env.VITE_URL;
     const profileSrc = user?.profile
         ? `${user.profile.startsWith('http') ? user.profile : `${profileUrlBase}${user.profile}`}`
-        : '/account_circle.png';
+        : '/user_logout_profile.png';
     const isMobile = useIsMobile();
 
     return (

@@ -63,32 +63,15 @@ const MyFolderCard = ({
         <div className="MyFolderCard" ref={cardRef} onClick={handleFolderClick}>
             {/* 상단 이미지 영역 */}
             <div className="MyFolderImageContainer">
-                {share ? (
-                    <div className="MultiThumbnailGrid">
-                        {(links || []).map((link, idx) => (
-                            <img
-                                key={link.linkId || idx}
-                                className="MultiThumbnail"
-                                src={link.thumbnailUrl || link.faviconUrl || '/Kkrap_logo_large.png'}
-                                alt={folderName}
-                                onError={(e) => {
-                                    e.target.onError = null;
-                                    e.target.src = '/Kkrap_logo_large.png';
-                                }}
-                            />
-                        ))}
-                    </div>
-                ) : (
-                    <img
-                        className="MyFolderImage"
-                        src={thumbnail}
-                        alt={folderName}
-                        onError={(e) => {
-                            e.target.onError = null;
-                            e.target.src = '/Kkrap_logo_large.png';
-                        }}
-                    />
-                )}
+                <img
+                    className="MyFolderImage"
+                    src={thumbnail}
+                    alt={folderName}
+                    onError={(e) => {
+                        e.target.onError = null;
+                        e.target.src = '/Kkrap_logo_large.png';
+                    }}
+                />
                 {/* 자물쇠 아이콘 */}
                 {showLockIcon && (
                     <div className="MyFolderLock">
@@ -144,7 +127,7 @@ const MyFolderCard = ({
                 <div className="MyFolderStats">
                     <div className="MyFolderStatsLeft">
                         <div className="MyFolderScrap">
-                            <img src="/scrap_icon.png" alt="스크랩" /> {scrapCount}
+                            <img src="/folder_scrap_icon.png" alt="스크랩" /> {scrapCount}
                         </div>
                         <div className="MyFolderView">
                             <img src="/view_icon.png" alt="조회수" /> {viewCount}

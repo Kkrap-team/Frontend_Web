@@ -40,10 +40,17 @@
     text-align: left;
     color: #757575;
     font-size: 16px;
+    line-height: 1.2;
+    min-height: 1.2em; /* 설명이 없어도 한 줄 높이 확보 */
     margin-bottom: 12px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; /* 한 줄로 제한 */
+}
+
+/* 설명이 비어 있을 때도 레이아웃 높이 유지 */
+.MyFolderDesc:empty::before {
+    content: '\00a0'; /* non‑breaking space */
 }
 
 .MyFolderImage {
@@ -144,11 +151,15 @@
     padding-right: 6px;
 }
 
-.MyFolderScrap img,
 .MyFolderVisible img {
     width: 16px;
     height: 18px;
     vertical-align: middle; /* 세로 중앙 정렬 */
+}
+.MyFolderScrap img {
+    width: 16px;
+    height: 14px;
+    vertical-align: middle;
     margin-right: 4px;
 }
 

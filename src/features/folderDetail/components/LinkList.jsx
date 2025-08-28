@@ -47,7 +47,7 @@ const LinkList = ({
                     />
                     {folderInfo?.visible ? '공개' : '비공개'}
                 </div>
-                {folderInfo?.share && (
+                {(folderInfo?.share || (invitedUsers && invitedUsers.length > 0)) && (
                     <SharedUsersPanel users={invitedUsers} loading={sharingLoading} onManage={onOpenPermission} />
                 )}
             </div>

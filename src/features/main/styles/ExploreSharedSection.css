@@ -12,6 +12,8 @@
     justify-items: center;
     width: min(100%, calc(4 * 320px + 3 * 32px));
     margin: 0 auto;
+    position: relative; /* 섹션 내부 절대 배치 기준 */
+    padding-bottom: 80px; /* 하단 배지(절대 위치)와 겹침 방지용 공간 확보 */
 }
 
 /* 그리드 */
@@ -69,6 +71,19 @@
     border-radius: 50%;
     animation: explore-spin 0.8s linear infinite;
 }
+/* 하단 고정 대기 상태 */
+.ExploreWaiting {
+    position: absolute;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 999px;
+    padding: 8px 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
 @keyframes explore-spin {
     to {
         transform: rotate(360deg);
@@ -84,6 +99,20 @@
     color: #888;
     font-size: 13px;
     padding: 12px 0;
+}
+
+/* 하단 고정 배지로 떠 있게 */
+.ExploreFloating {
+    position: absolute;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 999px;
+    padding: 8px 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
 }
 
 .ExploreTitle {

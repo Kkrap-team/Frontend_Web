@@ -5,14 +5,23 @@ import MyFolderCard from '@/features/storage/components/MyFolderCard';
 import UserFolderCardHeader from '@/features/main/components/UserFolderCardHeader';
 import useFollowContents from '../hooks/useFollowContents';
 import styles from '../styles/FollowContents.module.css';
+import { useNavigate } from '@tanstack/react-router';
+import { scrapFolder as scrapFolderApi } from '@/features/main/api/recommendApi';
 
 const FollowContents = () => {
     const { user } = useAuthStore();
     const { showConfirm } = useModal();
+    const navigate = useNavigate();
     const { contents, loading, error } = useFollowContents();
 
+    // 로컬 뷰 상태(스크랩 카운트 등 미세 업데이트)
+    const [list, setList] = useState([]);
+    useEffect(() => {
+        setList(contents || []);
+    }, [contents]);
+
     // 폴더 스크랩 처리 (자신의 폴더 체크 포함)
-    const handleScrapFolder = (folderData) => {
+    const handleScrapFolder = async (folderData) => {
         // 자신의 폴더인지 확인
         if (folderData?.userId && user?.userId && folderData.userId === user.userId) {
             showConfirm({
@@ -27,10 +36,41 @@ const FollowContents = () => {
             return;
         }
 
+        // 비로그인 안내
+        if (!user) {
+            showConfirm({
+                title: '로그인 필요',
+                message: '폴더 스크랩은 로그인이 필요합니다. 로그인하시겠습니까?',
+                confirmText: '로그인',
+                cancelText: '취소',
+                onConfirm: () => navigate({ to: '/login' }),
+            });
+            return;
+        }
+
         // 다른 사용자의 폴더인 경우 정상 스크랩 처리
-        console.log('스크랩 시도:', folderData);
-        // TODO: 실제 스크랩 API 호출
-        alert('스크랩 기능은 준비 중입니다.');
+        try {
+            const payload = {
+                sourceFolderId: folderData.folderId,
+                folderName: folderData.folderName,
+                folderDescription: folderData.folderDescription,
+                visible: folderData.visible,
+            };
+            await scrapFolderApi(payload);
+            showConfirm({
+                title: '스크랩 완료',
+                message: '폴더가 내 보관함에 스크랩되었습니다.',
+                confirmText: '확인',
+                onConfirm: () => {},
+            });
+        } catch (e) {
+            console.error('스크랩 실패:', e);
+            showConfirm({
+                title: '스크랩 실패',
+                message: '스크랩 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.',
+                confirmText: '확인',
+            });
+        }
     };
 
     if (loading) {
@@ -54,7 +94,7 @@ const FollowContents = () => {
     return (
         <div className={styles.followContentsContainer}>
             <div className={styles.followContentsGrid}>
-                {contents.map((content, index) => {
+                {list.map((content, index) => {
                     console.log(`Content ${index}:`, content);
 
                     return (

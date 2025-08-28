@@ -1,13 +1,16 @@
 import React from 'react';
-import { getRouteApi } from '@tanstack/react-router';
+import { getRouteApi, useNavigate } from '@tanstack/react-router';
 import { useAuthStore } from '@/stores/authStore';
 import useFolderDetail from '@/features/folderDetail/hooks/useFolderDetail';
 import FolderDetailHeader from '@/features/folderDetail/components/FolderDetailHeader';
+import { useModal } from '@/contexts/ModalContext';
 import LinkList from '@/features/folderDetail/components/LinkList';
 import CreateModal from '@/features/create/components/CreateModal';
 import { getFolderPermissionList } from '@/features/storage/api/folderPermissionApi';
 import PermissionModal from '@/features/storage/components/PermissionModal';
 import usePermissionUsers from '@/features/storage/hooks/usePermissionUsers';
+import FolderCreateModal from '@/features/create/components/FolderCreateModal';
+import { editMyFolder, deleteMyFolder } from '@/features/storage/api/myFolderApi';
 
 const routeApi = getRouteApi('/folder/$folderId');
 
@@ -36,8 +39,8 @@ export default function StorageFolderDetail() {
     // 모달 동작은 훅에서 관리
 
     React.useEffect(() => {
-        // 비회원이거나 공유되지 않은 폴더면 요청 스킵
-        if (!folderId || !folderInfo || folderInfo.share === false || !user) {
+        // 비로그인이면 스킵, 그 외에는 공유 여부와 무관하게 권한 목록 조회
+        if (!folderId || !user) {
             setPermData(null);
             setPermLoading(false);
             return;
@@ -54,23 +57,40 @@ export default function StorageFolderDetail() {
         return () => {
             ignore = true;
         };
-    }, [folderId, folderInfo, user]);
+    }, [folderId, user]);
 
     // 아이콘 표시에 사용할 원본 invited 목록만 전달 (가공은 컴포넌트가 담당)
     const invitedUsers = Array.isArray(permData?.invited) ? permData.invited : [];
 
     // 훅: 모달 동작(선택/부여/삭제) 담당. 성공 후 페이지 권한 데이터 새로고침
     const refreshPermData = React.useCallback(() => {
-        // 비회원이거나 공유되지 않은 폴더면 요청 스킵
-        if (!folderId || !folderInfo || folderInfo.share === false || !user) return;
+        // 로그인만 확인하고 항상 최신 권한 목록을 조회
+        if (!folderId || !user) return;
         setPermLoading(true);
         getFolderPermissionList(folderId)
             .then((data) => setPermData(data))
             .finally(() => setPermLoading(false));
-    }, [folderId, folderInfo, user]);
+    }, [folderId, user]);
 
     // 훅은 항상 호출하고 enabled로 내부 동작만 제어
     const permissionHook = usePermissionUsers(userId, refreshPermData, !!user);
+    const { showConfirm, showModal, hideModal } = useModal();
+    const navigate = useNavigate();
+
+    // 폴더 수정 모달 상태
+    const [editOpen, setEditOpen] = React.useState(false);
+    const openEdit = () => setEditOpen(true);
+    const closeEdit = () => setEditOpen(false);
+
+    const handleEditSubmit = async (data) => {
+        try {
+            await editMyFolder({ ...data, folderId });
+            closeEdit();
+            await refetch();
+        } catch (e) {
+            console.error(e);
+        }
+    };
 
     const {
         users: permUsers,
@@ -117,9 +137,44 @@ export default function StorageFolderDetail() {
         );
     }
 
+    const isOwner =
+        user && folderInfo ? String(folderInfo.ownerUserId ?? folderInfo.userId) === String(user.userId) : false;
+
     return (
         <div>
-            <FolderDetailHeader folderInfo={folderInfo} />
+            <FolderDetailHeader
+                folderInfo={folderInfo}
+                isOwner={isOwner}
+                onSettingsClick={() =>
+                    showModal('folderSettings', {
+                        onEdit: () => {
+                            hideModal();
+                            openEdit();
+                        },
+                        onPermission: () => {
+                            hideModal();
+                            openPermissionModal({ folderId, folderName: folderInfo?.folderName });
+                        },
+                        onDelete: () =>
+                            showConfirm({
+                                title: '폴더 삭제',
+                                message: '정말 이 폴더를 삭제하시겠습니까? 되돌릴 수 없습니다.',
+                                confirmText: '삭제',
+                                cancelText: '취소',
+                                confirmType: 'delete',
+                                onConfirm: async () => {
+                                    try {
+                                        hideModal();
+                                        await deleteMyFolder(folderId);
+                                        navigate({ to: `/storage/${userId}` });
+                                    } catch (e) {
+                                        console.error(e);
+                                    }
+                                },
+                            }),
+                    })
+                }
+            />
             <LinkList
                 links={links}
                 folderInfo={folderInfo}
@@ -155,6 +210,21 @@ export default function StorageFolderDetail() {
                     onRevoke={handlePermissionRevoke}
                     loading={hookLoading}
                     error={hookError}
+                />
+            )}
+
+            {/* 폴더 수정 모달 */}
+            {isOwner && editOpen && (
+                <FolderCreateModal
+                    mode="edit"
+                    initialData={{
+                        folderId,
+                        folderName: folderInfo?.folderName,
+                        folderDescription: folderInfo?.folderDescription,
+                        visible: folderInfo?.visible,
+                    }}
+                    onClose={closeEdit}
+                    onSubmit={handleEditSubmit}
                 />
             )}
         </div>
