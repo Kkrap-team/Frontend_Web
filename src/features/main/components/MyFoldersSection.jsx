@@ -67,11 +67,9 @@ const MyFoldersSection = () => {
                             </button>
                         </div>
                     )}
-                    <div className="SectionHeader">
+                    <div className="SectionHeader" onClick={() => navigate({ to: `/storage/${userId}` })}>
                         <h2 className="SectionTitle">{user ? `${user.nickname}님의 폴더` : '나의 폴더'}</h2>
-                        <span className="SectionArrow" onClick={() => navigate({ to: `/storage/${userId}` })}>
-                            &gt;
-                        </span>
+                        <span className="SectionArrow">&gt;</span>
                     </div>
                     <div className={`FoldersGrid${!user ? ' FoldersGridEmpty' : ''}`}>
                         {renderGridContent(ownFolders)}
@@ -83,11 +81,9 @@ const MyFoldersSection = () => {
             {user && (
                 <div className="SharedFoldersSection">
                     <div className="ExploreInner">
-                        <div className="SectionHeader">
+                        <div className="SectionHeader" onClick={() => navigate({ to: `/storage/${userId}` })}>
                             <h2 className="SectionTitle">{`${user.nickname}님과 공유된 폴더`}</h2>
-                            <span className="SectionArrow" onClick={() => navigate({ to: `/storage/${userId}` })}>
-                                &gt;
-                            </span>
+                            <span className="SectionArrow">&gt;</span>
                         </div>
                         <div className="FoldersGrid">{renderGridContent(sharedFolders)}</div>
                     </div>
