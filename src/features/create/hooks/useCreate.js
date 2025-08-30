@@ -62,7 +62,6 @@ export default function useCreate(initialFolders = [], userId, onSuccess) {
             };
             const created = await createLink(linkData, userId);
             setShowLinkModal(false);
-            console.log('[useCreate] onSuccess 전달할 createdLink:', created);
             if (onSuccess) onSuccess(created);
         } catch (err) {
             console.error('링크 create 안됨 :', err);

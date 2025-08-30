@@ -89,8 +89,6 @@ export default function usePermissionUsers(userId, onFoldersUpdate, enabled = tr
             const invitedUserIds = selectedUsers.map((user) => user.followingId);
 
             await grantFolderPermission(userId, targetFolder.folderId, invitedUserIds);
-            console.log('셀렉트유저', selectedUsers);
-            console.log('invitedUserIds', invitedUserIds);
 
             // 선택된 사용자들의 닉네임을 문자열로 변환
             const selectedNicknames = selectedUsers.map((user) => user.nickname).join(', ');

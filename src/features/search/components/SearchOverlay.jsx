@@ -106,7 +106,7 @@ const SearchOverlay = ({ isVisible, onClose }) => {
                   : '';
             
             const url = `/folder/${item.folderId}?${targetUserIdParam}`;
-            console.log('폴더 상세페이지로 이동:', url);
+
             
             // 검색 오버레이 닫기
             handleClose();

@@ -74,7 +74,7 @@ const SearchPage = () => {
                                 ownerUserId: result.ownerUserId || result.userId
                             };
                             
-                            console.log(`폴더 ${index} 데이터:`, folderData);
+                        
                             
                             return (
                                 <div key={result.folderId || result.id || index} className="search-result-card">

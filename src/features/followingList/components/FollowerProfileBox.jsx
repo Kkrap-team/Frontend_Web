@@ -7,7 +7,6 @@ const FollowerProfileBox = ({ follower }) => {
 
   // 데이터 유효성 검증
   if (!follower || typeof follower !== 'object') {
-    console.warn('FollowerProfileBox: Invalid follower data:', follower);
     return null; // 잘못된 데이터면 렌더링하지 않음
   }
 
@@ -15,17 +14,14 @@ const FollowerProfileBox = ({ follower }) => {
   const { nickname, profile, email, followingId, userId } = follower;
   
   if (!nickname) {
-    console.warn('FollowerProfileBox: Missing nickname:', follower);
     return null;
   }
 
   const handleProfileClick = () => {
     try {
-      console.log('FollowerProfileBox clicked:', follower);
       // followingId 또는 userId 중 존재하는 것을 사용
       const targetUserId = followingId || userId;
       if (targetUserId) {
-        console.log('Navigating to:', `/storage/${targetUserId}`);
         navigate({ to: `/storage/${targetUserId}` });
       } else {
         console.error('No userId found in follower data:', follower);
