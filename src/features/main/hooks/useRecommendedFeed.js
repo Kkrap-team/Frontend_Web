@@ -90,7 +90,7 @@ export default function useRecommendedFeed(enabled = true) {
                     visible: folderData.visible,
                 };
 
-                console.log('스크랩 요청 데이터:', scrapData);
+            
                 await scrapFolder(scrapData);
 
                 return { success: true };

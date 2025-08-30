@@ -33,7 +33,7 @@ export const unfollowUser = async (followingId) => {
     });
     return response.data;
   } catch (error) {
-    console.error('언팔로우 요청 실패:', error);
+    console.error('팔로우 취소 요청 실패:', error);
     throw error;
   }
 };

@@ -26,7 +26,6 @@ export const useFollow = (userId, initialFollowing = false) => {
   // 초기 상태 설정
   useEffect(() => {
     if (initialFollowing !== undefined && !getFollowState(userId)) {
-      console.log(`Setting initial state for user ${userId}:`, initialFollowing);
       setFollowState(userId, initialFollowing);
     }
   }, [userId, initialFollowing, getFollowState, setFollowState]);
@@ -35,13 +34,11 @@ export const useFollow = (userId, initialFollowing = false) => {
   const toggleFollow = useCallback(async () => {
     if (isLoading) return;
     
-    console.log(`Following user ${userId}`);
     setIsLoading(true);
     setError(null);
     
     try {
       await followUser(userId);
-      console.log(`Successfully followed user ${userId}, updating store`);
       setFollowState(userId, true);
     } catch (err) {
       console.error('팔로우 처리 실패:', err);
@@ -55,13 +52,11 @@ export const useFollow = (userId, initialFollowing = false) => {
   const performUnfollow = useCallback(async () => {
     if (isLoading) return;
     
-    console.log(`Unfollowing user ${userId}`);
     setIsLoading(true);
     setError(null);
     
     try {
       await unfollowUser(userId);
-      console.log(`Successfully unfollowed user ${userId}, updating store`);
       setFollowState(userId, false);
     } catch (err) {
       console.error('언팔로우 처리 실패:', err);

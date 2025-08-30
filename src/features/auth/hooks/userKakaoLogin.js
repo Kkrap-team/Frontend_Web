@@ -67,11 +67,7 @@ const useKakaoLogin = () => {
                     setUser(profile);
 
                     // 저장 후 확인
-                    console.log('저장 후 localStorage 확인:');
-                    console.log('userProfile:', localStorage.getItem('userProfile'));
-                    console.log('token:', localStorage.getItem('token'));
-
-                    console.log('로그인 성공:', response.data);
+                    
                     navigate({ to: '/' });
                 } catch (err) {
                     console.error('카카오 로그인 실패:', err);

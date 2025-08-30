@@ -3,7 +3,6 @@ const url = import.meta.env.VITE_URL;
 export async function getFollowContents() {
     try {
         const response = await api.get(`${url}/activityfeed/feed`);
-        console.log('팔로우 컨텐츠 데이터:', response.data);
         return response.data;
     } catch (error) {
         console.error('팔로우 컨텐츠 API 오류:', error);

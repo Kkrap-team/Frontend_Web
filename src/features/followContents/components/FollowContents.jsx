@@ -95,7 +95,7 @@ const FollowContents = () => {
         <div className={styles.followContentsContainer}>
             <div className={styles.followContentsGrid}>
                 {list.map((content, index) => {
-                    console.log(`Content ${index}:`, content);
+                
 
                     return (
                         <div key={content.folderId || content.id || index} className={styles.folderCardWrapper}>

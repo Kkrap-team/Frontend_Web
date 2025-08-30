@@ -53,9 +53,6 @@ const MyFolderCard = ({
               : '';
 
         const url = `/folder/${folderId}?${targetUserIdParam}`;
-        console.log('타겟유저아이디', targetUserIdParam);
-        console.log('MyFolderCard generated URL:', url);
-
         navigate({ to: url });
     };
 
