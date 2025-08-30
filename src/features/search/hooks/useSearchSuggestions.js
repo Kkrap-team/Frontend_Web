@@ -13,10 +13,10 @@ export const useSearchSuggestions = () => {
     const loadingTimerRef = useRef(null);
 
     const fetchSuggestions = async (query) => {
-        console.log('fetchSuggestions 호출:', query);
+    
         
         if (!query.trim()) {
-            console.log('빈 쿼리, 상태 초기화');
+          
             setSuggestions([]);
             setLoading(false);
             setIsSearching(false);
@@ -24,7 +24,7 @@ export const useSearchSuggestions = () => {
         }
 
         try {
-            console.log('검색 시작 - 로딩 상태 설정');
+           
             setIsSearching(true);
             setLoading(true);
             setError(null);
@@ -34,22 +34,20 @@ export const useSearchSuggestions = () => {
                 clearTimeout(loadingTimerRef.current);
             }
             
-            console.log('API 호출 시작');
+           
             const data = await searchFolders(query);
-            console.log('API 응답 받음:', data);
+           
             
             // 결과를 즉시 표시
             setSuggestions(data || []);
-            console.log('suggestions 상태 업데이트:', data || []);
-            
+           
             // 최소 로딩 시간 보장 (700ms)
             const minLoadingTime = 700;
             const startTime = performance.now();
             
             // 로딩 상태를 최소 시간까지 유지
             loadingTimerRef.current = setTimeout(() => {
-                console.log('최소 로딩 시간 완료, 로딩 상태 해제');
-                setLoading(false);
+                          setLoading(false);
             }, minLoadingTime);
             
         } catch (err) {
@@ -58,24 +56,21 @@ export const useSearchSuggestions = () => {
             setSuggestions([]);
             setLoading(false);
         } finally {
-            console.log('검색 완료 - isSearching 해제');
-            setIsSearching(false);
+                       setIsSearching(false);
         }
     };
 
     const debouncedFetchSuggestions = (query) => {
-        console.log('debouncedFetchSuggestions 호출:', query);
+        
         
         // 이전 타이머 취소
         if (debounceTimer.current) {
-            console.log('이전 타이머 취소');
-            clearTimeout(debounceTimer.current);
+                    clearTimeout(debounceTimer.current);
         }
         
         // 새로운 타이머 설정 (300ms 디바운싱)
         debounceTimer.current = setTimeout(() => {
-            console.log('디바운싱 완료, 실제 검색 실행');
-            fetchSuggestions(query);
+                    fetchSuggestions(query);
         }, 300);
     };
 

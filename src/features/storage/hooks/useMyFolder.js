@@ -49,7 +49,6 @@ export default function useMyFolders(userId) {
 
     // 폴더 삭제
     const removeFolder = async (folder) => {
-        console.log('removeFolder 데이터', folder);
         if (folder.defaultFolder) {
             showConfirm({
                 title: '삭제 불가',

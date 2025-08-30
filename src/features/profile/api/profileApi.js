@@ -10,7 +10,6 @@ export async function getCurrentUserProfileApi() {
 
 // 닉네임 중복 확인
 export async function nicknameCheckApi(userId, nickname) {
-    console.log('닉넴확인', userId, nickname);
     const res = await api.get(`${url}/users/check-nickname`, {
         params: { nickname },
     });
@@ -19,7 +18,6 @@ export async function nicknameCheckApi(userId, nickname) {
 
 // 닉네임, 소개 변경
 export async function profileFormUpdateApi(userId, nickname, bio) {
-    console.log('닉변', userId, nickname, bio);
     const res = await api.patch(`/users/profile`, { nickname, bio });
     return res.data;
 }

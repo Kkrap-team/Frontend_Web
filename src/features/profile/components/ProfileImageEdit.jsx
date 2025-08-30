@@ -23,7 +23,6 @@ export default function ProfileImageEdit({ changeImageHandler }) {
                 />
 
                 
-                {console.log('최종 이미지 경로:', `${url}${user.profile}?t=${Date.now()}`)}
             </label>
             <input
                 id="ProfileImageInput"

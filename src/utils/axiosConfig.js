@@ -39,14 +39,9 @@ api.interceptors.request.use(
             // 중요: 토큰이 없으면 인증이 필요한 API 호출은 실패 가능
             // 여기서는 단순 통과하고, 서버 401에서 재발급/로그아웃 흐름 처리
         }
-        console.log('요청 URL:', config.url);
-        console.log('요청 메서드:', config.method);
-        console.log('현재 AccessToken:', accessToken);
-        console.log('요청 헤더:', config.headers);
 
         if (accessToken) {
             config.headers.Authorization = `Bearer ${accessToken}`;
-            console.log('Authorization 헤더 추가됨:', `Bearer ${accessToken}`);
         } else {
             console.log('AccessToken이 없어서 Authorization 헤더를 추가하지 않음');
         }
